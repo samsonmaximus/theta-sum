@@ -37,4 +37,4 @@ lake build
 
 ## How this was made
 
-I used Claude (Anthropic) throughout this project, for the literature search, the arguments, the code, the Lean formalization and the text, and had every part checked by separate Claude sessions acting as referees. These checks do not replace expert refereeing; the papers have not yet been refereed. The full statement is at the end of the main paper. Comments and corrections are welcome by email.
+I used Claude Opus 5.5 (Anthropic) throughout this project, for the literature search, the arguments, the code, the Lean formalization and the text, and had every part checked by separate Claude sessions acting as referees. These checks do not replace expert refereeing; the papers have not yet been refereed. The full statement is at the end of the main paper. Comments and corrections are welcome by email.
