@@ -1,0 +1,412 @@
+% part3.tex -- v3, PDF pages 25-33: Sections 9, 10, 11, Appendix A,
+% Acknowledgements and use of AI, References.
+%
+% Additional definitions used only in this part:
+%   environment leancode -- typewriter block for the Lean listing of Appendix A
+%   (an alltt-like environment: spaces and line breaks are kept, $...$ math works,
+%   _ and ^ print as themselves; inside math use \sb and \sp instead of _ and ^).
+\makeatletter
+\newenvironment{leancode}{%
+  \trivlist\item\relax
+  \leftskip\@totalleftmargin\rightskip\z@skip
+  \parindent\z@\parfillskip\@flushglue\parskip\z@skip
+  \@@par
+  \@tempswafalse
+  \def\par{%
+    \if@tempswa
+      \leavevmode\null\@@par\penalty\interlinepenalty
+    \else
+      \@tempswatrue
+      \ifhmode\@@par\penalty\interlinepenalty\fi
+    \fi}%
+  \ttfamily\frenchspacing\@noligs
+  \catcode`\_=12 \catcode`\^=12
+  \obeylines\@vobeyspaces}{\endtrivlist}
+\makeatother
+
+\section{Averages over primes: proofs of Theorems \texorpdfstring{\ref{thm:E}}{E} and \texorpdfstring{\ref{thm:F}}{F}}\label{sec:averages}
+
+On average over the primes the problem is much easier, because $F_k(p)$ depends only on $p\bmod k$. We split $F_k$ into tangent sums $G_d$ over the reduced residues modulo the divisors $d$ of $k$, and compute their averages and mean squares over residue classes. The large sieve then shows that the moduli above a power of $\log X$ contribute little for almost all primes in $(X,2X]$ (Theorem~\ref{thm:E}(i)); together with the Siegel--Walfisz theorem it gives the mean square bound of Theorem~\ref{thm:E}(ii), and the Siegel--Walfisz theorem gives the means in residue classes (Theorem~\ref{thm:F}). Besides Theorem~\ref{thm:B}(ii), which rests on Weil's bound, these proofs use neither bounds for short Kloosterman sums nor Theorem~\ref{thm:D}.
+
+For odd $d\ge 3$ and $n\in\Z$ let
+\[
+G_d(n)=\sum_{\substack{1\le j<d/2\\ (j,d)=1}}\tan\frac{\pi jn}{d}.
+\]
+$G_d(n)$ depends only on $n\bmod d$, and $G_d(-n)=-G_d(n)$.
+
+\begin{lemma}\label{lem:Gd-decomposition}
+For odd $k\ge 3$ and $n\in\Z$, $F_k(n)=\sum_{d\mid k,\,d\ge 3}G_d(n)$. Consequently, for $3\le K_1<K_2$,
+\[
+R_K(n)=\sum_{\substack{3\le d<K\\ d\text{ odd}}}w_d(K)\frac{G_d(n)}{d^2},\qquad
+R_{K_2}(n)-R_{K_1}(n)=\sum_{\substack{3\le d<K_2\\ d\text{ odd}}}w_d(K_1,K_2)\frac{G_d(n)}{d^2},
+\]
+where $w_d(K)=\sum_{m\text{ odd},\,dm<K}m^{-2}\in[1,\pi^2/8]$ and $w_d(K_1,K_2)=\sum_{m\text{ odd},\,K_1\le dm<K_2}m^{-2}\in[0,\min(\pi^2/8,\,2d/K_1)]$.
+\end{lemma}
+
+\begin{proof}
+Write $t/k=j/d$ in lowest terms; then $d\mid k$, $d\ge 3$, and $t<k/2$ if and only if $j<d/2$; conversely each such pair $(d,j)$ comes from exactly one $t$. The formulas for $R_K$ follow by writing $k=dm$, and the bound for $w_d(K_1,K_2)$ follows from $\sum_{m\ge M}m^{-2}\le 2/M$ for $M>0$.
+\end{proof}
+
+\begin{lemma}[Conditional averages]\label{lem:conditional-averages}
+Let $d\ge 3$ be odd, $g\mid d$, $m=d/g$ and $s\in\Z$.
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item $\frac1m\sum_{i=0}^{m-1}G_d(s+gi)=A_{d,g}(s):=\sum_{1\le j<d/2,\,(j,d)=1}\tan\frac{\pi js}{g}$.
+\item $A_{d,1}\equiv 0$, and $|A_{d,g}(s)|\le\frac{\tau(d)}{\pi}\,g(\log g+2)$ for $g\ge 3$. In particular $|G_d(n)|\le\frac{\tau(d)}{\pi}d(\log d+2)$.
+\item Let $(s,g)=1$ and let $A^*_{d,g}(s)$ be the average of $G_d(x)$ over the reduced residues $x$ modulo $d$ with $x\equiv s\pmod g$. Then $A^*_{d,1}=0$, and for $g\ge 3$
+\[
+|A^*_{d,g}(s)|\le C\,\tau(d)^2\,(\log\log 3d)\,g\,(\log d+2).
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) For odd $m$ and real $x$ (avoiding poles) we have $\sum_{i=0}^{m-1}\tan(x+i\pi/m)=m\tan(mx)$; this follows by logarithmic differentiation of $\prod_{i=0}^{m-1}\sin(x+i\pi/m)=2^{1-m}\sin mx$ and the substitution $x\mapsto x+\frac{\pi}{2}$. For $(j,d)=1$, $ji$ runs over all residues modulo $m$ as $i$ does, so $\sum_i\tan(\pi j(s+gi)/d)=\sum_i\tan(\pi js/d+\pi i/m)=m\tan(\pi js/g)$.
+
+(b) If $g=1$ every term is $\tan(\pi js)=0$. Let $g\ge 3$. Since $ms\in\Z$, $\tan(\pi(d-j)s/g)=-\tan(\pi js/g)$, and $j\mapsto d-j$ maps the reduced residues in $(0,d/2)$ onto those in $(d/2,d)$. Hence
+\[
+A_{d,g}(s)=\frac12\sum_{\substack{c\bmod g\\ (c,g)=1}}\tan\frac{\pi cs}{g}\,N(c),\qquad
+N(c)=\sum_{\substack{0<j<d,\ (j,d)=1\\ j\equiv c\ (\mathrm{mod}\ g)}}\operatorname{sgn}\Bigl(\frac12-\frac jd\Bigr).
+\]
+Write $j=c+gi$ ($0\le i<m$, $0<c<g$). Then $(j,d)=1$ if and only if $(c+gi,m^*)=1$, where $m^*$ is the product of the primes dividing $m$ but not $g$. By M\"obius inversion, $N(c)=\sum_{e\mid m^*}\mu(e)\sum_{i:\,e\mid c+gi}\operatorname{sgn}(\frac12-\frac{c+gi}{d})$. For $e\mid m^*$ the relevant $j=c+gi$ form an arithmetic progression with difference $ge$ and $m/e$ terms, one in each interval $[gel,ge(l+1))$, $0\le l<m/e$; since $m/e$ is odd, the inner sum is $\pm1$. Hence $|N(c)|\le 2^{\omega(m^*)}\le\tau(d)$. Finally let $h=(s,g)$ and $g'=g/h$. As $c$ runs over the reduced residues modulo $g$, $cs/h$ runs over the reduced residues modulo $g'$, each hit $\varphi(g)/\varphi(g')\le h$ times; thus $\sum_c|\tan(\pi cs/g)|\le h\sum_{x=1}^{g'-1}|\tan(\pi x/g')|=2hF_{g'}(1)\le\frac{2g}{\pi}(\log g+2)$ by Corollary~\ref{cor:Cm1}(a) and Lemma~\ref{lem:Cm1-elementary} (and the sum vanishes if $g'=1$). This proves (b); the case $g=d$ gives the bound for $G_d$.
+
+(c) If $g=1$, $A^*_{d,1}$ is the average of the odd function $G_d$ over all reduced residues, hence 0. Let $g\ge 3$. The reduced residues $x\equiv s\pmod g$ are $x=s+gi$, $0\le i<m$, with $(s+gi,m^*)=1$; there are $m\varphi(m^*)/m^*$ of them. For $e\mid m^*$ (so $(e,g)=1$ and $ge\mid d$), the $i$ with $e\mid s+gi$ form one residue class modulo $e$, and the corresponding $x$ are $s_e+gei'$, $0\le i'<m/e$, for some $s_e\equiv s\pmod g$. By M\"obius inversion and (a) with $g$ replaced by $ge$,
+\[
+A^*_{d,g}(s)=\frac{m^*}{m\,\varphi(m^*)}\sum_{e\mid m^*}\mu(e)\,\frac me\,A_{d,ge}(s_e).
+\]
+By (b), $|A_{d,ge}(s_e)|\le\frac{\tau(d)}{\pi}ge(\log d+2)$, so $|A^*_{d,g}(s)|\le\frac{m^*}{\varphi(m^*)}2^{\omega(m^*)}\frac{\tau(d)}{\pi}g(\log d+2)$, and $\frac{m^*}{\varphi(m^*)}\le\frac{d}{\varphi(d)}\ll\log\log 3d$.
+\end{proof}
+
+We shall use the following consequence of the Chinese remainder theorem. Let $d,d'$ be odd, $g=(d,d')$, and let $x$ be uniformly distributed on $\Z/\Lambda\Z$ (respectively on $(\Z/\Lambda\Z)^\times$), where $\Lambda$ is a common multiple of $d$ and $d'$. Then, conditionally on $x\bmod g$, the residues $x\bmod d$ and $x\bmod d'$ are independent and uniformly distributed over the residues (respectively reduced residues) modulo $d$ and modulo $d'$ that lie over $x\bmod g$. Consequently
+\begin{equation}\label{eq:crt-expectation}
+\E\,[G_d(x)G_{d'}(x)]=\E_s\bigl[A_{d,g}(s)A_{d',g}(s)\bigr]\quad\text{resp.}\quad\E_s\bigl[A^*_{d,g}(s)A^*_{d',g}(s)\bigr],
+\end{equation}
+where $s$ is uniform on $\Z/g\Z$ (resp.\ on $(\Z/g\Z)^\times$). In particular these expectations vanish when $g=1$.
+
+\begin{lemma}[Mean squares over a period]\label{lem:mean-squares}
+Let $3\le K_1<K_2$ and let $\Lambda$ be a common multiple of the odd integers below $K_2$.
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item $\frac{1}{\varphi(\Lambda)}\sum_{x\bmod \Lambda,\,(x,\Lambda)=1}R_{K_2}(x)^2\le C_0$ with an absolute constant $C_0$.
+\item $\frac1\Lambda \sum_{x\bmod \Lambda}\bigl(R_{K_2}(x)-R_{K_1}(x)\bigr)^2\le C(\log K_2)^6/K_1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) By Lemma~\ref{lem:Gd-decomposition}, \eqref{eq:crt-expectation} and Lemma~\ref{lem:conditional-averages}(c), writing $d=ga$, $d'=ga'$ with $g=(d,d')\ge 3$,
+\[
+\E\,[R_{K_2}^2]\le C\sum_{g\ge 3}\sum_{a,a'\ge 1}\frac{\tau(ga)^2\tau(ga')^2\,(\log\log 3ga)(\log\log 3ga')\,(\log ga+2)(\log ga'+2)}{g^2a^2a'^2}.
+\]
+Since $\tau(n)\ll_\varepsilon n^\varepsilon$, the summand is $\ll g^{-2+\varepsilon}(aa')^{-2+\varepsilon}$, and the series converges.
+
+(b) By Lemma~\ref{lem:Gd-decomposition}, \eqref{eq:crt-expectation} and Lemma~\ref{lem:conditional-averages}(b), and since $w_dw_{d'}\le\frac{\pi^2}{8}\cdot\frac{2}{K_1}\sqrt{dd'}$ (the geometric mean of the two bounds for $w_d$),
+\begin{align*}
+\frac1\Lambda \sum_{x\bmod \Lambda}(R_{K_2}-R_{K_1})^2&\le\frac{\pi^2}{8}\cdot\frac{2}{K_1}\sum_{d,d'<K_2}\sqrt{dd'}\,\frac{\tau(d)\tau(d')g^2(\log g+2)^2}{\pi^2(dd')^2}\\
+&\le\frac{(\log K_2+2)^2}{4K_1}\sum_{g<K_2}\frac{\tau(g)^2}{g}\Bigl(\sum_{a\ge 1}\frac{\tau(a)}{a^{3/2}}\Bigr)^2,
+\end{align*}
+where again $d=ga$, $d'=ga'$, $g=(d,d')$, and we used $\tau(ga)\le\tau(g)\tau(a)$. Since $\sum_a\tau(a)a^{-3/2}=\zeta(3/2)^2$ and $\sum_{g\le x}\tau(g)^2/g\ll(\log x)^4$, the claim follows.
+\end{proof}
+
+\begin{lemma}[Large sieve]\label{lem:large-sieve}
+Let $f:\Z\to\C$ have period $\Lambda$, and suppose that its Fourier coefficients $\hat f(\xi)$ on $\Z/\Lambda\Z$ vanish unless $\xi/\Lambda$, in lowest terms, has denominator less than $Q$. Then for every set $J$ of $N$ consecutive integers,
+\[
+\sum_{n\in J}|f(n)|^2\le(N+Q^2)\,\frac1\Lambda \sum_{n\bmod \Lambda}|f(n)|^2.
+\]
+\end{lemma}
+
+\begin{proof}
+Distinct fractions $a/q$, $a'/q'$ with $q,q'<Q$ are at distance at least $1/(qq')>Q^{-2}$ modulo 1. Hence the large sieve inequality of Montgomery and Vaughan \cite{b20} (in its dual form; see also \cite{b15}) gives $\sum_{n\in J}|\sum_\xi\hat f(\xi)e(n\xi/\Lambda)|^2\le(N+Q^2)\sum_\xi|\hat f(\xi)|^2$, and Parseval's identity gives the claim.
+\end{proof}
+
+By Lemma~\ref{lem:Gd-decomposition}, $R_K$ and $R_{K_2}-R_{K_1}$ have period $\Lambda$ (any common multiple of the odd numbers below $K$, resp.\ $K_2$), and since $G_d$ has period $d$, their spectra consist of fractions with denominators below $K$ (resp.\ $K_2$). Lemma~\ref{lem:large-sieve} therefore applies with $Q=K$ (resp.\ $Q=K_2$).
+
+\begin{proof}[Proof of Theorem~\textup{\ref{thm:E}(i)}]
+Let $X$ be large, $K_2=\sqrt{2X}(\log 2X)^4$ and $Y=(\log X)^{A+14}$. For $p\in(X,2X]$ we have $\sqrt p(\log p)^4\le K_2\le p^{9/10}$, so Theorem~\ref{thm:B}(ii) with $K=K_2$ (a cutoff that does not depend on $p$) gives
+\[
+S(p)-\frac p2\log p=c_0p+\frac{4p}{\pi}R_Y(p)+\frac{4p}{\pi}\bigl(R_{K_2}(p)-R_Y(p)\bigr)+O\Bigl(\frac{p}{\log p}\Bigr).
+\]
+By Corollary~\ref{cor:Cm1}(b), and since $(\log k)/k$ is decreasing for $k\ge 3$,
+\[
+|R_Y(p)|\le\frac1\pi\sum_{\substack{3\le k<Y\\ k\text{ odd}}}\frac{\log k+K_0}{k}\le\frac1\pi\Bigl(\frac14(\log Y)^2+\frac{K_0}{2}\log Y+\frac1{10}\Bigr).
+\]
+Let $\mathcal E$ be the set of integers $n\in(X,2X]$ with $|R_{K_2}(n)-R_Y(n)|>1$. By Lemmas~\ref{lem:large-sieve} and~\ref{lem:mean-squares}(b),
+\[
+\#\mathcal E\le\sum_{X<n\le 2X}\bigl(R_{K_2}(n)-R_Y(n)\bigr)^2\le(X+K_2^2)\,\frac{C(\log K_2)^6}{Y}\le C'\,\frac{X(\log X)^{14}}{Y}=C'X(\log X)^{-A}.
+\]
+For primes $p\in(X,2X]\setminus\mathcal E$ we obtain $|S(p)-\frac p2\log p|\le\frac{(A+14)^2}{\pi^2}p(\log\log X)^2+O(Ap\log\log X)$, which is at most $\frac{(A+15)^2}{\pi^2}p(\log\log p)^2$ for $X\ge X_0(A)$.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:density}]
+(a) Apply Theorem~\ref{thm:E}(i) with $A=2$ (note that $17^2/\pi^2<30$) on the dyadic intervals $(x/2^{i+1},x/2^i]$ with $x/2^{i+1}\ge\max(X_0(2),\sqrt x)$. The exceptional primes number $\ll\sum_i\frac{x}{2^i}(\log x)^{-2}\ll x(\log x)^{-2}$, and there are $O(\sqrt x)$ primes below $\sqrt x$. (b) Apply Theorem~\ref{thm:E}(ii) and Chebyshev's inequality on each dyadic interval $(X,2X]$ with $\sqrt x\le X\le x$, with threshold $\min_{(X,2X]}\xi$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\textup{\ref{thm:E}(ii)}]
+Let $X$ be large, $\mathcal P_X$ the set of primes in $(X,2X]$, $K_2=\sqrt{2X}(\log 2X)^4$ and $Y=(\log X)^{16}$. By Theorem~\ref{thm:B}(ii),
+\[
+\sum_{p\in\mathcal P_X}\Bigl(\frac{S(p)}{p}-\frac12\log p-c_0\Bigr)^2\le\frac{48}{\pi^2}\Bigl(\sum_{p\in\mathcal P_X}R_Y(p)^2+\sum_{X<n\le 2X}\bigl(R_{K_2}(n)-R_Y(n)\bigr)^2\Bigr)+O\Bigl(\frac{X}{(\log X)^3}\Bigr).
+\]
+As in the previous proof, the second sum is $\ll X(\log X)^{14}/Y=X(\log X)^{-2}$. For the first, Lemma~\ref{lem:Gd-decomposition} gives
+\[
+\sum_{p\in\mathcal P_X}R_Y(p)^2=\sum_{d,d'<Y}\frac{w_d(Y)w_{d'}(Y)}{(dd')^2}\sum_{p\in\mathcal P_X}G_d(p)G_{d'}(p).
+\]
+For each pair let $q=\operatorname{lcm}(d,d')\le Y^2$; all $p\in\mathcal P_X$ are coprime to $q$. By the Siegel--Walfisz theorem (see \cite{b15}), uniformly for $q\le(\log X)^{32}$ and $(a,q)=1$,
+\[
+\#\{p\in\mathcal P_X:\ p\equiv a\ (\mathrm{mod}\ q)\}=\frac{\#\mathcal P_X}{\varphi(q)}+O\bigl(X\exp(-c\sqrt{\log X})\bigr)
+\]
+with an ineffective constant $c>0$. Since every term of $G_d$ has modulus at most $\cot\frac{\pi}{2d}\le\frac{2d}{\pi}$, we have $|G_d|\le d^2$, and therefore
+\[
+\sum_{p\in\mathcal P_X}G_d(p)G_{d'}(p)=\#\mathcal P_X\cdot\mathop{\E}_{x\in(\Z/q\Z)^\times}\bigl[G_d(x)G_{d'}(x)\bigr]+O\bigl(q\,d^2d'^2X\exp(-c\sqrt{\log X})\bigr).
+\]
+The error terms add up to $O(Y^4X\exp(-c\sqrt{\log X}))=o(X/(\log X)^2)$, and since the reduced residues modulo a common multiple $\Lambda$ of the odd numbers below $Y$ project uniformly onto those modulo $q$, the main terms add up to $\#\mathcal P_X\cdot\frac{1}{\varphi(\Lambda)}\sum_{(x,\Lambda)=1}R_Y(x)^2\le C_0\,\#\mathcal P_X$ by Lemma~\ref{lem:mean-squares}(a). This proves the claim for large $X$, and small $X$ are trivial.
+\end{proof}
+
+For Theorem~\ref{thm:F} we need one more observation. Let $k$ be odd, $q\ge 1$, $g=(k,q)$ and $(r,q)=1$, and let $x$ be uniformly distributed over the reduced residues modulo $k$ with $x\equiv r\pmod g$. Then for each $d\mid k$ the residue $x\bmod d$ is uniformly distributed over the reduced residues modulo $d$ with $x\equiv r\pmod{(d,q)}$. (The condition $x\equiv r\pmod g$ defines a coset of the kernel $H$ of $(\Z/k\Z)^\times\to(\Z/g\Z)^\times$; its image under reduction modulo $d$ is a coset of the image of $H$, which by the Chinese remainder theorem consists of the reduced residues modulo $d$ that are $\equiv 1$ modulo $(d,g)=(d,q)$, and the push-forward of the uniform distribution on a coset is uniform on its image.) Together with Lemma~\ref{lem:Gd-decomposition} this gives
+\begin{equation}\label{eq:c0qr-series}
+\langle F_k\rangle_{(k,q),r}=\sum_{d\mid k,\ d\ge 3}A^*_{d,(d,q)}(r),\qquad\text{hence}\qquad c_0(q;r)=c_0+\frac\pi2\sum_{\substack{d\ge 3\\ d\text{ odd}}}\frac{A^*_{d,(d,q)}(r)}{d^2},
+\end{equation}
+where we used $\sum_{m\text{ odd}}m^{-2}=\pi^2/8$; the rearrangement is justified by the absolute convergence established below. By Lemma~\ref{lem:conditional-averages}(c), only $d$ with $(d,q)>1$ contribute, and $|A^*_{d,(d,q)}(r)|\ll_{q,\varepsilon}d^\varepsilon$.
+
+\begin{proof}[Proof of Theorem~\textup{\ref{thm:F}}]
+By \eqref{eq:c0qr-series} and Lemma~\ref{lem:conditional-averages}(c), $|\langle F_k\rangle_{(k,q),r}|\ll_{q,\varepsilon}k^\varepsilon$, so the series defining $c_0(q;r)$ converges absolutely. It suffices to prove that the mean over $\mathcal P_X(r)=\{p\in(X,2X]:p\equiv r\pmod q\}$ tends to $c_0(q;r)$; the statement for $p\le x$ follows by summing over dyadic intervals. Let $K_2$ be as before and $Y=(\log X)^{16}$. By Theorem~\ref{thm:B}(ii),
+\[
+\frac{1}{\#\mathcal P_X(r)}\sum_{p\in\mathcal P_X(r)}\Bigl(\frac{S(p)}{p}-\frac12\log p\Bigr)=c_0+\frac4\pi\,\frac{\sum_{p\in\mathcal P_X(r)}\bigl(R_Y(p)+(R_{K_2}-R_Y)(p)\bigr)}{\#\mathcal P_X(r)}+O\Bigl(\frac{1}{\log X}\Bigr).
+\]
+By the Cauchy--Schwarz inequality and the bound $\sum_{X<n\le 2X}(R_{K_2}-R_Y)^2\ll X(\log X)^{-2}$ from the previous proof, the contribution of $R_{K_2}-R_Y$ is $\ll(\#\mathcal P_X(r))^{-1/2}X^{1/2}(\log X)^{-1}\ll_q(\log X)^{-1/2}$. For each odd $k<Y$ let $Q=\operatorname{lcm}(k,q)\le qY$. By the Siegel--Walfisz theorem the primes of $\mathcal P_X(r)$ are equidistributed, up to an error $O(X\exp(-c\sqrt{\log X}))$ per class, among the reduced residues modulo $Q$ that are $\equiv r\pmod q$, and by the observation preceding \eqref{eq:c0qr-series} (applied with $Q$ in place of $k$) their reductions modulo $k$ are uniformly distributed over the reduced residues $x$ modulo $k$ with $x\equiv r\pmod{(k,q)}$. Hence
+\[
+\frac{1}{\#\mathcal P_X(r)}\sum_{p\in\mathcal P_X(r)}F_k(p)=\langle F_k\rangle_{(k,q),r}+O_q\bigl(k^2\,Y\,\log X\,\exp(-c\sqrt{\log X})\bigr),
+\]
+and summing over the odd $k$ with $3\le k<Y$ with weights $k^{-2}$ shows that the mean of $R_Y(p)$ over $\mathcal P_X(r)$ equals $\sum_{3\le k<Y,\,k\text{ odd}}\langle F_k\rangle_{(k,q),r}/k^2+o(1)$, which tends to $\sum_{k\ge3,\,k\text{ odd}}\langle F_k\rangle_{(k,q),r}/k^2$. This proves the convergence. Since $F_k$ is odd, $\langle F_k\rangle_{(k,q),-r}=-\langle F_k\rangle_{(k,q),r}$, whence $c_0(q;r)+c_0(q;-r)=2c_0$. If $q$ is a power of 2, then $(k,q)=1$ for odd $k$, and $\langle F_k\rangle_{1,r}$ is the average of an odd function over all reduced residues, hence 0.
+\end{proof}
+
+\begin{table}[ht]
+\small
+\begin{tabular}{llrrrr}
+\toprule
+$q$ & $r$ & $c_0(q;r)$ & observed mean & standard error & number of primes\\
+\midrule
+3 & 1 & $0.6384$ & $0.6384$ & $0.0011$ & 206265\\
+3 & 2 & $-0.1585$ & $-0.1588$ & $0.0011$ & 206416\\
+5 & 1 & $0.5863$ & $0.5859$ & $0.0017$ & 103113\\
+5 & 2 & $0.4159$ & $0.4163$ & $0.0018$ & 103160\\
+5 & 3 & $0.0639$ & $0.0633$ & $0.0018$ & 103238\\
+5 & 4 & $-0.1064$ & $-0.1066$ & $0.0017$ & 103170\\
+7 & 1 & $0.4656$ & $0.4642$ & $0.0024$ & 68757\\
+7 & 6 & $0.0142$ & $0.0130$ & $0.0024$ & 68849\\
+9 & 1 & $0.7689$ & $0.7681$ & $0.0017$ & 68729\\
+9 & 8 & $-0.2891$ & $-0.2887$ & $0.0017$ & 68858\\
+4 & 1 & $c_0=0.2399$ & $0.2393$ & $0.0014$ & 206252\\
+4 & 3 & $c_0=0.2399$ & $0.2400$ & $0.0014$ & 206429\\
+\bottomrule
+\end{tabular}
+\caption{Limiting means $c_0(q;r)$ of $S(p)/p-\frac12\log p$ in residue classes (Theorem~\ref{thm:F}), compared with the means over the primes $10^3<p\le 6\cdot 10^6$ in the class. The values $c_0(q;r)$ were computed from \eqref{eq:c0qr-series}, summing over $d\le D$ with $D=8001$ and extrapolating the tail, which decays like $1/D$; this was done for $r=1$ (and for $r=2$ when $q=5$), and the remaining values follow from $c_0(q;r)+c_0(q;-r)=2c_0$. The uncertainty of the computed values is below $10^{-4}$.}\label{tab:residue-classes}
+\end{table}
+
+\section{Computations}\label{sec:computations}
+
+This section describes how we computed $S(p)$ exactly, how the values were checked, and what they show: the thresholds of Proposition~\ref{prop:numerics}, the statistics of $S(p)/p-\frac12\log p$, a numerical confirmation of $c_0$, and the structure of the primes for which $S(p)$ is unusually small. The algorithm is the Euclid-type recursion of Lemma~\ref{lem:counting}, which needs $O(p\log p)$ operations for one prime.
+
+\subsection{Method and checks}\label{subsec:method-checks}
+We computed $S(p)$ from Lemma~\ref{lem:counting}: $S(p)=\frac{(p-1)^3}{4}-4\sum_aF(2p,a)$, where each $F(2p,a)$ is evaluated by the Euclidean-type recursion of that lemma (we also use its nearest-integer variant and tables for small denominators). The program is written in C and all its arithmetic is exact (it uses 64-bit integers, and floating-point numbers only to represent integers below $2^{53}$); it needs $O(p\log p)$ operations, and for $p\approx 10^{10}$ one evaluation takes about 100 seconds on one core. The values were checked against (i) a brute-force evaluation of the definition \eqref{eq:Sk} for all 668 odd primes $p<5000$; (ii) an independent $O(p\log p)$ program based on Dedekind sums and their reciprocity law, for all 17983 odd primes $p<2\cdot 10^5$; (iii) for the larger primes, the prediction of Theorem~\ref{thm:B}, see Table~\ref{tab:large-primes}. No discrepancy occurred.
+
+\subsection{\texorpdfstring{All primes up to $6\cdot 10^6$}{All primes up to 6*10\textasciicircum 6}}\label{subsec:all-primes}
+We computed $S(p)$ for all 412848 odd primes $p\le 6\cdot 10^6$: first for the 283145 odd primes $p\le4\cdot10^6$ with the program described above, then for the remaining ones with a new implementation of the same algorithm in exact 128-bit integer arithmetic. As a further check, 640 of the values, chosen at random from all ranges and among the extreme values, were recomputed by a second program that shares no code or method with the first: it writes $(-1)^x=1-2x+4\lfloor x/2\rfloor$ and evaluates each inner sum over $j$ as a floor sum of a linear function by a Euclid-type algorithm. All 640 values agree. During the revision of this paper all 129703 values for $4\cdot10^6<p\le6\cdot10^6$ were recomputed by a separately written program based on the same formula (Lemma~\ref{lem:counting}); no discrepancy occurred.
+
+
+Proposition~\ref{prop:numerics} summarizes the threshold behaviour; the last primes $p\le6\cdot10^6$ with $S(p)\le mp$ are 5, 233, 3119, 58013, 869399 and 5935409 for $m=1,\dots,6$, and $S(p)>0$ throughout. The minimum of $S(p)/p$ over $3119<p\le 6\cdot 10^6$ is 3.0254, attained at $p=4139$; over $58013<p\le 6\cdot 10^6$ it is 4.0055 (at $p=90089$), and over $869399<p\le 6\cdot 10^6$ it is 5.1332 (at $p=1021019$). For $5\cdot10^6<p\le6\cdot10^6$ we have $S(p)/p>5.82$. Over all odd primes $p\le6\cdot10^6$, $S(p)/p-\frac12\log p$ lies between $-2.160$ (at $p=750749$) and $2.386$ (at $p=4158001$), and over $10^3<p\le6\cdot10^6$ its mean is $0.2396$ and its standard deviation $0.626$. Table~\ref{tab:statistics} shows that its distribution is stationary, with mean close to $c_0$ and standard deviation about 0.63, in accordance with Theorems~\ref{thm:E}(ii) and \ref{thm:F}. The companion paper~\cite{b32} explains the stationarity: $S(p)/p-\frac12\log p$ has a limiting distribution over the primes, with standard deviation $0.6264$ \cite[Remark~3.5]{b32}.
+
+\subsection{\texorpdfstring{The constant $c_0$}{The constant c0}}\label{subsec:constant-c0}
+By Theorem~\ref{thm:B}, $S(p)/p-\frac12\log p-\frac4\pi R_K(p)$ should fluctuate around $c_0$ with a much smaller variance than $S(p)/p-\frac12\log p$ itself. With $K=3002$ (i.e.\ $k\le 3001$), the mean of this quantity over the 412418 primes $3001<p\le 6\cdot 10^6$ is 0.23994, with standard error $3.5\cdot 10^{-5}$ (sample standard deviation 0.022), in agreement with $c_0=0.23993\,41036\,32069\,46768\ldots$. Table~\ref{tab:Psi-second-order}, which is based on the exact identity of Theorem~\ref{thm:B}(i), confirms $c_0$ to much higher accuracy.
+
+\begin{table}[ht]
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+range of $p$ & primes & mean & st.\ dev. & minimum (at $p$) & maximum (at $p$)\\
+\midrule
+$(10^3,\,2\cdot 10^5]$ & 17816 & 0.2387 & 0.624 & $-1.719$ (58013) & 2.219 (150151)\\
+$(2\cdot 10^5,\,10^6]$ & 60514 & 0.2400 & 0.627 & $-2.160$ (750749) & 2.279 (910981)\\
+$(10^6,\,2\cdot 10^6]$ & 70435 & 0.2397 & 0.625 & $-1.892$ (1767149) & 2.363 (1735651)\\
+$(2\cdot 10^6,\,3\cdot 10^6]$ & 67883 & 0.2407 & 0.626 & $-2.041$ (2972969) & 2.320 (2238391)\\
+$(3\cdot 10^6,\,4\cdot 10^6]$ & 66330 & 0.2391 & 0.625 & $-1.957$ (3950099) & 2.360 (3387931)\\
+$(4\cdot 10^6,\,5\cdot 10^6]$ & 65367 & 0.2396 & 0.626 & $-1.840$ (4046543) & 2.386 (4158001)\\
+$(5\cdot 10^6,\,6\cdot 10^6]$ & 64336 & 0.2390 & 0.628 & $-1.939$ (5525519) & 2.349 (5694151)\\
+\bottomrule
+\end{tabular}
+\caption{Statistics of $S(p)/p-\frac12\log p$.}\label{tab:statistics}
+\end{table}
+
+\subsection{Large and extremal primes}\label{subsec:extremal-primes}
+The fluctuations of $S(p)/p-\frac12\log p$ are dominated by the small moduli $k$. If $k\mid p{+}1$ then $F_k(p)=F_k(-1)=-F_k(1)$ is as negative as possible (Corollary~\ref{cor:Cm1}), and if $k\mid p-1$ then $F_k(p)=F_k(1)$. Primes for which $p+1$ (resp.\ $p-1$) is divisible by many small odd numbers therefore have unusually small (resp.\ large) values of $S(p)/p$. We searched for such primes and computed $S(p)$ exactly for 28 of them between $3\cdot 10^6$ and $5.4\cdot 10^{10}$, as well as for 28 further primes near $10^7$, $10^8$, $10^9$ and $10^{10}$. Table~\ref{tab:large-primes} lists some of them. The smallest value found is $S(p)/p-\frac12\log p-c_0=-3.008$ at $p=9166207049$, where $S(p)/p=8.70$. In all 56 cases the exact value agrees with $c_0+\frac4\pi R_{30002}(p)$ to within 0.03.
+
+\begin{table}[ht]
+\small
+\begin{tabular}{rlrrr}
+\toprule
+$p$ & structure & $S(p)$ & $\frac{S(p)}{p}-\frac{\log p}{2}-c_0$ & $\frac4\pi R_{30002}(p)$\\
+\midrule
+$10^{10}+19$ & & 115344445654 & $-0.2184$ & $-0.2165$\\
+$10^{10}+33$ & & 117633975024 & $0.0105$ & $0.0155$\\
+$10^{10}+61$ & & 112907100532 & $-0.4621$ & $-0.4495$\\
+9166207049 & $p+1=2\cdot 3^4\cdot 5^2\cdot 7^2\cdot 11\cdot 13\cdot 17\cdot 19$ & 79755583112 & $-3.0083$ & $-2.9884$\\
+53542288799 & $p+1=2^5\cdot 3^2\cdot 5^2\cdot 7\cdot 11\cdot 13\cdot 17\cdot 19\cdot 23$ & 514925507950 & $-2.9746$ & $-2.9478$\\
+5237832599 & $p+1=2^3\cdot 3^4\cdot 5^2\cdot 7\cdot 11\cdot 13\cdot 17\cdot 19$ & 44836822926 & $-2.8693$ & $-2.8626$\\
+3170267099 & $p+1=2^2\cdot 3^4\cdot 5^2\cdot 7\cdot 11\cdot 13\cdot 17\cdot 23$ & 26344372166 & $-2.8686$ & $-2.8548$\\
+2677114441 & $p-1=2^3\cdot 3^2\cdot 5\cdot 7\cdot 11\cdot 13\cdot 17\cdot 19\cdot 23$ & 36439344488 & $2.5175$ & $2.5157$\\
+20078358301 & $p-1=2^2\cdot 3^3\cdot 5^2\cdot 7\cdot 11\cdot 13\cdot 17\cdot 19\cdot 23$ & 299323341516 & $2.8064$ & $2.7878$\\
+\bottomrule
+\end{tabular}
+\caption{Exact values of $S(p)$ for some large primes, compared with the prediction of Theorem~\ref{thm:B} truncated at $k\le 30001$.}\label{tab:large-primes}
+\end{table}
+
+\subsection{Anatomy of the extremal primes}\label{subsec:anatomy}
+Using the expansion of Proposition~\ref{prop:expansion} (with a tabulated $I$) one can evaluate $R_K(p)$ for $K=4\sqrt p$ in a few milliseconds; for the 354 primes $p\le 4\cdot 10^6$ for which we compared, $\frac4\pi R_{4\sqrt p}(p)$ differs from $S(p)/p-\frac12\log p-c_0$ by at most 0.06 (standard deviation 0.016). We computed $R_{4\sqrt p}(p)$ for all 204648 primes $10^6<p\le 4\cdot 10^6$; this analysis was not extended to $6\cdot10^6$. For the 100 primes with the most negative values, the mean deficit relative to a random sample of primes is $-1.47$. Writing $R_K(p)=\sum_dw_d(K)G_d(p)/d^2$ as in Lemma~\ref{lem:Gd-decomposition}, this deficit is carried almost entirely by moduli $d$ that divide one of a few linear forms in $p$: 53\% by $d\mid p+1$, 11\% by $d\mid 2p-1$, 24\% by the absence of the positive contributions of $d\mid p-1$ and $d\mid 2p+1$, and most of the rest by other forms $ap+c$ with small $|a|,|c|$; the moduli $d$ that divide no form $ap+c$ with $|a|,|c|\le 12$ contribute $+0.003$. Moreover 57\% of the deficit comes from $d<16$, and every modulus $k\ge 256$ with $F_k(p)/k\le -1.5$ among these primes has $\theta_k$ just above 0 or just below $\frac12$, in accordance with Corollary~\ref{cor:singularities}.
+
+\section{Remaining questions}\label{sec:remaining-questions}
+
+We list the questions that this paper leaves open, and say what stands in the way of each.
+
+\textit{Explicit thresholds.} Conjectures~1.1, 3.1 and 3.2, and the inequality $S(p)>p$ for $p>5$, are now known for $p\le 6\cdot 10^6$ (Proposition~\ref{prop:numerics}) and for $p\ge p_1$, where $p_1$ can in principle be computed but is very large. Via Theorem~\ref{thm:C}, Corollary~\ref{cor:conj33} needs $\gamma_0<\frac13$, and for $\gamma_0=0.3$ an optimized explicit version of Theorem~\ref{thm:D} alone requires $\log p$ of order $10^{11}$ (Remark~\ref{rem:exponent-optimality}(c)). The threshold $p_1$ also depends on the constants $C_{BG}$ and $A_{BG}$ of Lemma~\ref{lem:bourgain-garaev}, which have not been computed. Even if $C_{BG}=1$, the bound of Lemma~\ref{lem:bourgain-garaev} beats the trivial bound for some $N\le\sqrt p$ only when $\log p>8(\log\log p)^6$, that is, when $\log p>5.2\cdot10^8$. For a single prime the margin is not large either: at $p\approx6\cdot10^6$, Conjecture~3.2 asks for $S(p)/p-\frac12\log p>-4.8$, while $S(p)/p-\frac12\log p-c_0$ reaches $-3.0$ at $p=9166207049$ (Table~\ref{tab:large-primes}). So, with this method, a proof for the primes just beyond the computed range would need explicit bounds for the sum in~\eqref{eq:thmBii} that are sharp up to a constant factor, and in the middle range of moduli these require explicit cancellation in short Kloosterman sums far beyond the present state of the art. Closing the gap requires an explicit form of the whole argument with drastically better constants, or a different method for the moderately large primes.
+
+\textit{The error term.} Theorem~\ref{thm:Cstar} gives $S(p)=\frac p2\log p+O(p(\log p)^{2/3}(\log\log p)^{17/3})$, and the exponent $\frac23$ is the limit of the method (Remark~\ref{rem:thmC}(b)). Theorem~\ref{thm:E} and the computations suggest that $S(p)=\frac p2\log p+O(p(\log\log p)^2)$ for every prime. Heuristically this would be optimal: by Linnik's theorem there are primes $p$ with $p\equiv -1$ modulo all odd $k\le c\log p$, and for these the moduli $k\le c\log p$ contribute $-(\frac{1}{\pi^2}+o(1))(\log\log p)^2$ to $S(p)/p$; we cannot, however, control the larger moduli for such special primes. The companion paper~\cite[Theorem~3]{b32} proves unconditionally that $S(p)/p-\frac12\log p-c_0=\Omega_\pm((\log\log p)^2)$, with the constant $2e^\gamma/\pi^2=0.3609\ldots$; so this conjecture, if true, is optimal up to the constant.
+
+\textit{The constant $c_1$.} We do not know whether the constant term $c_1=-0.40762\,59135\ldots$ of $\Psi(p)$ (Remark~\ref{rem:psi-expansion}) can be expressed in terms of classical constants.
+
+\textit{Formalization.} A formal proof of the hypothesis of Theorem~\ref{thm:Cflat}, for instance of the Bourgain--Garaev bound for $\log N\ge\frac12(\log p)^{9/10}$, or a proof of Corollary~\ref{cor:conj33} that avoids short Kloosterman sums, would make the formal proof of Conjecture~3.3 described in Appendix~\ref{app:lean} unconditional. Not formalized are, among others, Theorems~\ref{thm:E} and~\ref{thm:F}, Subsection~\ref{subsec:even-cf}, Lemmas~\ref{lem:sawtooth}, \ref{lem:lehmer}, \ref{lem:gauss} and~\ref{lem:cubic}, and Theorem~\ref{thm:B}(ii) in its sharp form.
+
+\appendix
+
+\section{The Lean formalization}\label{app:lean}
+
+This appendix describes what has been checked by the Lean proof assistant, and under which hypotheses. A formal proof removes the possibility of a gap in the long chain of estimates behind Corollary~\ref{cor:conj33}, except in the inputs that are assumed. We state the hypotheses exactly, list the main formal theorems, and say where the formal proofs differ from the paper.
+
+\subsection*{Numbering of the conjectures}
+We follow the numbering and wording of the third arXiv version of~\cite{b1}. In the first version Conjecture~1.1 is stated for every odd prime; as $S(3)=2$ and $S(5)=4$, the two forms are equivalent. The formal-conjectures file~\cite{b11} follows the first arXiv version. There Conjecture~1.1 appears as \lean{conjecture_1_1}, and Conjectures 3.1 and 3.2 appear as \lean{conjecture_4_2} and \lean{conjecture_4_3}. The statement \lean{conjecture_4_1} is the inequality $S(k)>k$ for primes $k>5$, which is not among the four conjectures of Subsection~\ref{subsec:conjectures}; it is covered by Proposition~\ref{prop:numerics} for $p\le6\cdot10^6$ and by Corollary~\ref{cor:conj33} for large $p$. Finally, \lean{conjecture_4_4} asserts that for every $n\in\N$ one has $nk<S(k)$ for all sufficiently large primes $k$; this is the lower half of Conjecture 3.3.
+
+\subsection*{The project}
+The formalization is a Lean~4 project~\cite{b35} built on Mathlib~\cite{b34} (Lean and Mathlib version \lean{v4.35.0}), of about 17000 lines, at \zenododoi. It contains no \texttt{sorry} and no \lean{native_decide}, and for every theorem named below \texttt{\#print axioms} lists only \texttt{propext}, \lean{Classical.choice} and \lean{Quot.sound}; the file \lean{ThetaSum/MainTheorems.lean} prints the statements and axioms of all of them. The definitions \texttt{S'} and \texttt{S} are copied verbatim from the formal-conjectures file \lean{FormalConjectures/Arxiv/2501.03234/ArithmeticSumS.lean} \cite{b11}, so that the theorems refer to exactly the formalized conjectures:
+\begin{leancode}
+def S' (h k : $\N$) : $\Z$ :=
+  $\sum$ j $\in$ Finset.Ico 1 k, (-1 : $\Z$) ^ (j + 1 + $\lfloor$(h * j : $\mathbb{Q}$) / k$\rfloor\sb{+}$)
+def S (k : $\N$) : $\Z$ := $\sum$ h $\in$ Finset.Ico 1 k, S' h k
+\end{leancode}
+
+\subsection*{Unconditional results}
+\begin{itemize}[leftmargin=*]
+\item Theorem~\ref{thm:A} with $K_0$ replaced by $2$, that is, $|S(p)|\le\frac2pC_p(1)^2\le\frac2{\pi^2}p(\log p+2)^2$ (\lean{theorem_A}, in the namespace of the file of~\cite{b11}); the bound $|S(p)|\le5pH_p^2$ (\lean{S_abs_le}); and the upper half of Conjecture~3.3 (\lean{ThetaSum.conjecture_3_3_upper}). These are also in a separate, smaller project for the upper half.
+\item Lemmas~\ref{lem:dual}--\ref{lem:Cm1-elementary}, Theorem~\ref{thm:B}(i) (\lean{TheoremB.S_eq_Psi_Phi}) and the reciprocity law, Lemma~\ref{lem:reciprocity} (\lean{Recip.reciprocity}). The formal proof of the reciprocity law uses no contour integration; it combines an exact polynomial identity at roots of unity with the partial fraction expansion of the cotangent.
+\item Theorem~\ref{thm:B}(ii) in a weaker form: for every $\varepsilon>0$ and all large primes $p$, $|S(p)-\frac p2\log p-c_0p-\frac{4p}\pi R_K(p)|\le\varepsilon p$ with $K=\lfloor p^{3/4}(\log p)^4\rfloor$ (\lean{ThetaSum.theorem_B_c0}), and the closed form~\eqref{eq:c0} of $c_0$ (\lean{ThetaSum.c0_closed_form}). In place of Weil's bound this uses Kloosterman's bound $|\mathcal K(b,\ell;p)|\le2p^{3/4}$~\cite{b36}, which is proved in Lean by the fourth-moment method (\lean{ThetaSum.hK34}); this is why the cutoff is $p^{3/4}(\log p)^4$.
+\item Theorem~\ref{thm:D}, exactly as stated (\lean{ThetaSum.theorem_D}), and Theorem~\ref{thm:Dstar} with $q_1=\exp(e^{1000})$, that is, for $\log\log q\ge1000$ (\lean{ThetaSum.theorem_D_star}).
+\item Vaaler's lemma, Lemma~\ref{lem:vaaler} (\lean{Vaaler.vaaler_lemma}), by a finite argument, and the other tools of Section~\ref{sec:tangent} except Lemma~\ref{lem:bourgain-garaev}: the sign form, the square wave, the reduction to initial sums, the heads, the tails, an elementary version of Lemma~\ref{lem:generic} without Vaaler's lemma, and the witnesses.
+\item Conjectures~1.1, 3.1 and~3.2, and $S(p)>p$ for $p>5$, for all primes $p\le2\cdot10^4$ (\lean{ThetaSum.S_pos_upto}, \lean{conjecture_4_1_upto} in the namespace of the file of~\cite{b11}, \lean{ThetaSum.S_gt_two_mul_upto}, \lean{ThetaSum.S_gt_three_mul_upto}), together with $S(233)=440$ and $S(3119)=9194$ (\lean{S_233}, \lean{S_3119}), which show that the thresholds $233$ and $3119$ are sharp. Lemma~\ref{lem:counting} is proved in Lean (\lean{S_eq_lemma25}), and the values are computed from it by the Lean kernel itself (\texttt{decide +kernel}).
+\end{itemize}
+
+\subsection*{The hypotheses}
+The bound of Bourgain and Garaev is not formalized. It enters through one of the following three propositions, in which $p$ is prime, $b\not\equiv0\pmod p$, $n^*$ is the inverse of $n$ modulo $p$, and ``for large $p$'' means for all primes $p$ larger than some bound.
+\begin{itemize}[leftmargin=5.6em,labelwidth=5.2em,labelsep=0.4em,align=left]
+\item[(HKS)] There are $\delta>0$, $\theta<1$ and $C$ such that for large $p$ and all $N<p$ with $\log N\ge(\log p)^\theta$,
+$\bigl|\sum_{n\le N}e(bn^*/p)\bigr|\le CN(\log p)^{-\delta}$.
+\item[(HBG)] There is $C$ such that for large $p$ and all $N<p$ with $\log N\ge\frac12(\log p)^{9/10}$,
+$\bigl|\sum_{n\le N}e(bn^*/p)\bigr|\le C(\log\log p)^3(\log p)(\log N)^{-3/2}N$.
+\item[(HBGfull)] There are $C$ and $A$ such that the bound of (HBG) holds for large $p$ and all $N<p$ with $\log N\ge A(\log p)^{2/3}(\log\log p)^{8/3}$.
+\end{itemize}
+(HBGfull) is Lemma~\ref{lem:bourgain-garaev}. (HBG) is the same bound in a smaller range, which lies inside the range of Lemma~\ref{lem:bourgain-garaev} for large $p$. Lean proves that (HBG) implies (HKS), with $\theta=\frac9{10}$ and $\delta=\frac14$ (\lean{ThetaSum.HKS_of_HBG}); so (HKS), a saving of any power of $\log p$ for short Kloosterman sums of length at least $\exp((\log p)^\theta)$, is the weakest of the three. It is the hypothesis of Theorem~\ref{thm:Cflat} (there we ask $\theta>0$, which is no restriction).
+
+\subsection*{Conditional results}
+\begin{itemize}[leftmargin=*]
+\item Conjecture~3.3 assuming (HKS) (\lean{ThetaSum.conjecture_3_3_of_HKS}), that is, the qualitative part of Theorem~\ref{thm:Cflat}, and hence assuming (HBG) (\lean{ThetaSum.conjecture_3_3_of_BG}); likewise the statement \lean{conjecture_4_4} of~\cite{b11} for every $n$ (\lean{conjecture_4_4_of_HKS}).
+\item The inequalities of Conjectures~1.1, 3.1 and~3.2 for all sufficiently large primes, assuming (HBG) (\lean{ThetaSum.conjecture_1_1_eventually_of_BG} and its analogues for 3.1 and 3.2). The statements for every prime are not proved; see Section~\ref{sec:remaining-questions}.
+\item Theorem~\ref{thm:Cstar} assuming (HBGfull) (\lean{ThetaSum.theorem_C_star}, with some constant $c$ in place of $c_0$; \lean{ThetaSum.theorem_C_star_c0}, with $c_0$), and Theorem~\ref{thm:C} assuming (HBGfull), for every $\gamma_0\in(0,\frac23)$ and with a constant $C$ depending on $\gamma_0$ (\lean{ThetaSum.theorem_C}; \lean{ThetaSum.theorem_C_c0}). At this size of the error term the forms with $c$ and with $c_0$ are equivalent.
+\end{itemize}
+The first of these reads, in the notation of~\cite{b11},
+\begin{leancode}
+theorem conjecture_3_3_of_HKS (hK : HKS) :
+    $\forall$ C$\sb{1}$ C$\sb{2}$ $\varepsilon$ : $\R$, 0 < C$\sb{1}$ $\to$ 0 < C$\sb{2}$ $\to$ 0 < $\varepsilon$ $\to$
+    $\forall\sp{f}$ k : $\N$ in Filter.atTop, k.Prime $\to$
+      C$\sb{1}$ * k < (S k : $\R$) $\wedge$ (S k : $\R$) < C$\sb{2}$ * (k : $\R$) ^ (1 + $\varepsilon$)
+\end{leancode}
+
+\subsection*{Differences from the paper}
+The formal proof of the lower half of Conjecture~3.3 follows Sections~\ref{sec:tangent}--\ref{sec:proof-C}, with four changes. It replaces Weil's bound by Kloosterman's bound, as described above. Where the proof of Theorem~\ref{thm:Cflat} takes $K_*=\exp(2(\log p)^\theta)$ and uses Theorem~\ref{thm:Dstar}, it takes $K_*=\exp((\log p)^{\theta'})$ with $\theta'=\frac{1+\theta}2<1$, and $T=\exp((\log p)^{\gamma})$ with a small $\gamma>0$ together with Theorem~\ref{thm:D}; this gives only $S(p)=\frac p2\log p+o(p\log p)$, which suffices for $S(p)/p\to\infty$. And it proves Theorems~\ref{thm:D} and~\ref{thm:Dstar} without Mertens' theorem, with a different form of Rankin's trick and different parameters; the statements are the same. Finally, Lemma~\ref{lem:I-asymptotics} is proved in a weaker form, which suffices for the constant $c_0$.
+
+\subsection*{The upper bound}
+The proof of $|S(p)|\le5pH_p^2$ follows the Fourier approach of Section~\ref{sec:dual} but avoids cotangents. With $\zeta=e^{\pi i/p}$, $w_l=\zeta^{2l+1}$ and $c_l=\sum_{m=1}^pw_l^m$, one has the exact expansion $p(-1)^{\lfloor n/p\rfloor}=-\sum_{l<p}c_lw_l^n$ for all $n\ge 0$; hence $pS(p)=-\sum_{l<p}c_l\sum_{a,b=1}^{p-1}w_l^{ab}$. Every geometric sum $\sum_{m\le i<n}\zeta^{ri}$ with $0<r<2p$ has modulus at most $1/\sin(\pi r/2p)\le p/\min(r,2p-r)$ by Jordan's inequality; for $2l+1\ne p$ the map $a\mapsto(2l+1)a\bmod 2p$ is injective on $[1,p)$, which gives $\sum_a|\sum_bw_l^{ab}|\le 2pH_p$, while the term $2l+1=p$ is bounded trivially. This yields $p|S(p)|\le 4p^2H_p^2+p^2$, hence $|S(p)|\le 5pH_p^2$; finally $H_p\le 1+\log p$ (proved by telescoping) and $\log p\le p^\delta/\delta$ give the asymptotic statement.
+
+\section*{Acknowledgements and use of AI}
+
+This work was done with substantial assistance from Claude, an AI system developed by Anthropic. Under the direction of the author, Claude found and wrote most of the proofs, including those of Theorems~\ref{thm:Cstar}, \ref{thm:C}, \ref{thm:D} and~\ref{thm:Dstar}, carried out the numerical experiments and the literature survey, wrote the Lean formalization, and wrote most of the text. The results were checked in three ways. Every identity and lemma that can be tested numerically was tested by computer. The parts described in Appendix~\ref{app:lean} were checked by the Lean proof assistant, under the hypotheses stated there. Every new proof was also checked by at least one separate automated referee run of an AI system (two for Theorems~\ref{thm:C} and~\ref{thm:D}); these runs are not independent of the system that helped to produce the proofs, and one of them found that an earlier version used the Bourgain--Garaev bound outside the range its proof covers; this is corrected here (Lemma~\ref{lem:bourgain-garaev}). The paper has not yet been checked by a human expert, and the author takes responsibility for any errors. All numerical results can be reproduced with the programs described in Section~\ref{sec:computations}, which are available at \zenododoi{} together with the data and the Lean project.
+
+\begin{thebibliography}{99}
+
+\bibitem{b1} B. C. Berndt, R. N. Bhat, J. L. Meyer, L. Xie and A. Zaharescu, \emph{An arithmetic sum associated with the classical theta function}, Results Math. \textbf{81} (2026), no.~1, Paper No.~25; arXiv:2501.03234 (version 3, 9 January 2026).
+
+\bibitem{b2} B. C. Berndt, \emph{Analytic Eisenstein series, theta-functions, and series relations in the spirit of Ramanujan}, J. Reine Angew. Math. \textbf{303/304} (1978), 332--365.
+
+\bibitem{b3} B. C. Berndt and L. A. Goldberg, \emph{Analytic properties of arithmetic sums arising in the theory of the classical theta-functions}, SIAM J. Math. Anal. \textbf{15} (1984), 143--150.
+
+\bibitem{b4} S. Bettin, \emph{On the distribution of a cotangent sum}, Int. Math. Res. Not. IMRN \textbf{2015}, no.~21, 11419--11432; arXiv:1411.2293.
+
+\bibitem{b5} S. Bettin and J. B. Conrey, \emph{Period functions and cotangent sums}, Algebra Number Theory \textbf{7} (2013), 215--242.
+
+\bibitem{b6} S. Bettin and S. Drappeau, \emph{Partial sums of the cotangent function}, J. Th\'eor. Nombres Bordeaux \textbf{32} (2020), 217--230.
+
+\bibitem{b7} S. Bettin and S. Drappeau, \emph{Limit laws for rational continued fractions and value distribution of quantum modular forms}, Proc. Lond. Math. Soc. (3) \textbf{125} (2022), no.~6, 1377--1425; arXiv:1903.00457.
+
+\bibitem{b8} J. Bourgain and M. Z. Garaev, \emph{Sumsets of reciprocals in prime fields and multilinear Kloosterman sums}, Izv. Math. \textbf{78} (2014), no.~4, 656--707; arXiv:1211.4184. (Theorem, section and page numbers refer to arXiv version 1, the only arXiv version; we have not been able to consult the published version.)
+
+\bibitem{b9} J. Bourgain and M. Z. Garaev, \emph{Kloosterman sums in residue rings}, Acta Arith. \textbf{164} (2014), 43--64; arXiv:1309.1124.
+
+\bibitem{b10} J. B. Conrey, E. Fransen, R. Klein and C. Scott, \emph{Mean values of Dedekind sums}, J. Number Theory \textbf{56} (1996), 214--226.
+
+\bibitem{b11} Google DeepMind and contributors, \emph{formal-conjectures}, a repository of formalized mathematical conjectures in Lean, \url{https://github.com/google-deepmind/formal-conjectures}, file \texttt{FormalConjectures/Arxiv/2501.03234/ArithmeticSumS.lean} (state of October 2026).
+
+\bibitem{b12} M. Z. Garaev and I. E. Shparlinski, \emph{On the distribution of modular inverses from short intervals}, Mathematika \textbf{69} (2023), no.~4, 1183--1194; arXiv:2304.07953.
+
+\bibitem{b13} S. W. Graham and G. Kolesnik, \emph{Van der Corput's Method of Exponential Sums}, London Math. Soc. Lecture Note Ser. \textbf{126}, Cambridge University Press, 1991.
+
+\bibitem{b14} G. H. Hardy, \emph{On certain series of discontinuous functions connected with the modular functions}, Quart. J. Math. \textbf{36} (1905), 93--123.
+
+\bibitem{b15} H. Iwaniec and E. Kowalski, \emph{Analytic Number Theory}, Amer. Math. Soc. Colloq. Publ. \textbf{53}, American Mathematical Society, Providence, RI, 2004.
+
+\bibitem{b16} M. I. Knopp, \emph{Hecke operators and an identity for the Dedekind sums}, J. Number Theory \textbf{12} (1980), 2--9.
+
+\bibitem{b17} M. A. Korolev, \emph{Karatsuba's method for estimating Kloosterman sums}, Sb. Math. \textbf{207} (2016), no.~8, 1142--1158.
+
+\bibitem{b18} A. L\"ageler, \emph{Continued fractions and Hardy sums}, Abh. Math. Semin. Univ. Hambg. \textbf{94} (2024), no.~2, 107--128; arXiv:2203.09834.
+
+\bibitem{b19} P. Minelli, A. Sourmelidis and M. Technau, \emph{On restricted averages of Dedekind sums}, Int. Math. Res. Not. IMRN \textbf{2024}, no.~10, 8485--8502; arXiv:2301.00441.
+
+\bibitem{b20} H. L. Montgomery and R. C. Vaughan, \emph{The large sieve}, Mathematika \textbf{20} (1973), 119--134.
+
+\bibitem{b21} I. Navot, \emph{An extension of the Euler--Maclaurin summation formula to functions with a branch singularity}, J. Math. and Phys. \textbf{40} (1961), 271--276.
+
+\bibitem{b22} I. Navot, \emph{A further extension of the Euler--Maclaurin summation formula}, J. Math. and Phys. \textbf{41} (1962), 155--163.
+
+\bibitem{b23} J. B. Rosser and L. Schoenfeld, \emph{Approximate formulas for some functions of prime numbers}, Illinois J. Math. \textbf{6} (1962), 64--94.
+
+\bibitem{b24} P. Shiu, \emph{A Brun--Titchmarsh theorem for multiplicative functions}, J. Reine Angew. Math. \textbf{313} (1980), 161--170.
+
+\bibitem{b25} I. E. Shparlinski, \emph{Modular hyperbolas}, Jpn. J. Math. \textbf{7} (2012), 235--294.
+
+\bibitem{b26} R. Sitaramachandrarao, \emph{Dedekind and Hardy sums}, Acta Arith. \textbf{48} (1987), 325--340.
+
+\bibitem{b27} J. D. Vaaler, \emph{Some extremal functions in Fourier analysis}, Bull. Amer. Math. Soc. (N.S.) \textbf{12} (1985), 183--216.
+
+\bibitem{b28} H. Walum, \emph{An exact formula for an average of $L$-series}, Illinois J. Math. \textbf{26} (1982), 1--3.
+
+\bibitem{b29} A. Weil, \emph{On some exponential sums}, Proc. Nat. Acad. Sci. U.S.A. \textbf{34} (1948), 204--207.
+
+\bibitem{b30} W. Zhang, \emph{A problem of D.\,H. Lehmer and its generalization (II)}, Compositio Math. \textbf{91} (1994), no.~1, 47--56.
+
+\bibitem{b31} W. Zhang, \emph{On the mean values of Dedekind sums}, J. Th\'eor. Nombres Bordeaux \textbf{8} (1996), 429--442.
+
+\bibitem{b32} S. Fraser, \emph{The distribution of the theta-function sum $S(p)$: limit law, character expansion, sharp tails and extreme values}, preprint (2026), available at \zenododoi.
+
+\bibitem{b34} The mathlib Community, \emph{The Lean mathematical library}, in: Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs (CPP 2020), ACM, 2020, 367--381.
+
+\bibitem{b35} L. de Moura and S. Ullrich, \emph{The Lean 4 theorem prover and programming language}, in: Automated Deduction -- CADE 28, Lecture Notes in Comput. Sci. \textbf{12699}, Springer, 2021, 625--635.
+
+\bibitem{b36} H. D. Kloosterman, \emph{On the representation of numbers in the form $ax^2+by^2+cz^2+dt^2$}, Acta Math. \textbf{49} (1926), 407--464.
+
+\bibitem{b37} R. R. Hall and G. Tenenbaum, \emph{Divisors}, Cambridge Tracts in Mathematics \textbf{90}, Cambridge University Press, 1988.
+
+\bibitem{b38} M. Nair and G. Tenenbaum, \emph{Short sums of certain arithmetic functions}, Acta Math. \textbf{180} (1998), 119--144.
+
+\end{thebibliography}

@@ -1,0 +1,790 @@
+% ====================================================================== part2.tex: Sections 5-8 of v3
+% ---------------------------------------------------------------- local macros (same definitions as in part1.tex)
+\providecommand{\sgn}{\operatorname{sgn}}
+\providecommand{\dpar}[1]{(\!(#1)\!)}   % the sawtooth ((x))
+\section{The exact decomposition and the proof of Theorem~\texorpdfstring{\ref{thm:B}}{B}}\label{sec:decomposition}
+
+We now insert the reciprocity law into the dual formula~\eqref{eq:dual}. This gives the exact identity $S(p)=\Psi(p)+\Phi(p)$ of Theorem~\ref{thm:B}(i), and the evaluation of the smooth part $\Psi(p)$ produces the constant $c_0$. For Theorem~\ref{thm:B}(ii) we show that the tangent sums with moduli $k\ge\sqrt p(\log p)^4$ contribute only $O(p/\log p)$. A single $F_k(p)$ can be as large as $\frac k\pi(\log k+K_0)$ in absolute value, so we must use cancellation between different $k$: summed over $k$ in an interval, the sums $C_p(k)$ become incomplete Kloosterman sums, and Weil's bound applies (Lemmas~\ref{lem:weil} and~\ref{lem:Cp-interval}).
+
+\begin{proof}[Proof of Theorem~\ref{thm:B}\textup{(i)}]
+By Lemma~\ref{lem:reciprocity} with $m=p$ we have $C_p(k)=\frac pkF_k(p)+I(k/p)$ for odd $k<p$. Inserting this into \eqref{eq:dual}
+gives $S(p)=\Psi(p)+\Phi(p)$; the term $k=1$ does not contribute to $\Phi(p)$ because $F_1=0$.
+
+Since $\cot\frac{\pi k}{2p}=\frac{2p}{\pi k}h(\frac kp)$, Lemma~\ref{lem:I-asymptotics} gives
+\[
+\Psi(p)=\frac{4p}{\pi^2}\sum_{\substack{0<k<p\\ k\text{ odd}}}\frac{h(k/p)}{k^2}\Bigl(\log\frac pk+K_0-\rho\Bigl(\frac kp\Bigr)\Bigr).
+\]
+Since $0\le1-h(x)\le x^2$ and $0\le\rho(x)\le\frac{7\pi^2}{72}x^2$, replacing $h(k/p)(\log\frac pk+K_0-\rho(\frac kp))$
+by $\log\frac pk+K_0$ changes the $k$-th term by at most $(k/p)^2(\log\frac pk+2)$, so the total change is at most
+$\frac{4}{\pi^2p}\sum_{k<p}(\log\frac pk+2)\le\frac{12}{\pi^2}$, because $\sum_{k\le p}\log\frac pk=p\log p-\log p!\le p$.
+Extending the sum to all odd $k\ge1$ costs at most $\frac{4p}{\pi^2}\sum_{k\ge p}(\log\frac kp+K_0)k^{-2}=O(1)$. Hence
+\[
+\Psi(p)=\frac{4p}{\pi^2}\Bigl(\frac{\pi^2}{8}(\log p+K_0)-\mathcal L\Bigr)+O(1),\qquad \mathcal L=\sum_{k\text{ odd}}\frac{\log k}{k^2},
+\]
+where we used $\sum_{k\text{ odd}}k^{-2}=\pi^2/8$. Differentiating $\sum_{k\text{ odd}}k^{-s}=(1-2^{-s})\zeta(s)$ at $s=2$
+gives $\mathcal L=-\frac{\log2}{4}\zeta(2)-\frac34\zeta'(2)$, and therefore $\Psi(p)=\frac p2\log p+c_0p+O(1)$ with $c_0$ as in
+\eqref{eq:c0}.
+\end{proof}
+
+\begin{remark}[The complete expansion of $\Psi(p)$]\label{rem:psi-expansion}
+Put $g(\lambda)=\cot\frac{\pi\lambda}{2}\,I(\lambda)$, so that $\Psi(p)=\frac2p\sum_{k\text{ odd},\,0<k<p}g(k/p)$. Near
+$\lambda=0$ one has $\pi\lambda I(\lambda)=\log\frac1\lambda+K_0-\rho(\lambda)$, where $\rho$ has the (divergent)
+asymptotic expansion $\rho(\lambda)\sim\sum_{j\ge1}\frac{B_{2j}}{j}\zeta(2j)\,(2^{2j}-2^{1-2j})\lambda^{2j}$ without
+logarithmic terms (so the coefficient of $\lambda^2$ is $\frac{7\pi^2}{72}$, as in Lemma~\ref{lem:I-asymptotics}); near $\lambda=1$, the
+relation $I(1/\lambda)=-\lambda I(\lambda)$ gives $I(1)=0$ and $g(1)=g'(1)=0$. The nodes $k/p$, $k$ odd, form a
+midpoint grid at $0$ and a trapezoidal grid at $1$, and the generalized Euler--Maclaurin formula for integrands with
+algebraic--logarithmic endpoint singularities (Navot \cite{b21,b22}) gives the asymptotic expansion
+\[
+\Psi(p)-\frac p2\log p-c_0p\sim c_1+\frac{\log2}{6p}-\frac{\zeta(3)}{240p^3}+\frac{\pi^2}{60p^4}+\frac{\zeta(5)}{672p^5}
+-\frac{4\pi^2}{63p^6}-\frac{3\zeta(7)}{2560p^7}+\cdots\,,
+\]
+in which the coefficient of $p^{1-2j}$ $(j\ge2)$ is $B_{2j}(1-4^{1-j})\zeta(2j-1)/(j(2j-1))$, the coefficient of
+$p^{-2m}$ $(m\ge2)$ is $2^{2m}B_{2m}g^{(2m-1)}(1)/(2m)!$, and there are no terms $p^{-2}$ or $(\log p)/p$. The
+constant term is the Hadamard finite part
+\begin{align*}
+c_1=\mathrm{FP}\!\int_0^1g(\lambda)\,d\lambda
+&=\frac{2}{\pi^2}(1-K_0)+\int_0^1\Bigl(g(\lambda)-\frac{2(\log\frac1\lambda+K_0)}{\pi^2\lambda^2}\Bigr)d\lambda\\
+&=-0.40762\,59135\,14130\,51147\ldots;
+\end{align*}
+we computed it by two independent quadratures, and a blind fit of exact values of $\Psi(p)$ for
+$101\le p\le16001$ reproduces it to $4\cdot10^{-25}$. We have verified the expansion numerically through the term
+$p^{-10}$ (the residual is $5\cdot10^{-34}$ at $p=1009$), and it reproduces Table~\ref{tab:Psi-second-order}; we
+state it here without a detailed proof. An integer-relation search at $108$ digits found no expression of $c_1$ in
+terms of $\gamma$, $\log2$, $\log\pi$, $\zeta(3)/\pi^2$, $\zeta'(2)/\pi^2$, Catalan's constant$/\pi$,
+$\log\Gamma(\frac14)$ and the Stieltjes constant $\gamma_1$.
+\end{remark}
+
+\begin{table}[ht]
+\centering
+{\small
+\begin{tabular}{rrrrrrrr}
+\toprule
+$p$ & $101$ & $211$ & $401$ & $1009$ & $10007$ & $20011$ & $100003$\\
+\midrule
+$\Psi(p)-\frac p2\log p-c_0p$ & $-0.40648$ & $-0.40708$ & $-0.40734$ & $-0.40751$ & $-0.40761$ & $-0.40762$ & $-0.407625$\\
+\bottomrule
+\end{tabular}}
+\caption{The second-order term of $\Psi(p)$ (see Remark~\ref{rem:psi-expansion}). Since $\Psi(p)$ is computed
+through the exact identity of Theorem~\ref{thm:B}(i), these values also confirm $c_0$.}
+\label{tab:Psi-second-order}
+\end{table}
+
+\begin{lemma}[Weil]\label{lem:weil}
+Let $c$ be an integer with $p\nmid c$ and let $J\subset[1,p)$ be an interval. Then
+\[
+\Big|\sum_{\substack{k\in J\\ k\text{ odd}}}e\Bigl(\frac{c\overline{k}}{2p}\Bigr)\Big|\le2\sqrt p\,(\log p+2).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $\overline{2}=(p+1)/2$. Since $\frac1{2p}=\frac{\overline{2}}{p}-\frac12$, we have
+$e(cx/2p)=(-1)^ce(c\overline{2}x/p)$ for odd $x$. Applied to the odd residue $x=\overline{k}$, which is $\equiv k^*\pmod
+p$, this gives $e(c\overline{k}/2p)=(-1)^ce(c\overline{2}k^*/p)$. For $k=2j+1$ we have $k\equiv2(j+\overline{2})\pmod
+p$, so $k^*\equiv\overline{2}\,(j+\overline{2})^*$. Hence the sum in question equals $\pm\sum_{y\in J'}e(by^*/p)$ with
+$b=c\,\overline{2}^{\,2}\not\equiv0\pmod p$ and $J'=\{j+\overline{2}:\ 2j+1\in J\}$, a set of at most $(p-1)/2$
+consecutive integers none of which is divisible by $p$. Completing the sum,
+\[
+\sum_{y\in J'}e\Bigl(\frac{by^*}{p}\Bigr)=\frac1p\sum_{\ell\bmod p}\Bigl(\sum_{y\in J'}e\Bigl(\frac{\ell y}{p}\Bigr)\Bigr)
+\mathcal{K}(b,-\ell;p),\qquad\mathcal{K}(b,\ell;p)=\sum_{z=1}^{p-1}e\Bigl(\frac{bz^*+\ell z}{p}\Bigr).
+\]
+Here $\mathcal{K}(b,0;p)=-1$, and $|\mathcal{K}(b,\ell;p)|\le2\sqrt p$ for $p\nmid\ell$ by Weil's bound \cite{b29}
+(see also \cite{b15}). Since $|\sum_{y\in J'}e(\ell y/p)|\le1/(2\|\ell/p\|)$, the sum is at most
+\[
+\frac{|J'|}{p}+\frac1{\sqrt p}\sum_{\ell=1}^{p-1}\frac1{\|\ell/p\|}\le1+2\sqrt p\,(1+\log p)\le2\sqrt p\,(\log p+2).
+\qedhere
+\]
+\end{proof}
+
+\begin{lemma}\label{lem:Cp-interval}
+For every interval $J\subset[1,p)$,
+\[
+\Big|\sum_{\substack{k\in J\\ k\text{ odd}}}C_p(k)\Big|\le\frac4{\pi^2}\,p^{3/2}(\log p+2)^3.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $\tilde\sigma$ be the function on $\Z/2p\Z$ that equals $\sigma$ outside $\{0,p\}$ and vanishes at $0$ and $p$.
+Then $\tilde\sigma=f-\delta_0+\delta_p$ with $f$ as in the proof of Lemma~\ref{lem:dual}, so by \eqref{eq:fourier-coeff} its Fourier coefficients
+vanish for even $\ell$ and equal $\hat f(\ell)-\frac1p=-\frac ip\cot\frac{\pi\ell}{2p}$ for odd $\ell$; in particular
+the coefficient at $\ell=p$ vanishes, and the sum of the absolute values of all coefficients is $\frac2pC_p(1)$. By
+\eqref{eq:sign-form},
+\[
+\sum_{\substack{k\in J\\ k\text{ odd}}}C_p(k)=\sum_{\substack{0<n<p\\ n\text{ odd}}}\cot\frac{\pi n}{2p}
+\sum_{\substack{0<\ell<2p,\ \ell\ne p\\ \ell\text{ odd}}}\hat{\tilde\sigma}(\ell)
+\sum_{\substack{k\in J\\ k\text{ odd}}}e\Bigl(\frac{\ell n\overline{k}}{2p}\Bigr).
+\]
+Since $p\nmid\ell n$, Lemma~\ref{lem:weil} bounds the inner sum by $2\sqrt p(\log p+2)$. Therefore the left-hand side
+is at most $C_p(1)\cdot\frac2pC_p(1)\cdot2\sqrt p(\log p+2)$, and Lemma~\ref{lem:Cm1-elementary} gives the claim.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:B}\textup{(ii)}]
+Let $\sqrt p(\log p)^4\le K\le p^{9/10}$ and split $\Phi(p)=\Phi_{<K}(p)+\Phi_{\ge K}(p)$ according as $k<K$ or
+$k\ge K$.
+
+\emph{Large $k$.} By Lemma~\ref{lem:reciprocity}, $2\cot\frac{\pi k}{2p}\frac{F_k(p)}{k}=\frac2p\cot\frac{\pi k}{2p}\bigl(C_p(k)-I(\frac
+kp)\bigr)$. By Corollary~\ref{cor:Cm1}(c) and $\cot\frac{\pi k}{2p}\le\frac{2p}{\pi k}$, the terms $I(k/p)$ contribute at most
+\[
+\frac2p\sum_{k\ge K}\frac{2p}{\pi k}\cdot\frac{p}{\pi k}\Bigl(\log\frac pk+2\Bigr)\le\frac{4p}{\pi^2}(\log p+2)
+\sum_{k\ge K}\frac1{k^2}\ll\frac{p\log p}{K}\ll\frac{\sqrt p}{(\log p)^3}.
+\]
+For the terms $C_p(k)$ we cover $[K,p)$ by the intervals $B_j=[2^jK,2^{j+1}K)\cap[K,p)$, $j\ge0$. On $B_j$ the weight
+$\cot(\pi k/2p)$ is positive and decreasing and at most $2p/(\pi2^jK)$, so Abel summation and
+Lemma~\ref{lem:Cp-interval} give
+\[
+\Big|\sum_{k\in B_j}\cot\frac{\pi k}{2p}\,C_p(k)\Big|\le\frac{2p}{\pi2^jK}\cdot\frac4{\pi^2}\,p^{3/2}(\log p+2)^3.
+\]
+Summing over $j$ and multiplying by $2/p$ we obtain at most $\frac{32}{\pi^3}p^{3/2}(\log p+2)^3/K\ll p/\log p$. Hence
+$\Phi_{\ge K}(p)\ll p/\log p$.
+
+\emph{Small $k$.} For $3\le k<K$ we have $2\cot\frac{\pi k}{2p}\frac1k=\frac{4p}{\pi k^2}h(\frac kp)$ and
+$0\le1-h(\frac kp)\le\frac{k^2}{p^2}$. By Corollary~\ref{cor:Cm1}(b),
+\[
+\bigg|\Phi_{<K}(p)-\frac{4p}{\pi}R_K(p)\bigg|\le\frac4{\pi p}\sum_{\substack{k<K\\ k\text{ odd}}}|F_k(p)|
+\le\frac4{\pi^2p}\sum_{\substack{k<K\\ k\text{ odd}}}k(\log k+K_0)\ll\frac{K^2\log K}{p}\ll p^{4/5}\log p.
+\]
+Combining these estimates with part (i) proves \eqref{eq:thmBii}.
+
+For the sum over all $k<p$ we may assume that $p$ is large, take $K=\sqrt p(\log p)^4$ and show that
+$\frac{4p}{\pi}\sum_{K\le k<p}F_k(p)/k^2\ll p/\log p$. By Lemma~\ref{lem:reciprocity} this sum equals
+$\sum_{K\le k<p}\frac4{\pi k}\bigl(C_p(k)-I(\frac kp)\bigr)$, and the argument for $\Phi_{\ge K}(p)$ applies verbatim
+with the decreasing weight $\frac4{\pi k}$ in place of $\frac2p\cot\frac{\pi k}{2p}$.
+\end{proof}
+
+\section{The tangent sums as functions of \texorpdfstring{$\theta_k$}{theta\_k}}\label{sec:tangent}
+
+This section provides the tools for the terms of~\eqref{eq:thmBii} with $k<\sqrt p(\log p)^4$: a formula for
+$F_k(p)/k$ in terms of $\theta_k$ alone, bounds for its head on average over $k$, and bounds for its tail for each $k$
+separately. Section~\ref{sec:proof-C} combines them.
+
+\begin{lemma}\label{lem:sign-form-tangent}
+Let $k$ be odd with $3\le k<p$, let $u_k\in[1,k)$ satisfy $2pu_k\equiv1\pmod k$, and put $\theta_k=u_k/k$.
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item $F_k(p)=\sum_{n\text{ odd},\,0<n<k}\cot\frac{\pi n}{2k}\,\sigma(n\overline{k})$.
+\item For odd $n$ with $0<n<k$ we have $\sigma(n\overline{k})=-\sgn(\frac12-\{n\theta_k\})$; hence
+\[
+F_k(p)=-\sum_{\substack{0<n<k\\ n\text{ odd}}}\cot\frac{\pi n}{2k}\,\sgn\Bigl(\frac12-\{n\theta_k\}\Bigr)
+\]
+depends only on $\theta_k$.
+\item If $\overline{k}\in[1,2p)$, then $\theta_k\equiv\frac1{2pk}-\frac{\overline{k}}{2p}\pmod 1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) As $t$ runs over $1,\dots,k-1$, $x=pt\bmod k$ runs over $1,\dots,k-1$; write $t_x$ for the corresponding $t$, and
+let $\epsilon(t)=1$ for $t\le(k-1)/2$ and $\epsilon(t)=-1$ otherwise. Since $\sum_{x=1}^{k-1}\tan(\pi x/k)=0$, we get
+$F_k(p)=\sum_x\tan(\pi x/k)\frac{1+\epsilon(t_x)}{2}=\frac12\sum_x\tan(\pi x/k)\epsilon(t_x)$. As $t_{k-x}=k-t_x$, the
+terms $x$ and $k-x$ coincide, and writing $x=(k-n)/2$ with $n$ odd, $0<n<k$, we obtain
+$F_k(p)=\sum_n\cot\frac{\pi n}{2k}\,\epsilon(t_{(k-n)/2})$, where $t_{(k-n)/2}\equiv-nu_k\pmod k$. On the other hand,
+let $w\in(0,2p)$ with $w\equiv n\overline{k}\pmod{2p}$. Then $kw=n+2pj$ for an integer $j$, and $0<kw<2pk$,
+$0<n<k<p$ give $0\le j\le k-1$; moreover $j\equiv-nu_k\pmod k$ and $j\ne0$ since $k\nmid n$. Thus $j=t_{(k-n)/2}$.
+Finally $\sigma(n\overline{k})=1$ if and only if $w<p$, i.e.\ $n+2pj<pk$, i.e.\ $j<\frac k2-\frac n{2p}$; as
+$0<\frac n{2p}<\frac12$ this means $j\le\frac{k-1}2$. Hence $\sigma(n\overline{k})=\epsilon(j)$, proving (a).
+
+(b) With $j$ as above, $j=k-(nu_k\bmod k)=k(1-\{n\theta_k\})$, so $j\le\frac{k-1}2$ if and only if
+$\{n\theta_k\}>\frac12$.
+
+(c) Since $2pu_k+k\overline{k}\equiv1$ modulo $k$ and modulo $2p$, we have $2pu_k+k\overline{k}=1+2pkm$ with
+$m\in\Z$; divide by $2pk$.
+\end{proof}
+
+Throughout the rest of the paper we write, for odd $k$ with $3\le k<p$,
+\[
+g(y)=\sgn\Bigl(\frac12{-}\{y\}\Bigr)\ \ (y\notin\tfrac12\Z),\qquad
+c_n(k)=\frac1k\cot\frac{\pi n}{2k}=\frac2{\pi n}\,h\Bigl(\frac nk\Bigr)\ \ (0<n<k),\qquad
+\Phi_k=\frac{F_k(p)}{k}.
+\]
+For $p\nmid m$ we have $\sigma(m)=g(m/2p)$, because $\{m/2p\}<\frac12$ exactly when $m\bmod2p\in(0,p)$. By
+Lemma~\ref{lem:sign-form-tangent},
+\begin{equation}\label{eq:Phik-sum}
+\Phi_k=\sum_{\substack{0<n<k\\ n\text{ odd}}}c_n(k)\,\sigma(n\overline{k}),\qquad
+\sigma(n\overline{k})=g\Bigl(\frac{n\overline{k}}{2p}\Bigr)=-g(n\theta_k),
+\end{equation}
+and none of the arguments of $g$ lies in $\frac12\Z$ (if $n\theta_k\in\frac12\Z$ then $k\mid2nu_k$, so $k\mid n$). For
+$N\ge1$ we split $\Phi_k=\Phi_k^{\le N}+\Phi_k^{>N}$, where $\Phi_k^{\le N}$ is the part of the sum in
+\eqref{eq:Phik-sum} with $n\le N$; thus $\Phi_k^{>N}=0$ if $k\le N+1$. Since $0\le h\le1$, we have
+$0<c_n(k)\le\frac2{\pi n}$, and since $\sum_{n\text{ odd},\,3\le n\le X}\frac1n\le\frac12\log X$,
+\begin{equation}\label{eq:head-trivial}
+|\Phi_k^{\le N}|\le\frac2\pi\Bigl(1+\frac12\log N\Bigr).
+\end{equation}
+
+\begin{lemma}[Vaaler \cite{b27}; see {\cite[Theorem~A.6]{b13}}]\label{lem:vaaler}
+For every integer $H\ge1$ there are complex numbers $a_\ell$, $1\le|\ell|\le H$, with $|a_\ell|\le\frac1{2\pi|\ell|}$,
+such that for all real $x$
+\[
+\Big|\dpar{x}-\sum_{1\le|\ell|\le H}a_\ell e(\ell x)\Big|\le\Delta_H(x):=\frac1{2H+2}\sum_{|\ell|\le H}
+\Bigl(1-\frac{|\ell|}{H+1}\Bigr)e(\ell x).
+\]
+\end{lemma}
+
+Note that $\Delta_H\ge0$ (it is a multiple of the Fej\'er kernel).
+
+\begin{lemma}[The square wave]\label{lem:square-wave}
+Let $H\ge1$. There are $b_\ell$ $(1\le|\ell|\le H)$ with $b_\ell=0$ for even $\ell$ and $|b_\ell|\le\frac2{\pi|\ell|}$
+such that, with
+\[
+T_H(y)=\sum_{1\le|\ell|\le H}b_\ell e(\ell y),\qquad E_H(y)=\frac2{H+1}\sum_{\substack{|\ell|\le H\\ \ell\text{ even}}}
+\Bigl(1-\frac{|\ell|}{H+1}\Bigr)e(\ell y),
+\]
+we have $E_H\ge0$ and $|g(y)-T_H(y)|\le E_H(y)$ for all $y\notin\frac12\Z$.
+\end{lemma}
+
+\begin{proof}
+By \eqref{eq:sgn-sawtooth}, $g(y)=2\dpar{y+\frac12}-2\dpar{y}$ for $y\notin\frac12\Z$. Applying Lemma~\ref{lem:vaaler} at $y$ and at
+$y+\frac12$ gives the claim with $b_\ell=2a_\ell((-1)^\ell-1)$ and error $2\Delta_H(y)+2\Delta_H(y+\frac12)=E_H(y)$,
+which is $\ge0$.
+\end{proof}
+
+For $K\ge6$ let
+\[
+\mathcal{M}_K=\max\Bigl\{\Big|\sum_{\substack{k\in I\\ k\text{ odd}}}e\Bigl(\frac{c\overline{k}}{2p}\Bigr)\Big|:\ p\nmid c,\
+I\subset[K,2K)\text{ an interval}\Bigr\}.
+\]
+
+\begin{lemma}[Reduction to initial sums]\label{lem:reduction}
+Let $6\le K\le p/2$. Then
+\[
+\mathcal{M}_K\le4\max\Bigl\{\Big|\sum_{1\le n\le N'}e\Bigl(\frac{bn^*}{p}\Bigr)\Big|:\ p\nmid b,\ \frac K2-1\le N'\le2K\Bigr\}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $\overline{2}=(p+1)/2$. Since $\frac1{2p}=\frac{\overline{2}}{p}-\frac12$, we have
+$e(cx/2p)=(-1)^ce(c\overline{2}x/p)$ for odd $x$; applied to the odd residue $x=\overline{k}\equiv k^*\pmod p$ this gives
+$e(c\overline{k}/2p)=(-1)^ce(ak^*/p)$ with $a=c\overline{2}$. For an interval $I=[u,v]\cap\Z\subset[K,2K)$ we have
+$\sum_{k\in I,\,k\text{ odd}}e(ak^*/p)=\sum_{k\in I}e(ak^*/p)-\sum_{u/2\le j\le v/2}e(a\overline{2}j^*/p)$, because
+$(2j)^*=\overline{2}j^*$. Each of the two sums on the right is the difference of two sums $\sum_{n\le N'}e(bn^*/p)$ with
+$b\in\{a,a\overline{2}\}$ and $N'\in\{v,u-1,\lfloor v/2\rfloor,\lceil u/2\rceil-1\}\subset[\frac K2-1,2K]$.
+\end{proof}
+
+\begin{lemma}[Bourgain--Garaev {\cite[Theorem~16]{b8}}]\label{lem:bourgain-garaev}
+There are absolute constants $C_{BG}$ and $A_{BG}$ such that for every sufficiently large prime $p$, every
+$b\not\equiv0\pmod p$ and every $N$ with
+\[
+\exp\bigl(A_{BG}(\log p)^{2/3}(\log\log p)^{8/3}\bigr)\le N<p
+\]
+we have
+\[
+\Big|\sum_{1\le n\le N}e\Bigl(\frac{bn^*}{p}\Bigr)\Big|\le C_{BG}\,\frac{(\log\log p)^3\log p}{(\log N)^{3/2}}\,N.
+\]
+Consequently,
+\[
+\frac{\mathcal{M}_K}K\le16\sqrt2\,C_{BG}\,\frac{(\log\log p)^3\log p}{(\log K)^{3/2}}\qquad\text{for}\quad
+\exp\bigl((A_{BG}+1)(\log p)^{2/3}(\log\log p)^{8/3}\bigr)\le K\le\frac p2.
+\]
+\end{lemma}
+
+\begin{proof}
+The first statement is \cite[Theorem~16]{b8} (the theorem and section numbers refer to the first arXiv version, where
+the theorem is stated in \S2.2 and proved in \S12.2). There it reads
+$\max_{(a,p)=1}|\sum_{n\le N}e_p(an^*)|\ll(\log N)^{-3/2}(\log p)(\log\log p)^3N$ with an absolute implied constant,
+$p$ being a large prime and $N<p$; no range of $N$ is stated. The proof puts $\varepsilon=\log N/\log p$ and first
+disposes of $\varepsilon\ge\frac47$ by Weil's bound. For smaller $N$ it works with a parameter $\beta$ that must satisfy
+$\beta<(\log\log p)^{-3}$ (p.~55 there), and at the end it chooses
+$\beta=C\log\log p/(\varepsilon^{3/2}(\log p)^{1/2})$ with a sufficiently large absolute constant $C$ (p.~60 there).
+This choice satisfies $\beta<(\log\log p)^{-3}$ if and only if
+\[
+\log N>C^{2/3}(\log p)^{2/3}(\log\log p)^{8/3}.
+\]
+So the proof gives the bound in the range stated above, with any constant $A_{BG}>C^{2/3}$. (Below this range the stated bound would still be nontrivial, so it cannot be extended to smaller $N$ by
+comparison with the trivial bound $N$; we do not claim that it fails there.) For the second statement, let $N'$ be one
+of the lengths in Lemma~\ref{lem:reduction}. In its proof $N'\le v<2K\le p$, so $N'<p$. As $K\ge6$ we have
+$N'\ge\frac K2-1\ge\frac K3$, so $\log N'\ge\log K-\log3\ge A_{BG}(\log p)^{2/3}(\log\log p)^{8/3}$ for large $p$,
+and the first statement applies to $N'$. As $K\ge9$ we also have $N'\ge\sqrt K$, hence $\log N'\ge\frac12\log K$; the
+second statement follows from Lemma~\ref{lem:reduction}.
+\end{proof}
+
+We do not use Korolev's bound~\cite[Theorem~2]{b17}, which is claimed for a slightly wider range of $N$; Garaev and Shparlinski note a gap in the proof of Lemma~2 of~\cite{b17}~\cite[Section~1.1]{b12}.
+
+
+\begin{lemma}[Heads]\label{lem:heads}
+Let $9\le K\le p/2$, let $B\subset[K,2K)$ be an interval, and let $H,N$ be integers with $1\le H<p$ and $2\le N<K$.
+Then
+\[
+\Big|\sum_{\substack{k\in B\\ k\text{ odd}}}\frac{\Phi_k^{\le N}}{k}\Big|\le(1+\log N)\Bigl(\frac2H+10\,(1+\log H)\,
+\frac{\mathcal{M}_K}{K}\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Put $y_{kn}=n\overline{k}/2p$, $\varphi_n(x)=h(n/x)/x$ and $w_{kn}=c_n(k)/k=\frac2{\pi n}\varphi_n(k)>0$ for odd
+$k\in B$ and odd $n\le N$ (note $n<K\le k$). By \eqref{eq:Phik-sum} the sum to be estimated is
+$\sum_{k,n}w_{kn}g(y_{kn})$. Let $Z(\ell)=\sum_{k,n}w_{kn}e(\ell y_{kn})$. By Lemma~\ref{lem:square-wave},
+\[
+\Big|\sum_{k,n}w_{kn}g(y_{kn})-\sum_\ell b_\ell Z(\ell)\Big|\le\sum_{k,n}w_{kn}E_H(y_{kn})\le\frac2{H+1}\Bigl(Z(0)+
+\sum_{\substack{0<|\ell|\le H\\ \ell\text{ even}}}|Z(\ell)|\Bigr).
+\]
+Since $\sum_{k\in B}\frac1k\le1$, we have $Z(0)\le\frac2\pi(1+\frac12\log N)\le1+\log N$. For $\ell\ne0$ we have
+$p\nmid\ell n$. On $[K,2K]$, $0<\varphi_n\le1/K$ and
+$|\varphi_n'(x)|=|\frac n{x^3}h'(\frac nx)+\frac{h(n/x)}{x^2}|\le\frac{1+\pi^2/4}{x^2}$ (because $|h'|\le\pi^2/4$ on
+$[0,1]$), so Abel summation over the odd $k\in B$ gives
+$|\sum_k\varphi_n(k)e(\ell n\overline{k}/2p)|\le\mathcal{M}_K(\frac1K+\frac{1+\pi^2/4}{2K})\le3\mathcal{M}_K/K$, and
+therefore $|Z(\ell)|\le3(1+\log N)\mathcal{M}_K/K$. Since $\sum_{\ell\text{ odd},\,|\ell|\le H}|b_\ell|\le\frac4\pi(1+
+\frac12\log H)$, we obtain the bound $(1+\log N)\bigl[\frac2{H+1}+\bigl(6+\frac{12}\pi+\frac6\pi\log H\bigr)
+\frac{\mathcal{M}_K}{K}\bigr]$, which implies the lemma.
+\end{proof}
+
+\begin{lemma}[Tails]\label{lem:tails}
+Let $k$ be odd with $3\le k<p$ and let $2\le N<k$. For $N\le t<k$ put $G_k(t)=\sum_{n\text{ odd},\,N<n\le t}g(n\theta_k)$
+and $D_k=\sup_{N\le t<k}|G_k(t)|/t$. Then \textup{(a)} $|\Phi_k^{>N}|\le\frac\pi2D_k\log\frac kN$, and
+\textup{(b)} $|\Phi_k^{>N}|\le\frac1\pi\log k$.
+\end{lemma}
+
+\begin{proof}
+(a) By \eqref{eq:Phik-sum}, $\Phi_k^{>N}=-\sum_{N<n<k}c(n)g(n\theta_k)$, where $c(t)=\frac1k\cot\frac{\pi t}{2k}$ is
+decreasing on $[N,k]$ with $c(k)=0$. Partial summation, $G_k(N)=0$ and $c(k)=0$ give
+$\Phi_k^{>N}=\int_N^kG_k(t)c'(t)\,dt$. Since $\sin u\ge\frac{2u}\pi$ on $[0,\frac\pi2]$,
+$|c'(t)|=\frac\pi{2k^2}\csc^2\frac{\pi t}{2k}\le\frac\pi{2t^2}$, and (a) follows. (b) follows from
+$c_n(k)\le\frac2{\pi n}$ and $\sum_{n\text{ odd},\,3\le n<k}\frac1n\le\frac12\log k$.
+\end{proof}
+
+\begin{lemma}[Generic $\theta$]\label{lem:generic}
+Let $M\ge1$ and $N\ge2$ be integers and $0<\eta\le\frac12$, and let $\theta\in\R$ satisfy $\|2m\theta\|\ge\eta$ for
+$1\le m\le M$. Let $\mathcal{S}$ be a set of consecutive odd integers in $(N,t]$, $t\ge N$, with
+$n\theta\notin\frac12\Z$ for $n\in\mathcal{S}$. Then
+\[
+\frac1t\Big|\sum_{n\in\mathcal{S}}g(n\theta)\Big|\le\frac1M+\frac{2+\log M}{\eta N}.
+\]
+In particular, $D_k\le\frac1M+\frac{2+\log M}{\eta N}$ if $\|2m\theta_k\|\ge\eta$ for $1\le m\le M$.
+\end{lemma}
+
+\begin{proof}
+Write $\mathcal{S}=\{n_0+2j:0\le j<|\mathcal{S}|\}$. For $1\le|\ell|\le M$,
+$|\sum_{n\in\mathcal{S}}e(\ell n\theta)|=|\sum_je(2\ell j\theta)|\le1/(2\|2\ell\theta\|)\le1/(2\eta)$.
+Lemma~\ref{lem:square-wave} with $H=M$ gives
+\[
+\Big|\sum_{n\in\mathcal{S}}g(n\theta)\Big|\le\sum_{\ell\text{ odd}}\frac2{\pi|\ell|}\cdot\frac1{2\eta}+\frac2{M+1}
+\Bigl(|\mathcal{S}|+\frac M{2\eta}\Bigr)\le\frac{2|\mathcal{S}|}{M+1}+\frac1\eta\Bigl(1+\frac2\pi+\frac1\pi\log M\Bigr).
+\]
+Now use $|\mathcal{S}|\le\frac{t-N}2+1\le\frac t2$ and $t\ge N$. For the last statement take
+$\mathcal{S}=\{n\text{ odd}:N<n\le t\}$ with $t<k$; by the remark after \eqref{eq:Phik-sum},
+$n\theta_k\notin\frac12\Z$.
+\end{proof}
+
+\begin{lemma}[Witnesses]\label{lem:witnesses}
+Let $k$ be odd with $3\le k<p$, let $1\le m<k$ and $0<\eta\le\frac12$. If $\|2m\theta_k\|<\eta$, then there is an
+integer $r$ with $0<|r|<\eta k$ and $k\mid pr-m$.
+\end{lemma}
+
+\begin{proof}
+Choose $b\in\Z$ with $|2mu_k/k-b|<\eta$ and put $r=2mu_k-bk$; then $|r|<\eta k$ and $pr\equiv2pu_k\,m\equiv m\pmod
+k$. If $r=0$ then $k\mid2mu_k$, hence $k\mid m$, which is impossible.
+\end{proof}
+
+\section{Large divisors of the terms of an arithmetic progression: proof of Theorems~\texorpdfstring{\ref{thm:D} and~\ref{thm:Dstar}}{D and D*}}\label{sec:divisors}
+
+This section proves Theorems~\ref{thm:D} and~\ref{thm:Dstar}. It is self-contained and does not involve $S(p)$. In Section~\ref{sec:proof-C} the moduli $k$ for which $\theta_k$ is close to a rational number with a small denominator turn out to be divisors larger than $T|r|$ of the numbers $pr-m$, and Theorems~\ref{thm:D} and~\ref{thm:Dstar} bound their $1/k$-weighted mass. The idea is to write a large divisor $d$ of a term as $d=ef$, where $e$ is the part of $d$ composed of primes up to some $y$. If $e$ is at most the length $R$ of the progression, then the terms divisible by $e$ are regularly spaced, and the rest $f$, composed of large primes, can be chosen in few ways. If $e>R$, then $e$ has a divisor $s$ slightly below $R$, and the terms divisible by $s$ form a much shorter progression (Lemma~\ref{lem:one-step}). After a few such steps the progressions are so short that Rankin's trick (Lemma~\ref{lem:rankin}) finishes the proof.
+
+Throughout this section $q\ge3$ is an integer (not necessarily prime), $L=\log q$ and $X=q^2$. An \emph{admissible
+progression} is a set $A=\{a+qt:t\in I\}$, where $I$ is a nonempty set of consecutive integers, $\gcd(a,q)=1$, and
+$0<|a+qt|\le X$ for $t\in I$; its \emph{length} is $|I|$. For $Y>0$ put
+\[
+\Delta(A;Y)=\sum_{t\in I}\sum_{\substack{d\mid a+qt\\ d>Y}}\frac1d.
+\]
+We use the following simple facts.
+\begin{enumerate}[label=(F\arabic*),leftmargin=*]
+\item Every divisor of an element of $A$ is coprime to $q$. If $e\ge1$ is coprime to $q$, the $t\in I$ with
+$e\mid a+qt$ form one residue class modulo $e$, so their number is at most $|I|/e+1$.
+\item If $Y\ge X$ then $\Delta(A;Y)=0$.
+\end{enumerate}
+We also use Mertens' bound in the form $M(y):=\prod_{\ell\le y}(1-1/\ell)^{-1}=\sum_{P^+(e)\le y}1/e\le e^\gamma(1+\log
+y)$ for $y\ge2$, which follows from \cite[(3.30)]{b23} for $y\ge3$ and is checked directly for $2\le y<3$.
+
+\begin{lemma}[Rankin]\label{lem:rankin}
+For $Y>0$ and $0<\alpha<1$, $\Delta(A;Y)\le|I|\,Y^{-\alpha}P(\alpha)$, where
+$P(\alpha)=\max_{1\le n\le X}\sigma_{\alpha-1}(n)$. If $0<\alpha\le\frac12$ and $L\ge3$, then
+$\log P(\alpha)\le4(4L)^\alpha(\log\log(4L)+1)$.
+\end{lemma}
+
+\begin{proof}
+For $n\ne0$, $\sum_{d\mid n,\,d>Y}\frac1d\le\sum_{d\mid n}\frac1d(\frac dY)^\alpha=Y^{-\alpha}\sigma_{\alpha-1}(|n|)$.
+Next, $\sigma_{\alpha-1}(n)\le\prod_{\ell\mid n}(1-\ell^{\alpha-1})^{-1}$. If $\ell_1<\dots<\ell_k$ are the prime
+factors of $n\le X$ and $q_i$ denotes the $i$-th prime, then $\ell_i\ge q_i$ and the product is at most
+$\prod_{i\le k}(1-q_i^{\alpha-1})^{-1}$; moreover $\theta(q_k)\le\log(q_1\cdots q_k)\le\log X=2L$, where $\theta$ is
+Chebyshev's function, and since $\theta(\ell)\ge\ell/2$ for primes $\ell\ge3$ we get $q_k\le4L$. For
+$\alpha\le\frac12$ we have $\ell^{\alpha-1}\le2^{-1/2}$ and $-\log(1-x)\le x/(1-2^{-1/2})\le4x$ for
+$0\le x\le2^{-1/2}$, so
+$\log P(\alpha)\le4\sum_{\ell\le4L}\ell^{\alpha-1}\le4(4L)^\alpha\sum_{\ell\le4L}\frac1\ell\le4(4L)^\alpha(\log\log(4L)+1)$.
+\end{proof}
+
+For $2\le y$ put $N_y=\lfloor\log X/\log y\rfloor$ and, for $Z\ge1$,
+\[
+G_y(Z)=\sum_{0\le i\le\log Z/\log y}\binom{N_y}{i}.
+\]
+
+\begin{lemma}[One step]\label{lem:one-step}
+Let $A$ be an admissible progression of length at most $R$, let $T'\ge1$ and $2\le y\le R$, and let $\mathcal{S}$ be
+the set of integers $s$ with $R/y<s\le R$ and $P^+(s)\le y$. For $s\in\mathcal{S}$ let
+$A_s=\{n/s:\ n\in A,\ s\mid n\}$. Then each nonempty $A_s$ is an admissible progression of length at most
+$R/s+1\le2R/s$, and
+\[
+\Delta(A;T'R)\le\frac{2M(y)}{T'}\sum_{j\ge0}2^{-j}G_y(2^{j+1}T'R)+\sum_{s\in\mathcal{S}}\frac1s\,
+\Delta\Bigl(A_s;\frac{T'R}{s}\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $s\in\mathcal{S}$. By (F1), $\gcd(s,q)=1$ and the $t\in I$ with $s\mid a+qt$ are $t=t_s+sv$, with $v$ running over
+a set of at most $|I|/s+1$ consecutive integers; then $(a+qt)/s=a'+qv$ with $a'=(a+qt_s)/s$, which is coprime to $q$.
+The elements of $A_s$ are nonzero and at most $X/s\le X$ in absolute value. This proves the first assertion.
+
+Now consider the pairs $(n,d)$ with $n\in A$, $d\mid n$ and $d>T'R$, and write $d=ef$, where $e$ is the largest
+$y$-smooth divisor of $d$ and $f$ is $y$-rough.
+
+\emph{Case $e\le R$.} Fix $j\ge0$ and consider the pairs with $2^jT'R<d\le2^{j+1}T'R$. The map
+$(n,d)\mapsto(e,n,f)$ is injective. Given $e$ (which is coprime to $q$), there are at most $R/e+1\le2R/e$ elements $n$
+with $e\mid n$, by (F1). Given $n$, the prime factors of $f$, counted with multiplicity, form a sub-multiset of size
+at most $\log(2^{j+1}T'R)/\log y$ of the multiset of prime factors of $n$ that exceed $y$; that multiset has at most
+$N_y$ elements because $y^\Omega\le|n|\le X$, and a multiset with at most $N_y$ elements has at most
+$\binom{N_y}{i}$ sub-multisets of size $i$. So there are at most $G_y(2^{j+1}T'R)$ choices for $f$. Since
+$1/d<2^{-j}/(T'R)$ and $\sum_{P^+(e)\le y}1/e=M(y)$, these pairs contribute at most
+$\sum_j\frac{2R\,M(y)}{T'R}2^{-j}G_y(2^{j+1}T'R)$.
+
+\emph{Case $e>R$.} List the prime factors of $e$, with multiplicity, in non-decreasing order, and let $s$ be the first
+partial product that exceeds $R/y$. It exists because $e>R\ge R/y$, and $s\le(R/y)\cdot y=R$ because every prime factor
+is at most $y$; so $s\in\mathcal{S}$ and $s\mid d\mid n$. The map $(n,d)\mapsto(s,n/s,d/s)$ is injective,
+$d/s\mid n/s$, $d/s>T'R/s$, and $1/d=\frac1s\cdot\frac1{d/s}$; so these pairs contribute at most
+$\sum_{s\in\mathcal{S}}\frac1s\Delta(A_s;T'R/s)$.
+\end{proof}
+
+\begin{lemma}\label{lem:Gy}
+Let $y\ge2$ and $Z\ge1$. Then $G_y(2^jZ)\le(1+N_y)^{1+j\log2/\log y}G_y(Z)$ for $j\ge0$. If $1+N_y\le y^{1/3}$, then
+$\sum_{j\ge0}2^{-j}G_y(2^{j+1}Z)\le2.7\,(1+N_y)\,G_y(2Z)$. Moreover $\sum_{0\le i\le m}\binom Ni\le(eN/m)^m$ for
+$1\le m\le N$.
+\end{lemma}
+
+\begin{proof}
+Since $\binom N{i+1}\le N\binom Ni$, we have $\sum_{i\le m+1}\binom Ni\le(1+N)\sum_{i\le m}\binom Ni$. Passing from
+$Z$ to $2^jZ$ raises the upper limit $\lfloor\log Z/\log y\rfloor$ by at most $\lceil j\log2/\log y\rceil\le1+j\log
+2/\log y$, which gives the first claim. If $1+N_y\le y^{1/3}$, then $(1+N_y)^{j\log2/\log y}\le2^{j/3}$, so the sum is
+at most $G_y(2Z)\bigl(1+(1+N_y)\sum_{j\ge1}2^{-2j/3}\bigr)\le2.7(1+N_y)G_y(2Z)$. The last claim is the standard bound
+$\sum_{i\le m}\binom Ni\le\sum_{i\le m}\frac{N^i}{i!}\le(\frac Nm)^m\sum_i\frac{m^i}{i!}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:D}]
+Fix $\gamma_0\in(0,1)$, let $L=\log q$ be large in terms of $\gamma_0$, and put $\kappa=\log T=L^{\gamma_0}$ and
+\[
+\alpha=\frac{\gamma_0}2,\qquad\beta=\frac{\gamma_0}8,\qquad u=\Bigl\lfloor\frac\kappa{3\log L}\Bigr\rfloor,\qquad
+R_b=T^\beta,\qquad T_j=2^{-j}T.
+\]
+Define $x_0=2L$, $x_{j+1}=\log2+(\kappa+x_j)/u$, and $J=\min\{j:\ x_j\le\beta\kappa\}$. Unrolling the recursion,
+$x_j\le(\log2+\frac\kappa u)\frac u{u-1}+2Lu^{-j}\le4\log L+2Lu^{-j}$, and $u\ge L^{\gamma_0}/(4\log L)$; hence
+$J\le\lceil1/\gamma_0\rceil+1$ once $L$ is large. We also assume that $L$ is so large that $u\ge1+8/\gamma_0$,
+$J\log2\le\beta\kappa/2$ and $u\log2<\kappa/2$.
+
+For $j\le J$ and $R\ge1$ let $B_j(R)$ be the supremum of $\Delta(A;T_jR)$ over all admissible progressions $A$ of
+length at most $R$, and let $b_j=\sup\{B_j(R):1\le R\le e^{x_j}\}$.
+
+\emph{Base case.} If $R\le R_b$, Lemma~\ref{lem:rankin} gives
+\[
+B_j(R)\le R^{1-\alpha}T_j^{-\alpha}P(\alpha)\le2^{\alpha J}R_b^{1-\alpha}T^{-\alpha}P(\alpha)
+=\exp\bigl(-(\tfrac38\gamma_0+\tfrac1{16}\gamma_0^2)\kappa+\alpha J\log2+\log P(\alpha)\bigr)=:E_b,
+\]
+because $\beta(1-\alpha)-\alpha=-\frac38\gamma_0-\frac1{16}\gamma_0^2$. By Lemma~\ref{lem:rankin},
+$\log P(\alpha)\ll L^{\gamma_0/2}\log\log L=o(\kappa)$, so
+$E_b=\exp(-(\frac38\gamma_0+\frac1{16}\gamma_0^2)\kappa+o(\kappa))$.
+
+\emph{Recursive step.} Let $j<J$ and $R_b<R\le e^{x_j}$, and put $y=(T_jR)^{1/u}$. Since $\log R>\beta\kappa$ and
+$(u-1)\beta\ge1$, we have $\log T_j\le\kappa\le(u-1)\log R$, i.e.\ $y\le R$. Also
+$\log y=(\log T_j+\log R)/u\ge(\kappa-J\log2+\beta\kappa)/u\ge(1+\frac\beta2)\frac\kappa u\ge(3+\beta)\log L$, so
+$y\ge L^{3+\beta}$; and $N_y\le2L/\log y\le L$, so $1+N_y\le y^{1/3}$ for large $L$. The upper limit in $G_y(2T_jR)$
+is $\lfloor u(1+\log2/\log(T_jR))\rfloor=u$, because $\log(T_jR)\ge\kappa/2>u\log2$. If $u\le N_y$,
+Lemma~\ref{lem:Gy} and $N_y/u\le2L/\log(T_jR)\le4L^{1-\gamma_0}$ give
+\[
+G_y(2T_jR)\le\Bigl(\frac{eN_y}u\Bigr)^u\le\exp\Bigl(\frac\kappa{3\log L}\bigl((1-\gamma_0)\log L+\log(4e)\bigr)\Bigr)
+=\exp\Bigl(\frac{1-\gamma_0}3\kappa+o(\kappa)\Bigr),
+\]
+and if $u>N_y$ then $G_y(2T_jR)\le2^{N_y}\le2^u$, which is smaller. Since $\log y\le(\kappa+x_j)/u\le2L$, we have
+$M(y)\le e^\gamma(1+2L)\le6L$ and $1+N_y\le L$. Lemmas~\ref{lem:one-step} and~\ref{lem:Gy} (with $T'=T_j$) therefore
+give, for every admissible $A$ of length at most $R$,
+\[
+\Delta(A;T_jR)\le\frac{2\cdot6L}{T_j}\cdot2.7L\cdot e^{\frac{1-\gamma_0}3\kappa+o(\kappa)}+\sum_{s\in\mathcal{S}}
+\frac1s\Delta\Bigl(A_s;\frac{T_jR}s\Bigr).
+\]
+The first term is at most $E_1:=\exp(-\frac{2+\gamma_0}3\kappa+o(\kappa))$, since $T_j\ge2^{-J}T$. In the second,
+$A_s$ has length at most $R':=2R/s$, and $T_jR/s=T_{j+1}R'$; moreover $2\le R'<2y$, so
+$\log R'<\log2+(\kappa+x_j)/u=x_{j+1}$. Hence $\Delta(A_s;T_jR/s)\le b_{j+1}$, and since
+$\sum_{s\in\mathcal{S}}1/s\le M(y)\le6L$,
+\[
+B_j(R)\le E_1+6L\,b_{j+1}\qquad(R_b<R\le e^{x_j}).
+\]
+
+\emph{Conclusion.} Combining the two cases, $b_j\le E_b+E_1+6L\,b_{j+1}$ for $j<J$, and $b_J\le E_b$ because
+$e^{x_J}\le R_b$. Hence
+\[
+b_0\le(J+1)(6L)^J(E_b+E_1)=\exp\Bigl(-\bigl(\tfrac38\gamma_0+\tfrac1{16}\gamma_0^2\bigr)\kappa+o(\kappa)\Bigr)\le
+e^{-\gamma_0\kappa/4}=T^{-\gamma_0/4}
+\]
+for $L\ge L_0(\gamma_0)$, because $J$ is bounded in terms of $\gamma_0$ and $\log(6L)=o(\kappa)$. Finally let $A$ be
+admissible of length at most $R$. If $R\ge X$ then $\Delta(A;TR)=0$ by (F2); otherwise $\log R<2L=x_0$ and
+$\Delta(A;TR)\le B_0(R)\le b_0$.
+\end{proof}
+
+\begin{remark}\label{rem:exponent-optimality}
+(a) The same argument with $\alpha=\gamma_0-\varepsilon/3$ and $\beta=\varepsilon/3$ gives the bound
+$T^{-\gamma_0+\varepsilon}$ for $L\ge L_0(\gamma_0,\varepsilon)$ (if $\alpha>\frac12$ one uses the bound
+$\log P(\alpha)\ll_\alpha L^\alpha$, which follows in the same way as Lemma~\ref{lem:rankin}). This is essentially
+optimal: if $R=1$ and $a+qt$ is the product of all primes up to $z$ with $\theta(z)\le2L$, then the products of
+$k=\lceil\kappa/\log(z/2)\rceil$ distinct primes from $(z/2,z]$ are at least $(\pi(z)-\pi(z/2))^k/k^k$ divisors of
+$a+qt$ in $(T,2^{k-1}zT]$, and a short computation gives $\Delta\ge T^{-\gamma_0-(\log2+o(1))/\log L}$. (b) The proof
+uses only (F1), (F2), Rankin's trick, Mertens' theorem and the inequality $\theta(\ell)\ge\ell/2$ for primes
+$\ell\ge3$; in particular it does not use Shiu's theorem \cite{b24}, which would require the length of the progression
+to be at least a fixed power of $q$. The large size of $T$ is essential: the base case needs $T^\alpha$ to beat
+$P(\alpha)=\exp(O(L^\alpha\log\log L))$, which is impossible if $T$ is a power of $\log q$. (c) The threshold
+$L_0(\gamma_0)$ is effective but very large: for $\gamma_0=0.3$ an optimized explicit version of the argument needs
+$L$ of order $10^{11}$, and the constants as printed here give about $10^{19}$. (d) Although the asymptotic regime of
+Theorem~\ref{thm:D} is far out of reach, its shape can be tested. For $q=1000003$, $R=4^i\le2^{16}$ and $10\le T\le10^5$ we
+computed $T\,\Delta(A;TR)$ exactly (by sieving the progression) for random $a$ and for $a$ equal to a product of the
+first primes. For random $a$ the value stays between $0.8$ and $4.5$, as the random model predicts; for the smooth
+starting terms it grows from $16$ at $T=10$ to $186$ at $T=10^5$, roughly like $T^{0.27}$, well inside the bound
+$T^{1-\gamma_0/4}$ and consistent with Remark (a). In the application, the $1/k$-weighted mass of the odd
+$k\in(10^3,2\cdot10^7)$ with $\|2m\theta_k\|<1/T$ for some $m\le50$ is (3--6)${}\cdot50/T$ for $10^2\le T\le10^5$ and
+a random prime $p\approx10^{12}$, and at most $13\cdot50/T$ for the primes $p=667866432132899$ and
+$p=83483304016613$, for which $p+1$, respectively $2p-1$, is divisible by every odd number below $40$.
+\end{remark}
+
+The proof of Theorem~\ref{thm:D} works for much smaller $T$ if $\alpha$ and $\beta$ are taken of size $1/\log\log q$
+instead of size $\gamma_0$. This gives Theorem~\ref{thm:Dstar}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:Dstar}]
+We keep the notation of the proof of Theorem~\ref{thm:D}; only the parameters change. Put $\kappa=\log T$. If
+$\kappa>2L$, then $TR\ge T>X$ and the sum vanishes by (F2). So we may assume $(\log L)^3\le\kappa\le2L$. Put
+\[
+\alpha=\frac1{\log L},\qquad\beta=\frac1{2\log L},\qquad u=\Bigl\lfloor\frac\kappa{3\log L}\Bigr\rfloor,\qquad
+R_b=T^\beta,\qquad T_j=2^{-j}T,
+\]
+and define $x_0=2L$, $x_{j+1}=\log2+(\kappa+x_j)/u$ and $J=\min\{j:\ x_j\le\beta\kappa\}$. Define $B_j(R)$ and $b_j$
+as in the proof of Theorem~\ref{thm:D}. In this proof ``for large $L$'' means $L\ge L_1$ for an absolute constant
+$L_1$; we take $q_1=e^{L_1}$.
+
+\emph{Parameters.} Since $\kappa\ge(\log L)^3$, we have $u\ge\frac{\kappa}{3\log L}-1\ge\frac14(\log L)^2$, hence
+$(u-1)\beta\ge1$, and $\kappa/u\le3.1\log L$. Unrolling the recursion as before,
+$x_j\le(\log2+\frac\kappa u)\frac u{u-1}+2Lu^{-j}\le4\log L+2Lu^{-j}$. As $\beta\kappa\ge\frac12(\log L)^2\ge8\log L$,
+we get $x_j\le\beta\kappa$ as soon as $u^j\ge8L/(\log L)^2$, so
+\[
+J\le1+\frac{\log8L}{\log u}\le\frac{\log L}{\log\log L},
+\]
+because $\log u\ge2\log\log L-\log4$. In particular $2^J\le L$ and $J\log2\le\log L\le\beta\kappa/2$. Also
+$u\log2<\kappa/3$, and $x_j\le2L$ for all $j$ (by induction, since $\kappa\le2L$ and $u\ge3$).
+
+\emph{Base case.} Let $j\le J$ and $R\le R_b$. Lemma~\ref{lem:rankin} gives
+\[
+B_j(R)\le R^{1-\alpha}T_j^{-\alpha}P(\alpha)\le\exp\bigl((1-\alpha)\beta\kappa-\alpha\kappa+\alpha J\log2+\log
+P(\alpha)\bigr)\le\exp\bigl(-\beta\kappa+1+\log P(\alpha)\bigr),
+\]
+because $(1-\alpha)\beta-\alpha=-\beta-\alpha\beta$ for $\alpha=2\beta$, and $\alpha J\log2\le1$. By
+Lemma~\ref{lem:rankin} and $(4L)^{1/\log L}=e^{1+\log4/\log L}$, we have
+$\log P(\alpha)\le4(4L)^{1/\log L}(\log\log4L+1)\le14\log\log L$. Hence $B_j(R)\le E_b:=\exp(-\beta\kappa+15\log\log L)$.
+
+\emph{Recursive step.} Let $j<J$ and $R_b<R\le e^{x_j}$, and put $y=(T_jR)^{1/u}$.
+\begin{itemize}[leftmargin=*]
+\item $\log T_j\le\kappa\le(u-1)\beta\kappa<(u-1)\log R$, so $y\le R$. Also $\log T_j\ge\kappa-J\log2>0$, so $T_j\ge1$.
+\item $\log(T_jR)\ge\kappa-J\log2+\beta\kappa\ge(1+\frac\beta2)\kappa$, so
+$\log y\ge(1+\frac\beta2)\frac\kappa u\ge(3+\frac{3\beta}2)\log L=3\log L+\frac34$. Hence $y\ge2L^3$, so
+$N_y\le2L/\log y\le L-1$ and $1+N_y\le y^{1/3}$.
+\item Since $\log(T_jR)\ge\kappa>u\log2$, the upper limit in $G_y(2T_jR)$ is exactly $u$, as in the proof of
+Theorem~\ref{thm:D}.
+\item If $u\le N_y$, then $N_y/u\le2L/\log(T_jR)\le2L/\kappa$, and Lemma~\ref{lem:Gy} gives
+\[
+G_y(2T_jR)\le\Bigl(\frac{eN_y}u\Bigr)^u\le\exp\Bigl(\frac{\kappa}{3\log L}\bigl(1+\log2+\log L-\log\kappa\bigr)\Bigr)
+\le e^{\kappa/3},
+\]
+where we used $2eL/\kappa\ge e$ and $\log\kappa\ge1+\log2$. If $u>N_y$, then $G_y(2T_jR)\le2^{N_y}\le2^u<e^{\kappa/3}$.
+\item $\log y\le(\kappa+x_j)/u\le2L$, so $M(y)\le e^\gamma(1+2L)\le6L$.
+\end{itemize}
+Lemmas~\ref{lem:one-step} and~\ref{lem:Gy} with $T'=T_j$ now give, for every admissible $A$ of length at most $R$,
+\[
+\Delta(A;T_jR)\le\frac{2\cdot6L}{T_j}\cdot2.7L\cdot e^{\kappa/3}+\sum_{s\in\mathcal{S}}\frac1s\Delta\Bigl(A_s;\frac{T_jR}s\Bigr)
+\le E_1+6L\,b_{j+1},
+\]
+where $E_1:=\exp(-\frac23\kappa+4\log L)$. For the first term we used $T_j\ge T/2^J\ge T/L$ and $32.4\le L$. The
+second term is treated exactly as in the proof of Theorem~\ref{thm:D}: $A_s$ has length at most $R'=2R/s$,
+$T_jR/s=T_{j+1}R'$, and $\log R'<\log2+\log y\le x_{j+1}$.
+
+\emph{Conclusion.} We have $b_j\le E_b+E_1+6L\,b_{j+1}$ for $j<J$, and $b_J\le E_b$ because $e^{x_J}\le R_b$. Since $\kappa\ge(\log L)^3$, we
+have $E_1\le E_b$, and therefore
+\[
+\log b_0\le\log\bigl(2(J+1)\bigr)+J\log(6L)-\frac{\kappa}{2\log L}+15\log\log L\le-\frac{\kappa}{4\log L}.
+\]
+For the last inequality note that $\frac{\kappa}{4\log L}\ge\frac14(\log L)^2$, while
+$J\log(6L)\le(1+o(1))(\log L)^2/\log\log L$ and the other terms are $O(\log\log L)$. Finally, if $R\ge X$ the sum in
+Theorem~\ref{thm:Dstar} vanishes by (F2); otherwise $\log R<2L=x_0$, and the sum is $\Delta(A;T_0R)\le b_0$.
+\end{proof}
+
+\section{Proofs of Theorems~\texorpdfstring{\ref{thm:Cstar}, \ref{thm:C} and~\ref{thm:Cflat}}{C*, C and C-flat}}\label{sec:proof-C}
+
+By Theorem~\ref{thm:B}(ii) it suffices to bound the sum $\Sigma$ of the $F_k(p)/k^2$ over the odd $k<\sqrt p(\log p)^4$. We follow the outline in Subsection~\ref{subsec:outline}. We first prove Theorem~\ref{thm:C}, which needs only Theorem~\ref{thm:D}, and then explain the changes that give Theorems~\ref{thm:Cstar} and~\ref{thm:Cflat}.
+
+The structure of the proof is that of Subsection~\ref{subsec:outline}: heads below $K_*$, heads between $K_*$ and $K_W$, and tails; the constants are tracked only to show that the exponent $2/3$ is reached.
+
+Let $\gamma_0\in(0,\frac23)$ and let $p$ be a prime, large in terms of $\gamma_0$. Put $L=\log p$ (this is the $L=\log q$ of Section~\ref{sec:divisors} with $q=p$) and
+\[
+T=e^{L^{\gamma_0}},\quad\eta=\frac1T,\quad M=H=\lceil L^2\rceil,\quad N=\bigl\lceil TM(2+\log M)\bigr\rceil,
+\]
+\[
+K_W=\sqrt pL^4,\qquad K_*=\exp\bigl(A\,L^{2/3}(\log L)^{8/3}\bigr),\qquad A=A_{BG}+1,
+\]
+where $A_{BG}$ is the constant of Lemma~\ref{lem:bourgain-garaev}.
+Then $\log N=L^{\gamma_0}+O(\log L)$, and for large $p$ we have $M<N<K_*<K_W<p/4$ (here $\gamma_0<\frac23$ is used),
+and Theorem~\ref{thm:D} applies with $q=p$ and this $T$. By Theorem~\ref{thm:B}(ii) with $K=K_W$,
+\begin{equation}\label{eq:S-Sigma}
+S(p)=\frac p2\log p+c_0p+\frac{4p}\pi\,\Sigma+O\Bigl(\frac pL\Bigr),\qquad
+\Sigma=R_{K_W}(p)=\sum_{\substack{3\le k<K_W\\ k\text{ odd}}}\frac{\Phi_k}k,
+\end{equation}
+and we write $\Sigma=\Sigma_{\mathrm{head}}+\Sigma_{\mathrm{tail}}$ with $\Sigma_{\mathrm{head}}=\sum_k\Phi_k^{\le N}/k$
+and $\Sigma_{\mathrm{tail}}=\sum_k\Phi_k^{>N}/k$, the sums being over odd $k$ with $3\le k<K_W$. Recall that
+$\Phi_k^{>N}=0$ for $k\le N+1$.
+
+\emph{The heads with $k<K_*$.} By \eqref{eq:head-trivial} and
+$\sum_{k\text{ odd},\,3\le k<K_*}\frac1k\le\frac12\log K_*$,
+\[
+\Big|\sum_{k<K_*}\frac{\Phi_k^{\le N}}k\Big|\le\frac1{2\pi}(2+\log N)\log K_*=\Bigl(\frac A{2\pi}+o(1)\Bigr)
+L^{2/3+\gamma_0}(\log L)^{8/3}.
+\]
+
+\emph{The heads with $K_*\le k<K_W$.} Cover $[K_*,K_W)$ by the intervals $B_j=[2^jK_*,2^{j+1}K_*)\cap[K_*,K_W)$,
+$0\le j\le L$. Only the nonempty $B_j$ contribute, and for them $2^jK_*<K_W$. Apply Lemma~\ref{lem:heads} to each
+nonempty $B_j$ with $K=K_j=2^jK_*$ (note $N<K_*\le K_j<K_W<p/2$) together with Lemma~\ref{lem:bourgain-garaev}, which
+applies because $K_j\ge K_*=\exp((A_{BG}+1)L^{2/3}(\log L)^{8/3})$:
+\[
+\Big|\sum_{K_*\le k<K_W}\frac{\Phi_k^{\le N}}k\Big|\le(1+\log N)\Bigl(\frac{2(L+1)}H+160\sqrt2\,C_{BG}(1+\log H)
+(\log L)^3L\sum_{j\ge0}(\log K_j)^{-3/2}\Bigr).
+\]
+Since $\log K_j=\log K_*+j\log2$, we have $\sum_j(\log K_j)^{-3/2}\le(\log K_*)^{-3/2}+\int_0^\infty\frac{dt}{(\log
+K_*+t\log2)^{3/2}}\le4(\log K_*)^{-1/2}$. With $1+\log H\le3\log L$, $H\ge L^2$ and
+$(\log K_*)^{1/2}=A^{1/2}L^{1/3}(\log L)^{4/3}$, the right-hand side is at most
+$(1920\sqrt2\,C_{BG}A^{-1/2}+o(1))\,L^{2/3+\gamma_0}(\log L)^{8/3}$.
+
+\emph{Generic tails.} Call an odd $k>N+1$ \emph{generic} if $\|2m\theta_k\|\ge\eta$ for $1\le m\le M$, and let $k$ be generic. Since
+$\eta N\ge M(2+\log M)$, Lemma~\ref{lem:generic} gives $D_k\le\frac1M+\frac1M=\frac2M$, and
+Lemma~\ref{lem:tails}(a) gives $|\Phi_k^{>N}|\le\frac\pi M\log k$. Since
+$\sum_{k\text{ odd},\,3\le k<X}\frac{\log k}k\le1+\frac14(\log X)^2$ and $\log K_W=\frac L2+4\log L$, these $k$
+contribute at most $\frac\pi M\bigl(1+\frac14(\frac L2+4\log L)^2\bigr)=\frac\pi{16}+o(1)$ to $\Sigma_{\mathrm{tail}}$.
+
+\emph{Non-generic tails.} Let $\mathcal{N}$ be the set of odd $k$ with $N+1<k<K_W$ for which $\|2m\theta_k\|<\eta$ for
+some $1\le m\le M$. For $k\in\mathcal{N}$, Lemma~\ref{lem:tails}(b) gives $|\Phi_k^{>N}|\le\frac1\pi\log
+k\le\frac L\pi$, and since $M<k$, Lemma~\ref{lem:witnesses} provides a \emph{witness} $(m,r)$ with $1\le m\le M$,
+$0<|r|<k/T$ and $k\mid pr-m$; in particular $k>T|r|$ and $|r|<K_W/T$. For $1\le m\le M$ and $R=2^i$ with
+$1\le R<K_W/T$ consider the progressions
+\[
+A^+_{m,R}=\{pt-m:\ R\le t<2R\},\qquad A^-_{m,R}=\{pt+m:\ R\le t<2R\}.
+\]
+They are admissible in the sense of Section~\ref{sec:divisors} (with $q=p$): their differences are $p$, their
+first terms $\mp m$ are coprime to $p$, and their elements lie in $(0,2pK_W]\subset(0,p^2]$. If $k\in\mathcal{N}$ has
+a witness $(m,r)$ with $R\le|r|<2R$, then $k$ is a divisor larger than $T|r|\ge TR$ of $|pr-m|$, which is an element
+of $A^+_{m,R}$ if $r>0$ and of $A^-_{m,R}$ if $r<0$. Hence, by Theorem~\ref{thm:D},
+\[
+\sum_{k\in\mathcal{N}}\frac1k\le\sum_{m\le M}\sum_{\substack{R=2^i\\ 1\le R<K_W/T}}\bigl(\Delta(A^+_{m,R};TR)+
+\Delta(A^-_{m,R};TR)\bigr)\le M\,(L+1)\,2T^{-\gamma_0/4},
+\]
+and the non-generic tails contribute at most $\frac L\pi\cdot2M(L+1)T^{-\gamma_0/4}=o(1)$ to
+$\Sigma_{\mathrm{tail}}$.
+
+\emph{Conclusion.} Every odd $k$ with $N+1<k<K_W$ is either generic or in $\mathcal{N}$, so
+\[
+|\Sigma|\le\Bigl(\frac A{2\pi}+\frac{1920\sqrt2\,C_{BG}}{\sqrt A}+o(1)\Bigr)L^{2/3+\gamma_0}(\log L)^{8/3}+\frac\pi{16}+o(1),
+\]
+and \eqref{eq:S-Sigma} gives Theorem~\ref{thm:C} with any constant
+$C>\frac4\pi\bigl(\frac A{2\pi}+1920\sqrt2\,C_{BG}A^{-1/2}\bigr)$.\qed
+
+\begin{proof}[Proof of Theorem~\ref{thm:Cstar}]
+We repeat the proof of Theorem~\ref{thm:C}, with $K_W$, $K_*$ and $A$ as there, but with
+\[
+T=\exp\bigl((\log L)^3\bigr),\quad\eta=\frac1T,\quad M=H=\lceil L^2\rceil,\quad N=\bigl\lceil TM(2+\log M)\bigr\rceil.
+\]
+Then $\log N=(\log L)^3+O(\log L)$, so $M<N<K_*<K_W<p/4$ for large $p$, and Theorem~\ref{thm:Dstar} applies with $q=p$
+and this $T$. Equation~\eqref{eq:S-Sigma} and the splitting $\Sigma=\Sigma_{\mathrm{head}}+\Sigma_{\mathrm{tail}}$ are
+unchanged. We bound the four ranges as before.
+\begin{itemize}[leftmargin=*]
+\item \emph{The heads with $k<K_*$} contribute at most
+$\frac1{2\pi}(2+\log N)\log K_*=(\frac A{2\pi}+o(1))L^{2/3}(\log L)^{17/3}$.
+\item \emph{The heads with $K_*\le k<K_W$.} The bound displayed in the proof of Theorem~\ref{thm:C} holds as it stands.
+Now $1+\log N=(1+o(1))(\log L)^3$, $1+\log H\le3\log L$, $H\ge L^2$ and
+$(\log K_*)^{1/2}=A^{1/2}L^{1/3}(\log L)^{4/3}$, so these heads contribute at most
+$(1920\sqrt2\,C_{BG}A^{-1/2}+o(1))L^{2/3}(\log L)^{17/3}$.
+\item \emph{Generic tails.} This part uses only $\eta N\ge M(2+\log M)$, so it contributes at most $\frac\pi{16}+o(1)$, as
+before.
+\item \emph{Non-generic tails.} As before, every $k\in\mathcal{N}$ is a divisor larger than $TR$ of an element of
+$A^+_{m,R}$ or $A^-_{m,R}$, for some $m\le M$ and some $R=2^i<K_W/T$; and each of these progressions consists of $R$
+consecutive terms. Theorem~\ref{thm:Dstar}, with $\log T=(\log L)^3$, gives
+\[
+\sum_{k\in\mathcal{N}}\frac1k\le2M(L+1)\exp\Bigl(-\frac{(\log L)^2}4\Bigr),
+\]
+so the non-generic tails contribute at most $\frac L\pi\cdot2M(L+1)e^{-(\log L)^2/4}\le
+\exp(5\log L-\frac14(\log L)^2)=o(1)$.
+\end{itemize}
+Adding up,
+\[
+|\Sigma|\le\Bigl(\frac A{2\pi}+\frac{1920\sqrt2\,C_{BG}}{\sqrt A}+o(1)\Bigr)L^{2/3}(\log L)^{17/3}+\frac\pi{16}+o(1),
+\]
+and \eqref{eq:S-Sigma} gives Theorem~\ref{thm:Cstar} with any constant
+$C>\frac4\pi\bigl(\frac A{2\pi}+1920\sqrt2\,C_{BG}A^{-1/2}\bigr)$.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:conj33}]
+Take $\gamma_0=\frac16$ in Theorem~\ref{thm:C}. Then
+\[
+\frac{S(p)}p\ge\frac12\log p+c_0-C(\log p)^{5/6}(\log\log p)^{8/3}\longrightarrow\infty.
+\]
+The upper half of Conjecture~3.3 is Theorem~\ref{thm:A}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:Cflat}]
+Let $\delta$, $\theta$ and $C$ be as in the hypothesis, and let $p$ be large. We repeat the proof of
+Theorem~\ref{thm:Cstar}, with the same $T,\eta,M,H,N$ and $K_W$, but with
+\[
+K_*=\exp(2L^\theta).
+\]
+Since $0<\theta<1$, we have $N<K_*<K_W$ for large $p$. The tails do not involve $K_*$, so they contribute
+$\frac\pi{16}+o(1)$ as in the proof of Theorem~\ref{thm:Cstar}. For the heads with $k<K_*$, \eqref{eq:head-trivial}
+gives the bound $\frac1{2\pi}(2+\log N)\log K_*=O(L^\theta(\log L)^3)$.
+
+For the heads with $K_*\le k<K_W$ we use the hypothesis in place of Lemma~\ref{lem:bourgain-garaev}. Let
+$K_*\le K\le p/2$. The lengths $N'$ in Lemma~\ref{lem:reduction} satisfy $K/3\le N'<p$ (see the proof of
+Lemma~\ref{lem:bourgain-garaev}), so $\log N'\ge2L^\theta-\log3\ge L^\theta$, and the hypothesis gives
+$|\sum_{n\le N'}e(bn^*/p)|\le CN'L^{-\delta}\le2CKL^{-\delta}$. By Lemma~\ref{lem:reduction},
+$\mathcal{M}_K/K\le8CL^{-\delta}$. We apply Lemma~\ref{lem:heads} to the at most $L+1$ blocks $B_j$ as in the proof of
+Theorem~\ref{thm:C}. Since we no longer have a saving that grows with $K$, we simply add the bounds for the blocks:
+\[
+\Big|\sum_{K_*\le k<K_W}\frac{\Phi_k^{\le N}}k\Big|\le(1+\log N)(L+1)\Bigl(\frac2H+80\,C(1+\log H)L^{-\delta}\Bigr)
+=O\bigl(L^{1-\delta}(\log L)^4\bigr)+o(1).
+\]
+Hence $\Sigma=O(L^\theta(\log L)^3+L^{1-\delta}(\log L)^4)$, and \eqref{eq:S-Sigma} gives the asymptotic formula. Since
+$\max(\theta,1-\delta)<1$, it follows that $S(p)/p\ge\frac12\log p-o(\log p)\to\infty$, and together with
+Theorem~\ref{thm:A} this gives Conjecture~3.3.
+\end{proof}
+
+The hypothesis of Theorem~\ref{thm:Cflat} holds with $\theta=\frac9{10}$ and $\delta=\frac14$. Indeed, let
+$\log N\ge L^{9/10}$. For large $p$ this is far inside the range of Lemma~\ref{lem:bourgain-garaev}, and that lemma
+gives
+\[
+\Big|\sum_{n\le N}e\Bigl(\frac{bn^*}p\Bigr)\Big|\le C_{BG}(\log L)^3L\,(\log N)^{-3/2}N\le
+C_{BG}(\log L)^3L^{-7/20}N\le C_{BG}L^{-1/4}N
+\]
+as soon as $(\log L)^3\le L^{1/10}$. So Theorem~\ref{thm:Cflat} gives a second proof of Corollary~\ref{cor:conj33},
+with the error term $O(p(\log p)^{9/10}(\log\log p)^4)$. It uses Lemma~\ref{lem:bourgain-garaev} only for
+$\log N\ge(\log p)^{9/10}$, so its conclusion holds whatever the size of $A_{BG}$. This is the route of the Lean
+proof of Conjecture~3.3, which assumes the bound of Lemma~\ref{lem:bourgain-garaev} only for
+$\log N\ge\frac12(\log p)^{9/10}$ (Appendix~\ref{app:lean}).
+
+\begin{remark}\label{rem:thmC}
+(a) The argument uses three inputs of very different nature: Weil's bound (through Theorem~\ref{thm:B}(ii)) for $k\ge K_W$, the
+bound of Bourgain and Garaev for the heads with $K_*\le k<K_W$, and Theorem~\ref{thm:D} or~\ref{thm:Dstar} for the tails. No information on short
+Kloosterman sums of length below $K_*$ is used: below $K_*$ the heads are estimated trivially, which is affordable
+because $\sum_{k<K_*}1/k\ll(\log p)^{2/3+o(1)}$ while each head costs only $O(\log N)$, which is $O((\log p)^{\gamma_0})$ for Theorem~\ref{thm:C} and $O((\log\log p)^3)$ for Theorem~\ref{thm:Cstar}, and the
+tails are controlled by the Diophantine condition $\|2m\theta_k\|\ge1/T$, which involves no exponential sums at all.
+(b) The exponent $\frac23$ comes from the range in which the proof of the Bourgain--Garaev bound applies
+(Lemma~\ref{lem:bourgain-garaev}; equivalently, from the range of Karatsuba's method), and so does the factor
+$(\log\log p)^{8/3}$. With $K_*=\exp(AL^a(\log L)^b)$ the heads below and above $K_*$ cost
+$(\log N)L^a(\log L)^b$ and $(\log N)L^{1-a/2}(\log L)^{4-b/2}$, up to constants. These balance exactly at $a=\frac23$ and
+$b=\frac83$, the lower end of the range of Lemma~\ref{lem:bourgain-garaev}. So, with this bound for short Kloosterman sums,
+$(\log p)^{2/3}$ is the limit of the method; the power $\frac{17}3$ in Theorem~\ref{thm:Cstar} is $3$, from $\log N$,
+plus $\frac83$, from $\log K_*$. A
+bound of the form $\mathcal{M}_K\le K(\log K)^{-1-\delta}(\log p)^{o(1)}$, with a fixed $\delta>0$, for all $K$ with
+$\log K\ge(\log p)^\vartheta$ would allow $K_*=\exp((\log p)^{\vartheta+o(1)})$ and give the error term
+$O_\varepsilon(p(\log p)^{\vartheta+\varepsilon})$. We expect the truth to be $O(p(\log\log p)^2)$, cf.\ Theorem~\ref{thm:E}. In the other direction, Theorem~\ref{thm:Cflat} shows that Corollary~\ref{cor:conj33} needs only a fixed power-of-log saving.
+(c) All ingredients are effective, so $p_0$ in Theorem~\ref{thm:Cstar} and $p_0(\gamma_0)$ in Theorem~\ref{thm:C} are effective in principle; they depend on the constants $C_{BG}$
+and $A_{BG}$ of Lemma~\ref{lem:bourgain-garaev}, which have not been computed, and even optimistic assumptions about
+them lead to thresholds $\log p_0$ of a size
+that is far beyond the range of any computation. So Conjectures 1.1, 3.1 and 3.2 are proved here only for
+sufficiently large primes.
+\end{remark}

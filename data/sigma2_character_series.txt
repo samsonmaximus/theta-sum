@@ -1,0 +1,11 @@
+# Partial sums over conductors f <= F of the series for sigma^2 in Theorem J(b) (code/char_expansion.py logic; Euler products over primes < 20000).
+# Columns: F, partial sum. Extrapolation: sigma^2 = 0.392369 +- 0.000002.
+101 np.float64(0.3818807486446343)
+201 np.float64(0.3870283818874153)
+401 np.float64(0.3896779935890388)
+801 np.float64(0.3910177262221771)
+1201 np.float64(0.39146731214878827)
+1601 np.float64(0.39169195367046633)
+2001 np.float64(0.3918270532005965)
+3001 np.float64(0.392007688852169)
+4001 np.float64(0.39209790879284107)

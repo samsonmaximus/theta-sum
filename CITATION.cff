@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "An asymptotic formula for the theta-function sum S(p), and a proof of a conjecture of Berndt, Bhat, Meyer, Xie and Zaharescu"
+authors:
+  - family-names: Fraser
+    given-names: Samson
+    email: samsonmfraser@gmail.com
+date-released: 2026-10-31
+type: article

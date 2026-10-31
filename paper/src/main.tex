@@ -1,0 +1,78 @@
+\documentclass[11pt]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{booktabs,array,enumitem}
+\usepackage{xcolor}
+\usepackage[expansion=false]{microtype}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+
+% ---------------------------------------------------------------- numbering (as in v3)
+\numberwithin{equation}{section}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{theorem}[lemma]{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}[lemma]{Definition}
+\theoremstyle{definition}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem*{remark*}{Remark}
+\theoremstyle{plain}
+% named theorems A, B, C, ...: \begin{namedthm}{A} ... \end{namedthm}
+\newtheorem*{namedthm@inner}{Theorem \namedthmlabel}
+\newcommand{\namedthmlabel}{}
+\newenvironment{namedthm}[1]{\renewcommand{\namedthmlabel}{#1}\begin{namedthm@inner}}{\end{namedthm@inner}}
+% conjectures with the numbering of Berndt et al.: \begin{bconj}{3.3} ... \end{bconj}
+\newtheorem*{bconj@inner}{Conjecture \bconjlabel}
+\newcommand{\bconjlabel}{}
+% optional descriptive name: \begin{bconj}[positivity]{1.1}
+\newenvironment{bconj}[2][]{\renewcommand{\bconjlabel}{#2}%
+  \if\relax\detokenize{#1}\relax\begin{bconj@inner}\else\begin{bconj@inner}[#1]\fi}{\end{bconj@inner}}
+
+% ---------------------------------------------------------------- macros (use these; add new ones only inside your own file, and report them)
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\e}{\operatorname{e}}          % e(x) = exp(2 pi i x) -- use \e(x) only if v3 writes e(x)
+\DeclareMathOperator{\Li}{Li}
+
+\title[An asymptotic formula for the theta-function sum $S(p)$]{An asymptotic formula for the theta-function sum $S(p)$, and a proof of a conjecture of Berndt, Bhat, Meyer, Xie and Zaharescu}
+\author{Samson Fraser}
+\address{Independent researcher}
+\newcommand{\zenododoi}{\texttt{[Zenodo DOI to be inserted]}}
+\date{October 2026}
+% the e-mail address is printed under the author's name on page 1 (as in v3), not in an address block at the end
+\makeatletter
+\def\@setauthors{%
+  \begingroup
+  \def\thanks{\protect\thanks@warning}%
+  \trivlist
+  \centering\footnotesize \@topsep30\p@\relax
+  \advance\@topsep by -\baselineskip
+  \item\relax
+  \author@andify\authors
+  \def\\{\protect\linebreak}%
+  \MakeUppercase{\authors}\par
+  {\scriptsize\href{mailto:samsonmfraser@gmail.com}{\nolinkurl{samsonmfraser@gmail.com}}\par}%
+  \endtrivlist
+  \endgroup}
+\makeatother
+
+% identifiers from the Lean sources, breakable at '.' and '_'
+\makeatletter\g@addto@macro\UrlBreaks{\do\_\do\.}\makeatother
+\DeclareUrlCommand\lean{\urlstyle{tt}}
+\setlength{\emergencystretch}{1.5em}
+
+\begin{document}
+\input{abstract}
+\maketitle
+\setcounter{tocdepth}{1}
+\tableofcontents
+\clearpage
+\input{part1}   % Sections 1-4
+\input{part2}   % Sections 5-8
+\input{part3}   % Sections 9-11, Appendix A, Acknowledgements and use of AI, References
+\end{document}

@@ -1,0 +1,666 @@
+% part1.tex -- Sections 1-4 of v3 (faithful transcription)
+% ---------------------------------------------------------------- local macros (reported)
+\providecommand{\sgn}{\operatorname{sgn}}
+\providecommand{\dpar}[1]{(\!(#1)\!)}   % the sawtooth ((x))
+\makeatletter
+\providecommand{\setlabeltext}[1]{\phantomsection\protected@edef\@currentlabel{#1}}
+\makeatother
+
+\section{Introduction}\label{sec:intro}
+
+\subsection*{A sum of signs}
+Let $p$ be an odd prime. Each pair $(h,j)$ with $1\le h,j\le p-1$ contributes a sign $(-1)^{j+1+\lfloor hj/p\rfloor}$, which is $+1$ or $-1$ according to the parity of $j+1+\lfloor hj/p\rfloor$. This paper is about the sum of these $(p-1)^2$ signs,
+\[
+S(p)=\sum_{h=1}^{p-1}\sum_{j=1}^{p-1}(-1)^{j+1+\lfloor hj/p\rfloor}.
+\]
+For a few small primes and some larger ones it takes the following values.
+\begin{center}\small
+\begin{tabular}{l*{10}{r}}
+\toprule
+$p$ & 3 & 5 & 7 & 11 & 13 & 101 & 233 & 1009 & 3119 & 999983\\
+$S(p)$ & 2 & 4 & 10 & 14 & 20 & 268 & 440 & 4408 & 9194 & 6306294\\
+\bottomrule
+\end{tabular}
+\end{center}
+For example, for $p=3$ the four terms are $+1,-1,+1,+1$, so $S(3)=2$. If the signs behaved like independent coin tosses, $S(p)$ would have size about $p$, and it would be negative about half of the time. In fact $S(p)$ has been positive for every prime computed, and it grows slightly faster than $p$. We shall see that $S(p)$ is about $\frac p2\log p$. So the signs cancel almost completely, and what is left is a bias only a factor of order $\log p$ above the size of a random sum.
+
+In the computed range the sum fluctuates around $\frac p2\log p$ by a few multiples of $p$. For all odd primes $p\le6\cdot10^6$ the quantity $S(p)/p-\frac12\log p$ lies between $-2.2$ and $2.4$, and over the primes $10^3<p\le6\cdot10^6$ it has mean $0.24$ and standard deviation $0.63$ (Section~\ref{sec:computations}). For example, $p=999983$, the largest prime below $10^6$, has $S(p)\approx6.31\,p$, while $\frac12\log p\approx6.91$. This prime lies below the average because $2p-1=3\cdot5\cdot11\cdot17\cdot23\cdot31$ has many small divisors; we explain below why such divisors push $S(p)$ down.
+
+The sign of $S(p)$ has an elementary meaning. Put $H=\frac{p-1}2$, reduce the $H^2$ numbers $2ab$ with $1\le a,b\le H$ modulo $p$, and let $N_+$ of the residues lie in the lower half $(0,p/2)$ and $N_-$ in the upper half $(p/2,p)$. Then $S(p)=2(N_--N_+)$ (Lemma~\ref{lem:gauss}). So $S(p)>0$ says that the upper half receives more of these products than the lower half, and $S(p)\approx\frac p2\log p$ says that the surplus is only a fraction of about $(\log p)/p$ of all the products. A proof that $S(p)>0$ must detect this small surplus for every prime.
+
+\subsection{The sum and the conjectures}\label{subsec:conjectures}
+For integers $h$ and $k\ge1$ let
+\begin{equation}\label{eq:Shk}
+S(h,k)=\sum_{j=1}^{k-1}(-1)^{j+1+\lfloor hj/k\rfloor}.
+\end{equation}
+It is one of the arithmetic sums attached to theta functions that were introduced by Hardy~\cite{b14} and studied by Berndt~\cite{b2} and Berndt and Goldberg~\cite{b3}. It belongs to the classical theta function $\vartheta_3(z)=\sum_{n\in\Z}e^{\pi in^2z}$: under a substitution $z\mapsto(az+b)/(cz+d)$ with $c>0$ and $c,d$ coprime of opposite parity, Berndt's transformation formula for $\log\vartheta_3$ contains, besides elementary terms, the term $\frac{\pi i}4S(d,c)$ (\cite[Theorem~4.1]{b2}; see~\cite[Section~2]{b1}). In the same way the Dedekind sum $s(d,c)$ appears in the transformation formula of the Dedekind eta function. For coprime $h,k$ of opposite parity, $S(h,k)$ satisfies the reciprocity law $S(h,k)+S(k,h)=1$ \cite[Theorem~4.2]{b2}, an analogue of Dedekind's reciprocity law. Remark~\ref{rem:hardy-dedekind} expresses $S(h,k)$ and $S(p)$ through Hardy sums and Dedekind sums. Berndt, Bhat, Meyer, Xie and Zaharescu~\cite{b1} studied the complete sums
+\begin{equation}\label{eq:Sk}
+S(k)=\sum_{h=1}^{k-1}S(h,k),
+\end{equation}
+so that $S(p)$ above is the case $k=p$. On the basis of numerical evidence they formulated the following conjectures, in which $k$ denotes a prime.\footnote{We keep the numbering of the third arXiv version of~\cite{b1}; Appendix~\ref{app:lean} compares it with the first version and with the formal statements in~\cite{b11}.}
+
+\begin{bconj}[positivity]{1.1}
+$S(k)>0$ for every odd prime $k>5$.
+\end{bconj}
+
+\begin{bconj}[the bound $2k$]{3.1}
+$S(k)>2k$ for every prime $k>233$.
+\end{bconj}
+
+\begin{bconj}[the bound $3k$]{3.2}
+$S(k)>3k$ for every prime $k>3119$.
+\end{bconj}
+
+\begin{bconj}[growth]{3.3}
+For any fixed $C_1,C_2,\varepsilon>0$ one has $C_1k<S(k)<C_2k^{1+\varepsilon}$ for all sufficiently large primes $k$.
+\end{bconj}
+
+The authors of~\cite{b1} write that ``Conjecture~1.1 appears to be very difficult to prove''. A priori, they note, a sum of $(k-1)^2$ signs should favour neither sign, ``But this intuition is apparently misleading.'' They trace the difficulty to ``our lack of knowledge about the distribution of the residues of $hj$ modulo $k$'', that is, to the points on the modular hyperbolas $hj\equiv c\pmod k$~\cite{b25}. They made Conjecture~3.3 ``with some temerity'', and they compare its upper half with conjectures in prime number theory ``for which `square-root cancellation' is surmised''. Their data for $k\le50000$ did not support a conjecture $S(k)>4k$: the largest exception they found was $k=49139$. The last exception below $6\cdot10^6$ is $k=58013$ (Proposition~\ref{prop:numerics}). The conjectures are also stated in the \emph{formal-conjectures} repository of Google DeepMind~\cite{b11}, where at the time of writing all of them are listed as open.
+
+\subsection*{Why this sum, and where the difficulty lies}
+Multiplication modulo $p$ scrambles intervals: as $h$ and $j$ run over intervals, the residues of $hj$ modulo $p$ spread over all residues, and how evenly the points of a modular hyperbola $hj\equiv c\pmod p$ fill a box is a subject of its own~\cite{b25}. The sum $S(p)$ measures a small, systematic departure from randomness in this picture, as the count of the products $2ab$ above shows. A classical question of the same kind is D.~H. Lehmer's problem on the parity of an integer and its inverse modulo $p$ (see~\cite{b30}), and $S(p)$ is a twisted first moment of the error term in a form of that problem (Lemma~\ref{lem:lehmer}).
+
+Our proof starts from an exact formula. A finite Fourier expansion and a reciprocity law for cotangent sums split $S(p)$ into a smooth main term and a weighted sum of the tangent sums $F_k(p)=\sum_{t=1}^{(k-1)/2}\tan(\pi pt/k)$ over odd $k$. Up to an error $O(p/\log p)$ only the moduli $k<\sqrt p(\log p)^4$ matter, and
+\[
+S(p)=\frac p2\log p+c_0p+\frac{4p}\pi\sum_{\substack{3\le k<\sqrt p(\log p)^4\\ k\text{ odd}}}\frac{F_k(p)}{k^2}+O\Bigl(\frac p{\log p}\Bigr)
+\]
+with an explicit constant $c_0=0.2399\ldots$ (Theorem~\ref{thm:B}). The whole problem is therefore to show that the sum over $k$ is $o(\log p)$. The trivial bound $|F_k(p)|\le F_k(1)\sim\frac k\pi\log k$ gives only $O((\log p)^2)$.
+
+This bound is needed for each prime, and averaging over $p$ cannot give it, because some terms are large for every prime. The quotient $F_k(p)/k$ depends only on $\theta_k=((2p)^{-1}\bmod k)/k$ (Lemma~\ref{lem:sign-form-tangent}), and it is large when $\theta_k$ is very close to a rational number with a small denominator. Iterating the reciprocity law makes this precise: up to a bounded error, $F_k(p)/k$ is a sum of terms $\pm\frac1{\pi m}\log\frac k{|r|m}$, one for each pair of integers $(m,r)$ with $m\ge1$ odd, $r\ne0$, $k\mid rp-m$ and $|r|m$ small compared with $k$ (Theorem~\ref{thm:explicit}). For instance, $F_k(p)=-F_k(1)$ if $k\mid p+1$ and $F_k(p)=F_k(1)$ if $k\mid p-1$, so that $F_k(p)/k=\mp\frac1\pi\log k+O(1)$ (Corollary~\ref{cor:Cm1}); the same holds with the minus sign if $k$ divides $2p-1$ and with the plus sign if $k$ divides $2p+1$ (Corollary~\ref{cor:singularities} and the remark after it). Which moduli these are depends on the factorizations of $p\pm1$, $2p\pm1$ and similar numbers, and such moduli occur for every $p$.
+
+We write $F_k(p)/k$ as a sum of signs along the multiples of $\theta_k$ and split it into a head, its first terms, and a tail. For the moduli $k$ between $\exp((\log p)^{2/3+o(1)})$ and $\sqrt p(\log p)^4$ we bound the heads on average over $k$. This leads to sums of modular inverses over short intervals, $\sum_{n\le N}e(bn^*/p)$ with $N$ much smaller than $\sqrt p$, where $n^*$ is the inverse of $n$ modulo $p$ and $e(x)=e^{2\pi ix}$. Little is known about these short Kloosterman sums. Nontrivial bounds are known only when $\log N$ is at least about $(\log p)^{2/3}$~\cite[Section~1.1]{b12}, and the bound of Bourgain and Garaev~\cite{b8} that we use saves only a power of $\log p$. This range is the source of the exponent $\frac23$ in our error term, and the small saving, with constants that are not explicit, is the reason why our proof applies only to very large primes. For smaller moduli we bound the heads trivially. The tails are large only when $\theta_k$ lies near a fraction with a small denominator, and we show that such moduli are rare with a new elementary estimate for the large divisors of the terms of an arithmetic progression (Theorem~\ref{thm:D}).
+
+\subsection{Main results}\label{subsec:main}
+The upper half of Conjecture~3.3 is easy: it follows in a few lines from a formula for $S(p)$ as a sum of products of cotangents (Section~\ref{sec:dual}). Let $\gamma$ be Euler's constant and
+\begin{equation}\label{eq:K0}
+K_0=\gamma+\log\frac4\pi=0.8187801401\ldots.
+\end{equation}
+
+\begin{namedthm}{A}\setlabeltext{A}\label{thm:A}
+For every odd prime $p$,
+\[
+|S(p)|\;\le\;\frac2p\Bigl(\sum_{\substack{0<a<p\\ a\text{ odd}}}\cot\frac{\pi a}{2p}\Bigr)^2\;\le\;\frac2{\pi^2}\,p\,(\log p+K_0)^2.
+\]
+In particular, for all $C_2>0$ and $\varepsilon>0$ we have $S(p)<C_2p^{1+\varepsilon}$ for all sufficiently large primes $p$.
+\end{namedthm}
+
+The exact decomposition of $S(p)$ uses, for odd $k\ge3$ and $n\in\Z$, the tangent sums
+\begin{equation}\label{eq:Fk}
+F_k(n)=\sum_{t=1}^{(k-1)/2}\tan\frac{\pi nt}k
+\end{equation}
+(no term is singular: $nt/k\equiv\frac12\pmod1$ is impossible for odd $k$), the function
+\begin{equation}\label{eq:I}
+I(\lambda)=\frac1\pi\int_0^\infty\frac{\cosh v-\cosh\lambda v}{\sinh v\,\sinh\lambda v}\,dv\qquad(\lambda>0),
+\end{equation}
+and the constant
+\begin{equation}\label{eq:c0}
+c_0=\frac{K_0}2+\frac{\log2}6+\frac3{\pi^2}\zeta'(2)=0.2399341036\ldots.
+\end{equation}
+
+\begin{namedthm}{B}\setlabeltext{B}\label{thm:B}
+\textup{(i)} For every odd prime $p$ we have the identity $S(p)=\Psi(p)+\Phi(p)$, where
+\[
+\Psi(p)=\frac2p\sum_{\substack{0<k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\,I\Bigl(\frac kp\Bigr),\qquad\Phi(p)=2\sum_{\substack{3\le k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\,\frac{F_k(p)}k,
+\]
+and $\Psi(p)=\frac p2\log p+c_0p+O(1)$.
+
+\textup{(ii)} For every odd prime $p$ and every real $K$ with $\sqrt p(\log p)^4\le K\le p^{9/10}$,
+\begin{equation}\label{eq:thmBii}
+S(p)=\frac p2\log p+c_0p+\frac{4p}\pi\sum_{\substack{3\le k<K\\ k\text{ odd}}}\frac{F_k(p)}{k^2}+O\Bigl(\frac p{\log p}\Bigr).
+\end{equation}
+The same holds with the sum extended over all odd $k$ with $3\le k<p$. All implied constants are absolute.
+\end{namedthm}
+
+Part~(i) splits $S(p)$ into a smooth part $\Psi(p)$, which depends on $p$ only through the sizes of the numbers $k/p$, and an arithmetic part $\Phi(p)$, in which $F_k(p)$ depends only on the residue of $p$ modulo $k$. Numerically, $\Psi(p)-\frac p2\log p-c_0p$ tends to a constant $c_1\approx-0.4076$, which we have not identified (Remark~\ref{rem:psi-expansion}). In part~(ii) the upper limit $p^{9/10}$ is a matter of convenience: for $k<K$ the proof replaces $\frac2k\cot\frac{\pi k}{2p}$ by $\frac{4p}{\pi k^2}$, at a cost $O(K^2\log K/p)$. Our main result is that, for every large prime, the sum in~\eqref{eq:thmBii} is of smaller order than the main term.
+
+\begin{namedthm}{C$^*$}\setlabeltext{C$^*$}\label{thm:Cstar}
+There are absolute constants $C$ and $p_0$ such that for every prime $p\ge p_0$
+\[
+\Bigl|S(p)-\frac p2\log p-c_0p\Bigr|\le C\,p\,(\log p)^{2/3}(\log\log p)^{17/3}.
+\]
+\end{namedthm}
+
+Since $(\log\log p)^3\le(\log p)^{\gamma_0}$ for large $p$, Theorem~\ref{thm:Cstar} contains the following form, with the same constant~$C$. Its proof is a little simpler (Section~\ref{sec:proof-C}).
+
+\begin{namedthm}{C}\setlabeltext{C}\label{thm:C}
+There is an absolute constant $C$ such that for every $\gamma_0\in(0,\frac23)$ and every prime $p\ge p_0(\gamma_0)$
+\[
+\Bigl|S(p)-\frac p2\log p-c_0p\Bigr|\le C\,p\,(\log p)^{2/3+\gamma_0}(\log\log p)^{8/3}.
+\]
+In particular, for every $\varepsilon>0$ we have $S(p)=\frac p2\log p+c_0p+O_\varepsilon\bigl(p(\log p)^{2/3+\varepsilon}\bigr)$ for all primes $p$.
+\end{namedthm}
+
+The term $c_0p$ in Theorem~\ref{thm:Cstar} is smaller than the error term. So Theorem~\ref{thm:Cstar} says no more than $S(p)=\frac p2\log p+O(p(\log p)^{2/3}(\log\log p)^{17/3})$; it does not show that $c_0p$ is a second-order term of $S(p)$ for an individual prime. In fact no error term $o(p)$ is possible. In a companion paper~\cite{b32}, which has not yet been refereed, we show that $S(p)/p-\frac12\log p$ has a limiting distribution over the primes, symmetric about $c_0$ and with support unbounded in both directions \cite[Theorem~1, Corollary~3.3 and Remark~3.4]{b32}. The constant $c_0$ carries information in two other places: in Theorem~\ref{thm:B}, where the rest of $S(p)$ is given explicitly up to $O(p/\log p)$, and on average over the primes, where $c_0$ is the mean value of $S(p)/p-\frac12\log p$ (Theorem~\ref{thm:F} with $q=1$) and the deviations from it are bounded in mean square (Theorem~\ref{thm:E}(ii)).
+
+\begin{corollary}\label{cor:conj33}
+$S(p)/p\to\infty$ as $p\to\infty$. Hence the lower half of Conjecture \textup{3.3} holds, and together with Theorem~\ref{thm:A}, Conjecture \textup{3.3} holds. Moreover, for every $M>0$ we have $S(p)>Mp$ for all sufficiently large primes $p$; in particular, $S(p)>0$, $S(p)>2p$ and $S(p)>3p$ for all sufficiently large primes.
+\end{corollary}
+
+Corollary~\ref{cor:conj33} needs much less than the bound of Bourgain and Garaev.
+
+\begin{namedthm}{C$^\flat$}\setlabeltext{C$^\flat$}\label{thm:Cflat}
+Suppose that there are constants $\delta>0$, $0<\theta<1$ and $C$ such that for every sufficiently large prime $p$, every $b\not\equiv0\pmod p$ and every $N<p$ with $\log N\ge(\log p)^\theta$,
+\[
+\Big|\sum_{n\le N}e\Bigl(\frac{bn^*}p\Bigr)\Big|\le C\,N(\log p)^{-\delta}.
+\]
+Then $S(p)=\frac p2\log p+O\bigl(p(\log p)^{\max(\theta,1-\delta)}(\log\log p)^4\bigr)$ for all sufficiently large primes $p$, with an implied constant depending only on $\delta$, $\theta$ and $C$. In particular $S(p)/p\to\infty$, and Conjecture~\textup{3.3} holds.
+\end{namedthm}
+
+The bound of Bourgain and Garaev gives this hypothesis with $\theta=\frac9{10}$ and $\delta=\frac14$, and for this it is needed only for $\log N\ge(\log p)^{9/10}$ (the Lean proof assumes it for $\log N\ge\frac12(\log p)^{9/10}$), far inside the range that their proof covers (Section~\ref{sec:proof-C}). So Conjecture~3.3 does not depend on the exact range of their theorem, but only on a fixed power-of-log saving that any future bound for short Kloosterman sums of this length would also give. This is the route of the Lean proof (Appendix~\ref{app:lean}).
+
+\subsection*{Further results}
+The new ingredient in the proofs of Theorems~\ref{thm:Cstar} and~\ref{thm:C} is the following elementary estimate, and its variant Theorem~\ref{thm:Dstar}. We state it for an arbitrary modulus $q$, since primality plays no role in it. Divisors are positive: for a nonzero integer $n$, $d\mid n$ means that $d$ is a positive divisor of $|n|$.
+
+\begin{namedthm}{D}\setlabeltext{D}\label{thm:D}
+Let $0<\gamma_0<1$. There is $L_0(\gamma_0)$ such that the following holds for every integer $q$ with $\log q\ge L_0(\gamma_0)$. Put $T=\exp((\log q)^{\gamma_0})$. Let $a$ be an integer coprime to $q$, let $R\ge1$, and let $I$ be a set of at most $R$ consecutive integers such that $0<|a+qt|\le q^2$ for all $t\in I$. Then
+\[
+\sum_{t\in I}\ \sum_{\substack{d\mid a+qt\\ d>TR}}\frac1d\;\le\;\exp\Bigl(-\frac{\gamma_0}4(\log q)^{\gamma_0}\Bigr)=T^{-\gamma_0/4}.
+\]
+\end{namedthm}
+
+For a random set of $R$ integers of size at most $q^2$ the left-hand side would be about $1/T$. Theorem~\ref{thm:D} therefore says that the terms of a progression with difference $q$ never carry more than $T^{1-\gamma_0/4}$ times this expected mass of divisors larger than $T$ times the length of the progression, uniformly in that length. The same proof gives the bound $T^{-\gamma_0+\varepsilon}$, and the case $R=1$, with $a+qt$ a product of the first few primes, shows that this is optimal up to $\varepsilon$ (Remark~\ref{rem:exponent-optimality}). We state the weaker form because it suffices and because it is the form checked in Lean. The method also works for much smaller $T$, with a smaller saving, and this gives Theorem~\ref{thm:Cstar}.
+
+\begin{namedthm}{D$^*$}\setlabeltext{D$^*$}\label{thm:Dstar}
+There is an absolute constant $q_1$ such that the following holds for every integer $q\ge q_1$. Put $L=\log q$, and let $T$ satisfy $\log T\ge(\log L)^3$. Let $a$ be an integer coprime to $q$, let $R\ge1$, and let $I$ be a set of at most $R$ consecutive integers such that $0<|a+qt|\le q^2$ for all $t\in I$. Then
+\[
+\sum_{t\in I}\ \sum_{\substack{d\mid a+qt\\ d>TR}}\frac1d\;\le\;\exp\Bigl(-\frac{\log T}{4\log L}\Bigr).
+\]
+\end{namedthm}
+
+In Section~\ref{sec:proof-C}, Theorems~\ref{thm:D} and~\ref{thm:Dstar} are applied with $q=p$ to the progressions $\{pt\mp m:R\le t<2R\}$, where $1\le m\le\lceil(\log p)^2\rceil$ and $R$ is a power of $2$. If $\|2m\theta_k\|<1/T$, then $k$ is a divisor larger than $TR$ of a term of one of them, for a suitable $R$ (Lemma~\ref{lem:witnesses}). Shiu's theorem~\cite{b24} bounds sums of multiplicative functions over progressions of length at least $q^\eta$; Theorem~\ref{thm:D} has no condition on the length, but it bounds only the $1/d$-weighted mass of the divisors above $TR$. We do not know whether it can be deduced from the results on divisors in short intervals and progressions in Hall and Tenenbaum's book~\cite{b37} or in Nair and Tenenbaum~\cite{b38}; we would be glad to learn of such a deduction.
+
+On average over $p$ the error term in Theorem~\ref{thm:Cstar} can be reduced to $p(\log\log p)^2$.
+
+\begin{namedthm}{E}\setlabeltext{E}\label{thm:E}
+\textup{(i)} Let $A>0$. For $X\ge X_0(A)$, all primes $p\in(X,2X]$ except at most $CX(\log X)^{-A}$ of them satisfy
+\[
+\Bigl|S(p)-\frac p2\log p\Bigr|\le\frac{(A+15)^2}{\pi^2}\,p\,(\log\log p)^2,
+\]
+where $C$ is an absolute constant.
+
+\textup{(ii)} For $X\ge2$,
+\[
+\sum_{X<p\le2X}\Bigl(\frac{S(p)}p-\frac12\log p-c_0\Bigr)^2\le C'\,\frac X{\log X}
+\]
+with an absolute but ineffective constant $C'$.
+\end{namedthm}
+
+The constant $C'$ is ineffective because the proof uses the Siegel--Walfisz theorem.
+
+\begin{corollary}\label{cor:density}
+\textup{(a)} Let $\mathcal P$ be the set of primes $p$ with $|S(p)-\frac p2\log p|\le30\,p(\log\log p)^2$. Then $\#\{p\le x:p\notin\mathcal P\}\ll x(\log x)^{-2}$.
+
+\textup{(b)} For every function $\xi(x)\to\infty$, $\#\{p\le x:\ |S(p)-\frac p2\log p-c_0p|>\xi(p)\,p\}=o(\pi(x))$.
+\end{corollary}
+
+The heuristics and the numerical evidence (Section~\ref{sec:computations}) suggest that the bound $S(p)=\frac p2\log p+O(p(\log\log p)^2)$ holds for every prime, and that the extreme values come from primes $p$ for which $p+1$, $p-1$, $2p-1$ or $2p+1$ is divisible by many small odd numbers.
+
+Our last theorem gives the mean value of $S(p)/p-\frac12\log p$ in residue classes. For odd $k\ge3$, a divisor $g$ of $k$ and an integer $r$ coprime to $g$, let $\langle F_k\rangle_{g,r}$ be the average of $F_k(x)$ over the reduced residues $x$ modulo $k$ with $x\equiv r\pmod g$.
+
+\begin{namedthm}{F}\setlabeltext{F}\label{thm:F}
+Let $q\ge1$ and $(r,q)=1$. As $x\to\infty$,
+\[
+\frac1{\pi(x;q,r)}\sum_{\substack{p\le x\\ p\equiv r\ (\mathrm{mod}\ q)}}\Bigl(\frac{S(p)}p-\frac12\log p\Bigr)\longrightarrow c_0(q;r):=c_0+\frac4\pi\sum_{\substack{k\ge3\\ k\text{ odd}}}\frac{\langle F_k\rangle_{(k,q),r}}{k^2},
+\]
+and the series converges absolutely. Moreover $c_0(q;r)+c_0(q;-r)=2c_0$, and $c_0(q;r)=c_0$ if $q$ is a power of $2$.
+\end{namedthm}
+
+Table~\ref{tab:residue-classes} compares $c_0(q;r)$ with observed means; for instance $c_0(3;1)=0.6384$ and $c_0(3;2)=-0.1585$, while the means over the primes $10^3<p\le6\cdot10^6$ in these classes are $0.6384$ and $-0.1588$.
+
+Finally, we computed $S(p)$ exactly for all odd primes $p\le6\cdot10^6$ and for $56$ selected primes between $3\cdot10^6$ and $5.4\cdot10^{10}$ (Section~\ref{sec:computations}).
+
+\begin{proposition}\label{prop:numerics}
+For all odd primes $p\le6\cdot10^6$ we have $S(p)>0$; $S(p)>p$ if $p>5$; $S(p)>2p$ if $p>233$; $S(p)>3p$ if $p>3119$; $S(p)>4p$ if $p>58013$; and $S(p)>5p$ if $p>869399$. None of the thresholds can be lowered: $S(5)=4$, $S(233)=440$, $S(3119)=9194$, $S(58013)<4\cdot58013$ and $S(869399)<5\cdot869399$.
+\end{proposition}
+
+\subsection{What is and what is not proved}\label{subsec:status}\mbox{}
+
+\begin{center}\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.375\textwidth}>{\raggedright\arraybackslash}p{0.537\textwidth}}
+\toprule
+Statement & Status\\
+\midrule
+Growth conjecture (3.3), upper half & proved for all $p$ (Theorem~\ref{thm:A})\\
+\addlinespace
+Growth conjecture (3.3), lower half & proved (Corollary~\ref{cor:conj33}); needs only a power-of-log saving for short Kloosterman sums (Theorem~\ref{thm:Cflat})\\
+\addlinespace
+$S(p)=\frac p2\log p$\newline\mbox{}\quad${}+O(p(\log p)^{2/3}(\log\log p)^{17/3})$ & proved for all large $p$ (Theorem~\ref{thm:Cstar})\\
+\addlinespace
+the constant $c_0$ & second-order constant of $\Psi(p)$ (Theorem~\ref{thm:B}); mean of $S(p)/p-\frac12\log p$ over the primes (Theorem~\ref{thm:F})\\
+\addlinespace
+$S(p)=\frac p2\log p+O(p(\log\log p)^2)$ & proved for all $p$ outside a set of relative density zero (Theorem~\ref{thm:E}); open for all $p$\\
+\addlinespace
+$S(p)>0$, $S(p)>2p$, $S(p)>3p$ beyond the thresholds of~\cite{b1} (Conjectures 1.1, 3.1, 3.2); $S(p)>p$ for $p>5$ & proved for all $p\ge p_1$, an uncomputed threshold (Corollary~\ref{cor:conj33}); verified for $p\le6\cdot10^6$ (Proposition~\ref{prop:numerics}); open in between\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+We know of no earlier proof of Conjecture~3.3. Our proof gives more than the conjecture: the asymptotic formula of Theorem~\ref{thm:Cstar}, which rests on the exact decomposition of Theorem~\ref{thm:B}. For the conjecture itself it needs only a fixed power-of-log saving for short Kloosterman sums (Theorem~\ref{thm:Cflat}). Theorems~\ref{thm:D} and~\ref{thm:Dstar} are estimates for large divisors of the terms of arithmetic progressions of any length; they do not involve $S(p)$, their proofs are elementary, and they may be of independent interest. The values of $S(p)$ for all primes up to $6\cdot10^6$ were computed exactly, and checked by independent programs for all $p<2\cdot10^5$ and for $640$ values from the whole range (Section~\ref{sec:computations}). All values for $4\cdot10^6<p\le6\cdot10^6$ were also recomputed by a separately written program based on the same formula (Lemma~\ref{lem:counting}), with no discrepancy.
+
+A variant of the proof has also been checked by computer. Lean is a proof assistant: a program that checks every step of a formal proof. In Lean~4 with its library Mathlib, starting from the definitions of $S$ in~\cite{b11}, the file that also states the conjectures formally, we have verified the upper half of Conjecture~3.3 and Theorems~\ref{thm:D} and~\ref{thm:Dstar} unconditionally. The whole of Conjecture~3.3 is verified assuming only the hypothesis of Theorem~\ref{thm:Cflat}, which the formalization derives from the Bourgain--Garaev bound for $\log N\ge\frac12(\log p)^{9/10}$. Theorem~\ref{thm:Cstar} (and hence Theorem~\ref{thm:C}) is verified assuming the Bourgain--Garaev bound in the range of Lemma~\ref{lem:bourgain-garaev}. That bound is the only input of the formal proofs that is not itself formalized. The formal proofs differ from ours in some details; for instance, they use Kloosterman's bound $2p^{3/4}$ in place of Weil's bound. The positivity, $2k$ and $3k$ conjectures are verified for all $p\le2\cdot10^4$ by a computation in the Lean kernel. Appendix~\ref{app:lean} gives the details.
+
+The main open questions (Section~\ref{sec:remaining-questions}) are the positivity, $2k$ and $3k$ conjectures for the primes between $6\cdot10^6$ and $p_1$; the error term $O(p(\log\log p)^2)$ for every prime, which Theorem~\ref{thm:E} gives for almost all primes; and a proof of Conjecture~3.3 that avoids bounds for short Kloosterman sums. The threshold $p_1$ is effective in principle but has not been computed: it depends on the constants of \cite[Theorem~16]{b8}, which are not given explicitly.
+
+\emph{What a reader should check first.} Apart from the parts checked in Lean, the proof of Conjecture~3.3 uses one external result: Lemma~\ref{lem:bourgain-garaev}, our statement of \cite[Theorem~16]{b8} together with the range of $N$ covered by its proof. An earlier version of this paper used that bound outside this range. A reader who checks one thing should check Lemma~\ref{lem:bourgain-garaev} against~\cite{b8}, and then Section~\ref{sec:proof-C}.
+
+The Lean code, the data and the verification programs are available at \zenododoi.
+
+\subsection{Outline of the method}\label{subsec:outline}
+\emph{The tools.} For a prime $p$ and $b\not\equiv0\pmod p$, sums of $e(bn^*/p)$ over $n$ are \emph{Kloosterman sums}. Over a complete residue system, and with an additional factor $e(\ell n/p)$, Weil's bound gives square-root cancellation: such a sum is at most $2\sqrt p$ in absolute value~\cite{b29}. By completion, this bounds the sums over intervals of length $N$ by about $\sqrt p\log p$, which is useful only for $N$ larger than $\sqrt p\log p$. For the \emph{short} Kloosterman sums $\sum_{n\le N}e(bn^*/p)$ with smaller $N$, the bound of Bourgain and Garaev~\cite{b8} is $C_{BG}N(\log p)(\log\log p)^3/(\log N)^{3/2}$, a saving of the factor $(\log N)^{3/2}/(C_{BG}(\log p)(\log\log p)^3)$ over the trivial bound $N$. Their Theorem~16 is stated without a restriction on $N$, but its proof covers only $\log N\ge A_{BG}(\log p)^{2/3}(\log\log p)^{8/3}$, for an absolute constant $A_{BG}$ (Lemma~\ref{lem:bourgain-garaev}). We therefore apply it to the moduli $k\ge K_*=\exp(A(\log p)^{2/3}(\log\log p)^{8/3})$ with $A=A_{BG}+1$. This is the source of the exponent $\frac23$ in Theorems~\ref{thm:Cstar} and~\ref{thm:C}.
+
+\emph{An exact formula.} The starting point (Section~\ref{sec:dual}) is the finite Fourier expansion of $n\mapsto(-1)^{\lfloor n/p\rfloor}$ on $\Z/2p\Z$. It turns the sum of signs into a sum of products of cotangents,
+\begin{equation}\label{eq:dual-intro}
+S(p)=\frac2p\sum_{\substack{0<k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\,C_p(k),\qquad C_p(k)=\sum_{\substack{0<a<p\\ a\text{ odd}}}\cot\frac{\pi ka}{2p},
+\end{equation}
+or, equivalently,
+\begin{equation}\label{eq:symmetric}
+S(p)=\frac2p\sum_{\substack{0<k,n<p\\ k,n\text{ odd}}}\cot\frac{\pi k}{2p}\,\cot\frac{\pi n}{2p}\,\sigma(n\overline k),
+\end{equation}
+where $\overline k$ is the inverse of $k$ modulo $2p$ and $\sigma(m)=\pm1$ according as $m\bmod2p$ lies in $(0,p)$ or in $(p,2p)$. Since $|C_p(k)|\le C_p(1)\sim\frac p\pi\log p$, Theorem~\ref{thm:A} follows at once. Formula~\eqref{eq:symmetric} also shows where the difficulty lies: the signs $\sigma(n\overline k)$ depend on modular inverses, which is the modular-hyperbola problem of~\cite{b1} in another form.
+
+\emph{Reciprocity and the main term.} The half-range cotangent sums satisfy a reciprocity law (Section~\ref{sec:reciprocity}), which we prove by contour integration:
+\[
+C_p(k)=\frac pkF_k(p)+I\Bigl(\frac kp\Bigr),\qquad\pi\lambda I(\lambda)=\log\frac1\lambda+K_0+O(\lambda^2).
+\]
+Inserted into~\eqref{eq:dual-intro}, the terms $I(k/p)$ produce the main term $\frac p2\log p+c_0p$, and the terms $F_k(p)$ produce $\Phi(p)$ (Section~\ref{sec:decomposition}).
+
+\emph{Large moduli: Weil's bound.} For $k\ge K_W=\sqrt p(\log p)^4$ we do not estimate the $F_k(p)$ one by one. Summed over $k$ in an interval, the sums $C_p(k)$ become sums of $e(c\overline k/2p)$ over $k$, which are incomplete Kloosterman sums, and Weil's bound gives square-root cancellation in them. These moduli contribute only $O(p/\log p)$ (Theorem~\ref{thm:B}(ii)), although the trivial bound for them is of order $p(\log p)^2$.
+
+\emph{Heads and tails.} For $k<K_W$ we write $F_k(p)/k$, via a sign form of the tangent sums (Lemma~\ref{lem:sign-form-tangent}), as
+\[
+\frac{F_k(p)}k=-\sum_{\substack{0<n<k\\ n\text{ odd}}}\frac1k\cot\frac{\pi n}{2k}\,\sgn\Bigl(\frac12-\{n\theta_k\}\Bigr),
+\]
+a sum of signs along the multiples of $\theta_k$, with weights close to $\frac2{\pi n}$. We split it at $n\le N$, where $\log N\approx\log T$ and $T=\exp((\log\log p)^3)$ (for Theorem~\ref{thm:C}, $T=\exp((\log p)^{\gamma_0})$). The head ($n\le N$) is at most $\frac1\pi\log N+O(1)$ in absolute value. Summed with the weights $1/k$ over $k<K_*$, the heads therefore cost $O(\log N\log K_*)=O((\log p)^{2/3}(\log\log p)^{17/3})$, which is the error term in Theorem~\ref{thm:Cstar}.
+
+\emph{Middle moduli: the Bourgain--Garaev bound.} For $K_*\le k<K_W$ we average the heads over $k$ in dyadic blocks. Expanding the sign function into a trigonometric polynomial turns each head into sums of $e(\ell n\overline k/2p)$ over $k$ in a block $[K,2K)$, that is, into Kloosterman sums of length about $K$. These sums are short, of length at most $\sqrt p(\log p)^4$, and for most of them Weil's bound is trivial. The bound of Bourgain and Garaev applies to them because $K\ge K_*$ (Lemmas~\ref{lem:reduction} and~\ref{lem:bourgain-garaev}). The power $\frac32$ of $\log N$ in the saving matters: it makes the contributions of the dyadic blocks above $K_*$ add up to the same order as the heads below $K_*$.
+
+\emph{The tails: Theorems~\ref{thm:D} and~\ref{thm:Dstar}.} The tail ($N<n<k$) is small whenever the points $n\theta_k$ are well distributed. An inequality of Erd\H{o}s--Tur\'an type, which bounds the discrepancy of a sequence by its exponential sums, shows that this is the case unless $\|2m\theta_k\|<1/T$ for some $m\le(\log p)^2$; the tails of the other moduli contribute $O(p)$ to $S(p)$. At this scale no estimate for exponential sums is available, so we count the exceptional moduli instead. Such a modulus $k$ has a \emph{witness}: an integer $r$ with $0<|r|<k/T$ and $k\mid pr-m$. Theorem~\ref{thm:Dstar}, applied as described after Theorem~\ref{thm:D}, shows that the total $1/k$-weighted mass of these moduli is at most a power of $\log p$ times $\exp(-\frac14(\log\log p)^2)$, so that their tails contribute only $o(p)$. Bounds for divisor sums along progressions, such as Shiu's theorem~\cite{b24}, need progressions of length at least a fixed power of the modulus. Ours have every length from $1$ to about $\sqrt p$, and this is why we need Theorems~\ref{thm:D} and~\ref{thm:Dstar}. Their proof (Section~\ref{sec:divisors}) is a recursion on the length of the progression, which ends with Rankin's trick, the bound $\mathbf 1_{d>Y}\le(d/Y)^\alpha$.
+
+\emph{Averages over primes.} On average over $p$ the problem is much easier. Since $F_k(p)$ depends only on $p\bmod k$, each truncation $R_K(p)$ of the sum in~\eqref{eq:thmBii} is a periodic function of $p$, whose frequencies are fractions with odd denominators below $K$. The large sieve gives Theorem~\ref{thm:E}(i); together with the Siegel--Walfisz theorem it gives Theorem~\ref{thm:E}(ii), and the Siegel--Walfisz theorem gives Theorem~\ref{thm:F} (Section~\ref{sec:averages}).
+
+\subsection{Related work}\label{subsec:related}
+Hardy sums and their reciprocity laws go back to Hardy~\cite{b14} and were developed by Berndt~\cite{b2}, Berndt and Goldberg~\cite{b3} and Sitaramachandrarao~\cite{b26}, who expressed them in terms of Dedekind sums; L\"ageler~\cite{b18} related $S(d,c)$ to even continued fractions, which also govern the expansion of Subsection~\ref{subsec:even-cf}. Mean values of Dedekind sums $s(h,k)$ over $h$ for fixed $k$ are classical (see e.g.~\cite{b10}); they are closely related to mean values of $|L(1,\chi)|^2$ over odd characters~\cite{b31}, and Walum~\cite{b28} gave an exact formula for $\sum_{\chi\text{ odd}}|L(1,\chi)|^2$. Those mean values are quadratic in $L(1,\chi)$, whereas $S(p)$ is cubic: by orthogonality it is a weighted sum of $|A(\chi)|^2A(\chi)$ over the odd characters $\chi$ modulo $p$, where $A(\chi)=\sum_{0<b<p/2}\chi(b)$ (Lemma~\ref{lem:cubic}). Averages of Dedekind sums over restricted sets of Farey fractions, which are of order $\log Q$, were evaluated by Minelli, Sourmelidis and Technau~\cite{b19}; reciprocity formulas, pointwise bounds and limiting distributions for cotangent sums were obtained by Bettin and Conrey~\cite{b5}, Bettin~\cite{b4} and Bettin and Drappeau~\cite{b6,b7}; in particular~\cite{b6} bounds partial sums of the cotangent function in terms of continued fraction data, in the spirit of Subsection~\ref{subsec:even-cf}. The distributional results among these average over complete residue systems or over all denominators, whereas $S(p)$ involves essentially one point per modulus. We did not find the twisted first moment of Lemma~\ref{lem:lehmer} in the literature. For short Kloosterman sums see Korolev~\cite{b17}, who also describes Karatsuba's method, Bourgain and Garaev~\cite{b8,b9} and Garaev and Shparlinski~\cite{b12}; for modular hyperbolas see Shparlinski's survey~\cite{b25}. Theorem~\ref{thm:D} is related in spirit to Shiu's Brun--Titchmarsh theorem for multiplicative functions~\cite{b24}, which bounds divisor sums along progressions whose length is a power of the modulus; Theorem~\ref{thm:D} has no such restriction, but controls only the $1/d$-weighted mass of the large divisors.
+
+\subsection*{How to read this paper}
+Sections~\ref{sec:elementary} and~\ref{sec:dual} are elementary; they give several exact formulas for $S(p)$ and the proof of Theorem~\ref{thm:A}. Section~\ref{sec:reciprocity} proves the reciprocity law; its Subsection~\ref{subsec:even-cf} explains the size and the singularities of $F_k(p)$ but is not used in the proof of Theorem~\ref{thm:Cstar}. Section~\ref{sec:decomposition} proves Theorem~\ref{thm:B}. The proofs of Theorems~\ref{thm:Cstar}, \ref{thm:C} and~\ref{thm:Cflat} occupy Sections~\ref{sec:tangent}--\ref{sec:proof-C}: Section~\ref{sec:tangent} collects the tools, Section~\ref{sec:divisors} proves Theorems~\ref{thm:D} and~\ref{thm:Dstar} and can be read on its own, and Section~\ref{sec:proof-C} puts the pieces together. Section~\ref{sec:averages} proves the results on average (Theorems~\ref{thm:E} and~\ref{thm:F}), Section~\ref{sec:computations} describes the computations, Section~\ref{sec:remaining-questions} lists open questions, and Appendix~\ref{app:lean} describes the formalization. A reader interested only in Corollary~\ref{cor:conj33} can skip Subsection~\ref{subsec:even-cf} and Sections~\ref{sec:averages} and~\ref{sec:computations}.
+
+\subsection{Notation}\label{subsec:notation}
+We write $e(x)=e^{2\pi ix}$, $\|x\|$ for the distance from $x$ to the nearest integer, $\{x\}=x-\lfloor x\rfloor$, and $\dpar x=x-\lfloor x\rfloor-\frac12$. For $m\in\Z$ with $p\nmid m$ we put
+\[
+\sigma(m)=(-1)^{\lfloor m/p\rfloor};
+\]
+thus $\sigma(m)=1$ if $m\bmod2p\in(0,p)$ and $\sigma(m)=-1$ if $m\bmod2p\in(p,2p)$, and $\sigma$ is $2p$-periodic and odd. We use two kinds of inverses. For $k$ coprime to $2p$, $\overline k$ denotes an integer with $k\overline k\equiv1\pmod{2p}$. For $n$ coprime to $p$, $n^*$ denotes the inverse of $n$ modulo $p$. For coprime odd positive integers $m,k$ let
+\[
+C_m(k)=\sum_{\substack{0<a<m\\ a\text{ odd}}}\cot\frac{\pi ka}{2m}.
+\]
+The sums $F_k(n)$ are defined in~\eqref{eq:Fk} for odd $k\ge3$, and $F_1=0$. For $K>3$ we put
+\[
+R_K(n)=\sum_{\substack{3\le k<K\\ k\text{ odd}}}\frac{F_k(n)}{k^2}.
+\]
+We use $h(x)=\frac{\pi x}2\cot\frac{\pi x}2$ for $0<x\le1$ and $h(0)=1$; $h$ decreases from $1$ to $0$ on $[0,1]$, is continuously differentiable there, and $0\le1-h(x)\le x^2$ (the Taylor coefficients of $1-y\cot y$ are positive, so $(1-h(x))/x^2$ increases on $(0,1]$, and its value at $x=1$ is $1-h(1)=1$). $P^+(n)$ denotes the largest prime factor of $n$ ($P^+(1)=1$), and $n$ is \emph{$y$-smooth} if $P^+(n)\le y$ and \emph{$y$-rough} if all its prime factors exceed $y$; $\Omega(n)$ is the number of prime factors of $n$ counted with multiplicity, and $\sigma_s(n)=\sum_{d\mid n}d^s$. The letter $\ell$ always denotes a prime. Finally $\tau,\omega,\varphi,\mu$ are the divisor function, the number of distinct prime factors, Euler's function and the M\"obius function, $\pi(x;q,r)$ counts primes $p\le x$ with $p\equiv r\pmod q$, and $C$ denotes an absolute constant, not necessarily the same at each occurrence.
+
+\section{Elementary reformulations}\label{sec:elementary}
+
+This section rewrites $S(p)$ in several equivalent forms, each of which shows a different side of it: a sum of Hardy sums, a sum of sawtooth values, a signed count in Lehmer's problem on an integer and its inverse, a count of the products $2ab\bmod p$ that fall into the lower half of $(0,p)$, and a cubic moment of half-range character sums. The main device is the reflection $b\mapsto p-b$, which makes the terms with even $a$ cancel. The later sections use only Lemma~\ref{lem:elementary}, the identity~\eqref{eq:sgn-sawtooth}, and Lemma~\ref{lem:counting}, which is the basis of our computations.
+
+\begin{lemma}\label{lem:elementary}
+For every odd prime $p$:
+\begin{enumerate}[label=\upshape(\alph*),leftmargin=*,nosep]
+\item $S(p)=\sum_{a,b=1}^{p-1}(-1)^{\lfloor ab/p\rfloor}=\sum_{a,b=1}^{p-1}\sigma(ab)$;
+\item the inner sums $T(a):=\sum_{b=1}^{p-1}(-1)^{\lfloor ab/p\rfloor}$ vanish for even $a$, so that $S(p)=\sum_{0<a<p,\ a\text{ odd}}T(a)$;
+\item $S(p-a,p)=T(a)$ for $1\le a\le p-1$; in particular $S(h,p)=0$ for odd $h$ \textup{(}take $a=p-h$, which is even\textup{)}.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For $1\le a,j\le p-1$ we have $p\nmid aj$, hence $\lfloor(p-a)j/p\rfloor=j-1-\lfloor aj/p\rfloor$ and $j+1+\lfloor(p-a)j/p\rfloor\equiv\lfloor aj/p\rfloor\pmod2$. This proves (c), and (a) follows by summing over $a$. If $a$ is even, then $\lfloor a(p-b)/p\rfloor=a-1-\lfloor ab/p\rfloor\equiv1+\lfloor ab/p\rfloor\pmod2$, so the terms $b$ and $p-b$ of $T(a)$ cancel; since $p$ is odd, $b\mapsto p-b$ has no fixed point. This proves (b) and the last assertion of (c).
+\end{proof}
+
+\begin{remark}[Hardy and Dedekind sums]\label{rem:hardy-dedekind}
+In Berndt's notation for Hardy sums, $T(a)=s_4(a,p)$, so that $S(p)=\sum_{a\text{ odd},\,0<a<p}s_4(a,p)$. Sitaramachandrarao~\cite{b26} expressed the Hardy sums through Dedekind sums $s(h,k)$; in particular $s_4(h,k)=8s(h,2k)-4s(h,k)$ for odd $h$ coprime to $k$, whence $S(p)=\sum_{a\text{ odd},\,0<a<p}\bigl(8s(a,2p)-4s(a,p)\bigr)$, and $S(h,k)=4s(h,k)-8s(h+k,2k)$ for coprime $h,k$ with $h{+}k$ odd. Combined with the identity $s(h,2k){+}s(h{+}k,2k){+}s(2h,k)=3s(h,k)$ for coprime $h,k$, a case of Knopp's identity~\cite{b16}, the latter becomes $S(h,k)=8s(h,2k)+8s(2h,k)-20s(h,k)$. These identities are not used below.
+\end{remark}
+
+\begin{lemma}[Sawtooth form]\label{lem:sawtooth}
+$S(p)=-4\sum_{a,b=1}^{p-1}\dpar{\frac{ab}{2p}}$.
+\end{lemma}
+
+\begin{proof}
+For $y\in\R\setminus\frac12\Z$ we have
+\begin{equation}\label{eq:sgn-sawtooth}
+\sgn\Bigl(\frac12-\{y\}\Bigr)=2\,\dpar{y+\tfrac12}-2\,\dpar y,
+\end{equation}
+and $\sigma(m)=\sgn(\frac12-\{m/2p\})$ for $p\nmid m$. Hence $\sigma(ab)=2\dpar{\frac{ab+p}{2p}}-2\dpar{\frac{ab}{2p}}$. Replacing $b$ by $p-b$ shows that $\sum_b\dpar{\frac{ab+p}{2p}}=\sum_b\dpar{\frac{a+1}2-\frac{ab}{2p}}$; for odd $a$ this equals $-\sum_b\dpar{\frac{ab}{2p}}$, while for even $a$ it equals $-\sum_b\dpar{\frac{ab+p}{2p}}$ and therefore vanishes. In the same way $\sum_b\dpar{\frac{ab}{2p}}=0$ for even $a$. Summing over $a$ gives the claim.
+\end{proof}
+
+\begin{lemma}[Lehmer form]\label{lem:lehmer}
+For $1\le c\le p-1$ let $N(c,p)$ be the number of pairs $(a,b)\in[1,p-1]^2$ with $ab\equiv c\pmod p$ and $a+b$ odd. Then
+\[
+S(p)=\sum_{c=1}^{p-1}(-1)^cN(c,p)=\sum_{c=1}^{p-1}(-1)^c\Bigl(N(c,p)-\frac{p-1}2\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Write $ab=p\lfloor ab/p\rfloor+c$ with $c\equiv ab\pmod p$, $0<c<p$. As $p$ is odd, $\lfloor ab/p\rfloor\equiv ab+c\pmod2$, so $S(p)=\sum_c(-1)^c\sum_{ab\equiv c}(-1)^{ab}$. For fixed $c$ there are $p-1$ pairs with $ab\equiv c$, and $(a,b)\mapsto(p-a,p-b)$ exchanges the pairs with $a,b$ both odd and those with $a,b$ both even. If $n_c$ denotes the number of the former, then $\sum_{ab\equiv c}(-1)^{ab}=p-1-2n_c=N(c,p)$. The second form follows from $\sum_{c=1}^{p-1}(-1)^c=0$.
+\end{proof}
+
+\begin{lemma}[A counting formula]\label{lem:counting}
+For integers $x\ge0$, $y\ge1$ put $F(x,y)=\sum_{c=1}^{\lfloor(y-1)/2\rfloor}\lfloor cx/y\rfloor$. For odd $a$ with $1\le a<p$,
+\[
+T(a)=(p-1)a-4F(2p,a),\qquad\text{hence}\qquad S(p)=\frac{(p-1)^3}4-4\sum_{\substack{3\le a\le p-2\\ a\text{ odd}}}F(2p,a).
+\]
+Moreover, with $U=\lfloor(y-1)/2\rfloor$ we have $F(qy+r,y)=q\tbinom{U+1}2+F(r,y)$ for integers $q,r\ge0$, and
+\[
+F(r,y)+F(y,r)=\Bigl\lfloor\frac{y-1}2\Bigr\rfloor\Bigl\lfloor\frac{r-1}2\Bigr\rfloor\qquad\text{for coprime integers }r,y\ge1.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $a$ be odd. For $0\le c\le a$ let $N_c$ be the number of $b\in[1,p-1]$ with $ab<cp$; thus $N_0=0$, $N_a=p-1$, and $N_c=\lfloor cp/a\rfloor$ for $1\le c\le a-1$ (as $a\nmid cp$). Since $\lfloor ab/p\rfloor=c$ for exactly $N_{c+1}-N_c$ values of $b$,
+\[
+T(a)=\sum_{c=0}^{a-1}(-1)^c(N_{c+1}-N_c)=-(-1)^aN_a-2\sum_{c=1}^{a-1}(-1)^cN_c=(p-1)-2\sum_{c=1}^{a-1}(-1)^c\Bigl\lfloor\frac{cp}a\Bigr\rfloor.
+\]
+Now $\sum_{c=1}^{a-1}\lfloor cp/a\rfloor=(p-1)(a-1)/2$, and the terms with even $c=2c'$ give $\sum_{c'=1}^{(a-1)/2}\lfloor2c'p/a\rfloor=F(2p,a)$; hence $\sum_{c=1}^{a-1}(-1)^c\lfloor cp/a\rfloor=2F(2p,a)-\frac{(p-1)(a-1)}2$, which gives the formula for $T(a)$. Summing over odd $a$ (note $F(2p,1)=0$ and $\sum_{a\text{ odd},\,a<p}a=((p-1)/2)^2$) and using Lemma~\ref{lem:elementary}(b) gives the formula for $S(p)$. The relation for $F(qy+r,y)$ follows from $\lfloor c(qy+r)/y\rfloor=cq+\lfloor cr/y\rfloor$. For the last identity, let $V=\lfloor(r-1)/2\rfloor$. For $1\le c\le U$ we have $cr/y<r/2$, so $F(r,y)$ counts the lattice points $(c,d)$ with $1\le c\le U$, $1\le d\le V$ and $dy<cr$; similarly $F(y,r)$ counts those with $cr<dy$. No point of $[1,U]\times[1,V]$ satisfies $dy=cr$, because that would force $y\mid c$. Hence $F(r,y)+F(y,r)=UV$.
+\end{proof}
+
+Iterating the last two relations evaluates $F(2p,a)$ in $O(\log a)$ arithmetic operations, as in the Euclidean algorithm; this is how we computed $S(p)$ (Section~\ref{sec:computations}).
+
+The following identities are not used in the proof of Theorem~\ref{thm:C}, but they give useful alternative descriptions of $S(p)$. For a character $\chi$ modulo $p$ put
+\[
+A(\chi)=\sum_{0<a<p/2}\chi(a),\qquad B_{1,\chi}=\frac1p\sum_{a=1}^{p-1}a\,\chi(a),
+\]
+let $s(x,p)=\sum_{c=1}^{p-1}\dpar{\frac cp}\dpar{\frac{xc}p}$ be the Dedekind sum, and let $2^*=\frac{p+1}2$ be the inverse of $2$ modulo $p$.
+
+\begin{lemma}[Gauss-lemma form]\label{lem:gauss}
+Let $H=\frac{p-1}2$. Then
+\begin{gather*}
+S(p)=2\sum_{a,b=1}^H\sgn\Bigl(\Bigl\{\frac{2ab}p\Bigr\}-\frac12\Bigr)=2H^2-4N_+,\\
+N_+=\#\{(a,b,c)\in[1,H]^3:\ 2ab\equiv c\pmod p\}.
+\end{gather*}
+Thus $S(p)>0$ if and only if fewer than half of the products $2ab\bmod p$, $1\le a,b\le H$, lie in the lower half $(0,p/2)$.
+\end{lemma}
+
+\begin{lemma}[Cubic moments]\label{lem:cubic}
+We have
+\begin{align*}
+S(p)&=-\frac4{p-1}\sum_{\chi\text{ odd}}\chi(2)\,|A(\chi)|^2A(\chi)=\frac4{p-1}\sum_{\chi\text{ odd}}\bigl(2\chi(2)-1\bigr)\,|2-\chi(2)|^2\,|B_{1,\chi}|^2B_{1,\chi}\\
+&=4\sum_{a=1}^{p-1}\dpar{\frac ap}\Bigl(-4s(4a,p)+12s(2a,p)+2s(2^*a,p)-9s(a,p)\Bigr).
+\end{align*}
+\end{lemma}
+
+\begin{proof}[Proof of Lemmas~\ref{lem:gauss} and~\ref{lem:cubic}]
+For $p\nmid m$ let $r\in(0,p)$ be the residue of $m$ modulo $p$. The two integers in $(0,2p)$ that are congruent to $m$ modulo $p$ are $r$ and $r+p$, and they have different parities; hence $m\bmod2p\in(0,p)$ if and only if $m\equiv r\pmod2$, that is, $\sigma(m)=(-1)^m\lambda(m)$ with $\lambda(m)=(-1)^r$. By Lemma~\ref{lem:elementary}(a), $S(p)=\sum_{a,b=1}^{p-1}(-1)^{ab}\lambda(ab)$. Expand $\lambda=\sum_\chi c_\chi\chi$ on $(\Z/p\Z)^\times$, $c_\chi=\frac1{p-1}\sum_{x=1}^{p-1}(-1)^x\overline\chi(x)$. For $\chi$ nontrivial, $\sum_x(-1)^x\overline\chi(x)=2\sum_{x\text{ even}}\overline\chi(x)=2\overline\chi(2)\overline{A(\chi)}$, which vanishes for even $\chi$ because then $A(\chi)=\frac12\sum_x\chi(x)=0$; for $\chi$ trivial the sum is $0$. For odd $\chi$ we have $\sum_{a=1}^{p-1}\chi(a)=0$ and $\sum_{a\text{ odd}}\chi(a)=-\sum_{a\text{ even}}\chi(a)=-\chi(2)A(\chi)$, so
+\[
+\sum_{a,b=1}^{p-1}(-1)^{ab}\chi(ab)=\Bigl(\sum_a\chi(a)\Bigr)^2-2\Bigl(\sum_{a\text{ odd}}\chi(a)\Bigr)^2=-2\chi(2)^2A(\chi)^2.
+\]
+Hence $S(p)=\sum_{\chi\text{ odd}}\frac{2\overline\chi(2)\overline{A(\chi)}}{p-1}\bigl(-2\chi(2)^2A(\chi)^2\bigr)$, the first formula of Lemma~\ref{lem:cubic}. Next, by orthogonality, $\sum_{\chi\text{ odd}}\chi(x)=\frac{p-1}2(\delta_{x\equiv1}-\delta_{x\equiv-1})$, so
+\[
+\sum_{\chi\text{ odd}}\chi(2)A(\chi)^2\overline{A(\chi)}=\sum_{a,b,c=1}^H\ \sum_{\chi\text{ odd}}\chi(2ab\,c^{-1})=\frac{p-1}2\,(N_+-N_-),
+\]
+where $N_-$ counts the triples with $2ab\equiv-c$. For each $(a,b)$ exactly one $c\in[1,H]$ satisfies $2ab\equiv\pm c$, so $N_++N_-=H^2$, and $N_-$ counts the pairs with $2ab\bmod p>p/2$. This gives Lemma~\ref{lem:gauss}. For the second formula of Lemma~\ref{lem:cubic}, let $\chi$ be odd. As $b$ runs over $1,\dots,p-1$, so does $2b\bmod p$; hence
+\[
+pB_{1,\chi}=\sum_{b=1}^{p-1}(2b\bmod p)\chi(2b)=\chi(2)\Bigl(2pB_{1,\chi}-p\sum_{p/2<b<p}\chi(b)\Bigr)=\chi(2)\bigl(2pB_{1,\chi}+pA(\chi)\bigr),
+\]
+because $\sum_{p/2<b<p}\chi(b)=\sum_{b<p/2}\chi(p-b)=-A(\chi)$. Thus $A(\chi)=-(2-\overline\chi(2))B_{1,\chi}$, and $\chi(2)|A(\chi)|^2A(\chi)=-(2\chi(2)-1)|2-\chi(2)|^2|B_{1,\chi}|^2B_{1,\chi}$. For the third formula, $(2z-1)|2-z|^2=-4z^2+12z+2\overline z-9$ for $|z|=1$. Expanding $|B_{1,\chi}|^2B_{1,\chi}=p^{-3}\sum_{a,b,c}abc\,\chi(ac\,b^{-1})$ and using orthogonality as above, the term $\chi(\lambda)$, $\lambda\in\{4,2,2^*,1\}$, contributes
+\[
+\frac4{p-1}\cdot\frac{p-1}{2p^3}\sum_{a,c=1}^{p-1}ac\sum_{b=1}^{p-1}b\,(\delta_{b\equiv\lambda ac}-\delta_{b\equiv-\lambda ac})=\frac2{p^3}\sum_{a,c}ac\,\bigl(2(\lambda ac\bmod p)-p\bigr)=\frac4{p^2}\sum_{a,c}ac\dpar{\frac{\lambda ac}p}
+\]
+times its coefficient. Finally $\sum_cc\dpar{\frac{xc}p}=p\,s(x,p)$ for $p\nmid x$ (because $\sum_c\dpar{\frac{xc}p}=0$), and $\sum_aa\,s(\lambda a,p)=p\sum_a\dpar{\frac ap}s(\lambda a,p)$ (because $\sum_as(\lambda a,p)=0$, $s(\cdot,p)$ being odd), so $\sum_{a,c}ac\dpar{\frac{\lambda ac}p}=p^2\sum_a\dpar{\frac ap}s(\lambda a,p)$.
+\end{proof}
+
+
+\section{The dual formula and the proof of Theorem~\ref{thm:A}}\label{sec:dual}
+
+Here we expand the sign $(-1)^{\lfloor n/p\rfloor}$ into its finite Fourier series modulo $2p$. This turns $S(p)$ into the cotangent sum~\eqref{eq:dual}, the starting point of everything that follows, and it gives the upper bound of Theorem~\ref{thm:A} in a few lines. That bound exceeds the truth by a factor of order $\log p$, because it replaces every $C_p(k)$ by its largest possible value $C_p(1)$.
+
+\begin{lemma}[Dual formula]\label{lem:dual}
+For odd $a$ with $0<a<p$,
+\[
+T(a)=\frac2p\sum_{\substack{0<k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\cot\frac{\pi ka}{2p},
+\]
+and consequently
+\begin{equation}\label{eq:dual}
+S(p)=\frac2p\sum_{\substack{0<k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\,C_p(k).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The function $f(n)=(-1)^{\lfloor n/p\rfloor}$ has period $2p$ and satisfies $f(n+p)=-f(n)$. Hence its Fourier coefficients $\hat f(\ell)=\frac1{2p}\sum_{n=0}^{2p-1}f(n)e(-\ell n/2p)$ vanish for even $\ell$, and for odd $\ell$, with $\zeta=e(-\ell/2p)$ (so that $\zeta^p=-1$),
+\begin{equation}\label{eq:fourier-coeff}
+\hat f(\ell)=\frac1{2p}(1-\zeta^p)\sum_{n=0}^{p-1}\zeta^n=\frac2{p(1-\zeta)}=\frac1p\Bigl(1-i\cot\frac{\pi\ell}{2p}\Bigr);
+\end{equation}
+for $\ell=p$ this equals $1/p$. Let $a$ be odd, $0<a<p$. Then $T(a)=\sum_\ell\hat f(\ell)\sum_{b=1}^{p-1}e(\ell ab/2p)$, where $\ell$ runs over the odd residues modulo $2p$. For $\ell=p$ the inner sum is $\sum_b(-1)^{ab}=\sum_{b=1}^{p-1}(-1)^b=0$. For odd $\ell\ne p$ put $\vartheta=\ell a/2p$; then $e(p\vartheta)=-1$ because $\ell a$ is odd, $e(\vartheta)\ne1$ because $p\nmid\ell a$, and
+\[
+\sum_{b=1}^{p-1}e(b\vartheta)=\frac{1-e(p\vartheta)}{1-e(\vartheta)}-1=\frac{1+e(\vartheta)}{1-e(\vartheta)}=i\cot(\pi\vartheta).
+\]
+Hence
+\[
+T(a)=\frac1p\sum_{\substack{0<\ell<2p,\ \ell\ne p\\ \ell\text{ odd}}}\Bigl(\cot\frac{\pi\ell}{2p}\cot\frac{\pi\ell a}{2p}+i\cot\frac{\pi\ell a}{2p}\Bigr).
+\]
+Under $\ell\mapsto2p{-}\ell$ the function $\cot(\pi\ell a/2p)$ changes sign (because $a$ is an integer), so the imaginary part vanishes, while the product of the two cotangents is invariant. This gives the formula for $T(a)$, and~\eqref{eq:dual} follows by summing over odd $a$ and using Lemma~\ref{lem:elementary}(b).
+\end{proof}
+
+\begin{lemma}[Sign form]\label{lem:sign-form}
+Let $k$ be odd with $p\nmid k$. Then
+\begin{equation}\label{eq:sign-form}
+C_p(k)=\sum_{\substack{0<n<p\\ n\text{ odd}}}\sigma(n\overline k)\cot\frac{\pi n}{2p}.
+\end{equation}
+In particular $|C_p(k)|\le C_p(1)$.
+\end{lemma}
+
+\begin{proof}
+For odd $n$ with $0<n<p$ let $w_n\in(0,2p)$ be the residue of $n\overline k$ modulo $2p$; it is odd and different from $p$. Put $a_n=w_n$ if $w_n<p$ and $a_n=2p-w_n$ otherwise. Then $a_n$ is odd, $0<a_n<p$, and $ka_n\equiv\sigma(n\overline k)\,n\pmod{2p}$, so that $\cot(\pi ka_n/2p)=\sigma(n\overline k)\cot(\pi n/2p)$. The map $n\mapsto a_n$ is a bijection of the set of odd integers in $(0,p)$ onto itself; its inverse sends $a$ to the element of $\{ka\bmod2p,\ 2p-(ka\bmod2p)\}$ that lies in $(0,p)$. Summing over $n$ gives~\eqref{eq:sign-form}, and the bound follows since $\cot(\pi n/2p)>0$ for $0<n<p$.
+\end{proof}
+
+Combining~\eqref{eq:dual} and~\eqref{eq:sign-form} gives the symmetric formula~\eqref{eq:symmetric}.
+
+\begin{lemma}\label{lem:Cm1-elementary}
+For odd $m\ge3$, $C_m(1)\le\frac m\pi(\log m+2)$.
+\end{lemma}
+
+\begin{proof}
+We have $\cot y\le1/y$ for $0<y\le\pi/2$, and $\sum_{a\text{ odd},\,3\le a\le N}1/a\le\frac12\log N$ because $1/a\le\frac12\int_{a-2}^a dx/x$. Hence $C_m(1)\le\frac{2m}\pi\bigl(1+\frac12\log m\bigr)$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:A}]
+By~\eqref{eq:dual}, Lemma~\ref{lem:sign-form} and the positivity of $\cot(\pi k/2p)$ for $0<k<p$,
+\[
+|S(p)|\le\frac2p\sum_{\substack{0<k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\,C_p(1)=\frac2p\,C_p(1)^2.
+\]
+By Corollary~\ref{cor:Cm1}(a) below, $C_p(1)\le\frac p\pi(\log p+K_0)$, which gives the second inequality. (Lemma~\ref{lem:Cm1-elementary} gives, in an elementary way, the slightly weaker bound with $K_0$ replaced by $2$.) The last assertion follows since $(2/\pi^2)(\log p+K_0)^2<C_2p^\varepsilon$ for large $p$.
+\end{proof}
+
+\begin{remark}\label{rem:thmA-sharpness}
+For $p=7$ the ratio of $|S(p)|$ to the second bound of Theorem~\ref{thm:A} is $0.92$, its maximum over all $p\le6\cdot10^6$. For large $p$ the bound exceeds the true size $\frac p2\log p$ of $S(p)$ by a factor of order $\log p$.
+\end{remark}
+
+\section{A reciprocity law for half-range cotangent sums}\label{sec:reciprocity}
+
+The sums $C_p(k)$ in~\eqref{eq:dual} have length about $p/2$, like the original problem. The reciprocity law of this section exchanges the roles of $p$ and $k$: it writes $C_p(k)$ as $\frac pkF_k(p)$, where $F_k(p)$ is a tangent sum of length $(k-1)/2$, plus an explicit term $I(k/p)$. The terms $I(k/p)$ will produce the main term of $S(p)$, and the tangent sums its fluctuations. We prove the law by integrating a product of a tangent and a cotangent around a rectangle. We then derive the asymptotics of $I$ and the trivial bound $|F_k(n)|\le F_k(1)$, and Subsection~\ref{subsec:even-cf} iterates the law.
+
+\begin{lemma}[Reciprocity]\label{lem:reciprocity}
+Let $m$ and $k$ be coprime odd positive integers. Then
+\[
+C_m(k)=\frac mk\,F_k(m)+I\Bigl(\frac km\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Consider the meromorphic function $f(z)=-\frac\pi2\tan\frac{\pi z}2\cot\frac{\pi kz}{2m}$. In the strip $0<\operatorname{Re}z<m$ its poles are the following. (i) The odd integers $a\in(0,m)$, where $\tan(\pi z/2)$ has a simple pole with residue $-2/\pi$ and $\cot(\pi ka/2m)$ is finite because $ka$ is odd; the residue of $f$ is $\cot(\pi ka/2m)$. (ii) The points $z_n=2mn/k$, $1\le n\le(k{-}1)/2$, where $\cot(\pi kz/2m)$ has a simple pole with residue $2m/(\pi k)$; these points are not integers, since $k\nmid2mn$, so $\tan(\pi z_n/2)=\tan(\pi mn/k)$ is finite, and the residue of $f$ is $-\frac mk\tan(\pi mn/k)$. Hence the sum of the residues in the strip is $C_m(k)-\frac mkF_k(m)$.
+
+On the lines $\operatorname{Re}z=0$ and $\operatorname{Re}z=m$ the function $f$ is analytic: at $z=0$ a simple zero of $\tan(\pi z/2)$ cancels a simple pole of $\cot(\pi kz/2m)$, at $z=m$ a simple pole of $\tan(\pi z/2)$ ($m$ odd) cancels a simple zero of $\cot(\pi kz/2m)$ ($k$ odd), and there are no other singularities on these lines. For real $y\ne0$,
+\[
+f(iy)=-\frac\pi2\tanh\frac{\pi y}2\coth\frac{\pi ky}{2m},\qquad f(m+iy)=-\frac\pi2\coth\frac{\pi y}2\tanh\frac{\pi ky}{2m}.
+\]
+As $|\operatorname{Im}z|\to\infty$ we have $\tan(\pi z/2)\to\pm i$ and $\cot(\pi kz/2m)\to\mp i$, uniformly in $\operatorname{Re}z$ and with exponentially small error, so $f(z)\to-\pi/2$. Integrate $f$ over the boundary of the rectangle with vertices $-iT$, $m-iT$, $m+iT$, $iT$. The contributions of the two horizontal sides tend to $-\frac{\pi m}2$ and $+\frac{\pi m}2$ as $T\to\infty$, and the vertical sides give $i\int_{-T}^T(f(m+iy)-f(iy))\,dy$. The integrand decays exponentially, and we obtain
+\[
+C_m(k)-\frac mkF_k(m)=\frac1{2\pi i}\cdot i\cdot\frac\pi2\int_\R\Bigl(\tanh\frac{\pi y}2\coth\frac{\pi ky}{2m}-\coth\frac{\pi y}2\tanh\frac{\pi ky}{2m}\Bigr)\,dy.
+\]
+With $\lambda=k/m$ and the identity
+\begin{equation}\label{eq:tanh-identity}
+\tanh u\coth\lambda u-\coth u\tanh\lambda u=\frac{2(\cosh2u-\cosh2\lambda u)}{\sinh2u\,\sinh2\lambda u},
+\end{equation}
+the substitution $v=\pi y$ turns the right-hand side into $I(\lambda)$.
+\end{proof}
+
+\begin{lemma}\label{lem:I-asymptotics}
+For $\lambda>0$ write $\pi\lambda I(\lambda)=\log\frac1\lambda+K_0-\rho(\lambda)$. Then $0\le\rho(\lambda)\le\frac{7\pi^2}{72}\lambda^2$. Moreover $I(1/\lambda)=-\lambda I(\lambda)$.
+\end{lemma}
+
+\begin{proof}
+By~\eqref{eq:tanh-identity} and the substitution $v=2u$, $\pi I(\lambda)=\int_0^\infty(\tanh u\coth\lambda u-\coth u\tanh\lambda u)\,du$. Write $\coth x=\frac1x+\kappa(x)$, where $0\le\kappa(x)\le x/3$ for $x>0$ (from $\kappa(x)=\sum_{n\ge1}\frac{2x}{x^2+\pi^2n^2}$). Using $\coth x-\tanh x=2/\sinh2x$ one checks that
+\[
+\tanh u\coth\lambda u-\coth u\tanh\lambda u=\frac{\phi(2\lambda u)-\psi(2u)}{\lambda u}-(1-\tanh u)\,\kappa(\lambda u)-(\coth u-1)\tanh\lambda u,
+\]
+where $\phi(x)=x/\sinh x$ and $\psi(x)=2/(e^x+1)=1-\tanh(x/2)$. All three terms are integrable on $(0,\infty)$, and the last two are nonnegative. By Frullani's theorem ($\phi$ is continuous, $\phi(0)=1$, $\phi(\infty)=0$),
+\[
+\int_0^\infty\bigl(\phi(2\lambda u)-\psi(2u)\bigr)\frac{du}u=\log\frac1\lambda+\int_0^\infty\bigl(\phi(x)-\psi(x)\bigr)\frac{dx}x.
+\]
+For $\operatorname{Re}s>0$ we have the Mellin transforms $\int_0^\infty\phi(x)x^{s-1}dx=2\Gamma(s+1)(1-2^{-s-1})\zeta(s+1)=\frac1s+\log2+O(s)$ and $\int_0^\infty\psi(x)x^{s-1}dx=2\Gamma(s)(1-2^{1-s})\zeta(s)=\frac1s+\log\frac\pi2-\gamma+O(s)$ (expand the integrands in powers of $e^{-x}$; for the second expansion use $\zeta(0)=-\frac12$ and $\zeta'(0)=-\frac12\log2\pi$). Since $\phi-\psi=O(x)$ near $0$, letting $s\to0^+$ gives $\int_0^\infty(\phi-\psi)\,dx/x=\log2-\log\frac\pi2+\gamma=K_0$. Hence $\pi\lambda I(\lambda)=\log\frac1\lambda+K_0-\lambda(J_1+J_2)$, where
+\begin{gather*}
+0\le J_1=\int_0^\infty(1-\tanh u)\kappa(\lambda u)\,du\le\frac\lambda3\int_0^\infty u(1-\tanh u)\,du=\frac{\pi^2\lambda}{72},\\
+0\le J_2=\int_0^\infty(\coth u-1)\tanh(\lambda u)\,du\le\lambda\int_0^\infty u(\coth u-1)\,du=\frac{\pi^2\lambda}{12};
+\end{gather*}
+here we used $\tanh x\le x$, $1-\tanh u=2\sum_{n\ge1}(-1)^{n-1}e^{-2nu}$ and $\coth u-1=2\sum_{n\ge1}e^{-2nu}$. Thus $0\le\rho(\lambda)\le(\frac{\pi^2}{72}+\frac{\pi^2}{12})\lambda^2=\frac{7\pi^2}{72}\lambda^2$. The relation $I(1/\lambda)=-\lambda I(\lambda)$ follows from the substitution $v\mapsto\lambda v$ in~\eqref{eq:I}.
+\end{proof}
+
+The constant $\frac{7\pi^2}{72}$ is optimal as $\lambda\to0$: by dominated convergence, $J_1/\lambda$ and $J_2/\lambda$ tend to the two bounds $\frac{\pi^2}{72}$ and $\frac{\pi^2}{12}$.
+
+\begin{corollary}\label{cor:Cm1}
+\textup{(a)} For odd $m\ge1$ we have $F_m(1)=C_m(1)=I(1/m)$ and
+\[
+\frac m\pi(\log m+K_0)-\frac{7\pi}{72m}\le C_m(1)\le\frac m\pi(\log m+K_0).
+\]
+\textup{(b)} For odd $k\ge3$ and every integer $r$, $|F_k(r)|\le F_k(1)\le\frac k\pi(\log k+K_0)$; moreover $F_k(-1)=-F_k(1)$, and the constant $K_0$ is optimal: $\pi F_k(1)/k-\log k\to K_0$.
+
+\textup{(c)} For $0<\lambda\le1$, $|I(\lambda)|\le\frac1{\pi\lambda}\bigl(\log\frac1\lambda+2\bigr)$.
+\end{corollary}
+
+\begin{proof}
+(a) The substitution $a=m-2t$ gives
+\[
+F_m(1)=\sum_{t<m/2}\tan\frac{\pi t}m=\sum_{\substack{a<m\\ a\text{ odd}}}\cot\frac{\pi a}{2m}=C_m(1),
+\]
+and Lemma~\ref{lem:reciprocity} with $k=1$ gives $C_m(1)=mF_1(m)+I(1/m)=I(1/m)$. Now apply Lemma~\ref{lem:I-asymptotics} with $\lambda=1/m$.
+
+(b) If $(r,k)=1$, then as $t$ runs over $1,\dots,(k-1)/2$ the residues $\pm rt$ run over $1,\dots,k-1$, and $\tan(\pi(k-x)/k)=-\tan(\pi x/k)$; hence $F_k(r)=\sum_{x=1}^{(k-1)/2}\pm\tan(\pi x/k)$ and $|F_k(r)|\le F_k(1)$. If $g=(r,k)>1$, put $k'=k/g$ and $r'=r/g$. The function $t\mapsto\tan(\pi r't/k')$ has period $k'$ and is odd, so its sum over a complete period vanishes. Since $(k-1)/2=k'\frac{g-1}2+\frac{k'-1}2$, the sum over $1\le t\le(k-1)/2$ consists of $\frac{g-1}2$ complete periods and of the sum over $1\le t\le(k'-1)/2$; thus $F_k(r)=F_{k'}(r')$, and $|F_k(r)|\le F_{k'}(1)\le F_k(1)$ by the previous case and by (a) (note $k\ge3k'$). The bound for $F_k(1)$ and the optimality of $K_0$ follow from (a).
+
+(c) By Lemma~\ref{lem:I-asymptotics}, $|\pi\lambda I(\lambda)|\le\log\frac1\lambda+K_0+\frac{7\pi^2}{72}<\log\frac1\lambda+2$.
+\end{proof}
+
+\subsection{An even continued fraction expansion of \texorpdfstring{$F_k$}{Fk}}\label{subsec:even-cf}
+Iterating Lemma~\ref{lem:reciprocity} expresses $F_k(n)/k$ exactly as a sum over the steps of a Euclidean-type algorithm. This section explains the size and the singularities of $F_k(n)$; it is not needed for the proof of Theorem~\ref{thm:C}, which uses the cruder decomposition of Section~\ref{sec:tangent}.
+
+\begin{lemma}[Odd reciprocity]\label{lem:odd-reciprocity}
+Let $k$ and $m$ be coprime odd positive integers. Then $C_m(k)=F_m(k)$ and
+\[
+\frac{F_k(m)}k=\frac{F_m(k)}m+\frac1kI\Bigl(\frac mk\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Write the odd $a\in(0,m)$ as $a=m{-}2t$ with $1\le t\le\frac{m-1}2$. Since $k$ is odd and $\cot$ has period $\pi$, $\cot\frac{\pi k(m-2t)}{2m}=\cot(\frac{\pi}2-\frac{\pi kt}m)=\tan\frac{\pi kt}m$; summing over $t$ gives $C_m(k)=F_m(k)$. By Lemma~\ref{lem:reciprocity}, $F_m(k)=\frac mkF_k(m)+I(\frac km)$; divide by $m$ and use $I(\frac km)=-\frac mkI(\frac mk)$ (Lemma~\ref{lem:I-asymptotics}).
+\end{proof}
+
+\begin{proposition}[Expansion]\label{prop:expansion}
+Let $k\ge3$ be odd and $\gcd(n,k)=1$. Put $n_{-1}=n$, $n_0=k$, and while $n_i>1$ let $\rho_i\in[1,n_i-1]$ be the residue of $n_{i-1}$ modulo $n_i$ and
+\[
+(n_{i+1},s_{i+1},b_i)=\begin{cases}(\rho_i,\,+1,\,\lfloor n_{i-1}/n_i\rfloor)&\text{if $\rho_i$ is odd},\\(n_i-\rho_i,\,-1,\,\lfloor n_{i-1}/n_i\rfloor+1)&\text{if $\rho_i$ is even}.\end{cases}
+\]
+Then $n_{i-1}=b_in_i{+}s_{i+1}n_{i+1}$, all $n_i$ $(i\ge0)$ are odd, $\gcd(n_i,n_{i+1})=1$, $k=n_0>n_1>\dots>n_J=1$, and with $\varepsilon_i=s_1s_2\cdots s_{i+1}$
+\[
+\frac{F_k(n)}k=\sum_{i=0}^{J-1}\varepsilon_iJ_i,\qquad J_i=\frac1{n_i}I\Bigl(\frac{n_{i+1}}{n_i}\Bigr)>0.
+\]
+\end{proposition}
+
+\begin{proof}
+Since $\gcd(n_i,\rho_i)=\gcd(n_i,n_{i-1})=1$, we have $\rho_i\ne0$ while $n_i>1$; $n_{i+1}$ is odd because $n_i$ is, and $n_{i+1}<n_i$. As $F_{n_i}$ is odd and has period $n_i$, $F_{n_i}(n_{i-1})=F_{n_i}(\rho_i)=s_{i+1}F_{n_i}(n_{i+1})$, and Lemma~\ref{lem:odd-reciprocity} gives $F_{n_i}(n_{i+1})/n_i=F_{n_{i+1}}(n_i)/n_{i+1}+J_i$. Starting from $F_{n_0}(n_{-1})/n_0=F_k(n)/k$ and iterating until $F_{n_J}=F_1=0$ gives the formula. That $J_i>0$ follows from Lemma~\ref{lem:I-bounds}(a) below.
+\end{proof}
+
+For $i\ge1$ the partial quotients $b_i$ are even (Proposition~\ref{prop:steps}(b)), so this is an \emph{even continued fraction}, the kind that L\"ageler~\cite{b18} related to the sums $S(h,k)$.
+
+\begin{lemma}\label{lem:I-bounds}
+For $0<\lambda<1$: \textup{(a)} $0<I(\lambda)\le\frac\pi8(1-\lambda)(1+\lambda^{-2})$; \textup{(b)} $I(\lambda)\le\frac1{\pi\lambda}(\log\frac1\lambda+K_0)$. Consequently, in Proposition~\ref{prop:expansion}, $J_i\le\frac{\log(n_i/n_{i+1})+K_0}{\pi n_{i+1}}$ for every step, and $J_i\le\frac{5\pi}8\bigl(\frac1{n_{i+1}}-\frac1{n_i}\bigr)$ if $n_{i+1}\ge\frac12n_i$.
+\end{lemma}
+
+\begin{proof}
+(a) Since $\cosh v-\cosh\lambda v=2\sinh\frac{(1+\lambda)v}2\sinh\frac{(1-\lambda)v}2$, the integrand in~\eqref{eq:I} is positive. Using $\sinh x\le x\cosh x$ for $x\ge0$ and $2\sinh\frac{(1+\lambda)v}2\cosh\frac{(1-\lambda)v}2=\sinh v+\sinh\lambda v$,
+\[
+I(\lambda)\le\frac{1-\lambda}{2\pi}\int_0^\infty v\Bigl(\frac1{\sinh\lambda v}+\frac1{\sinh v}\Bigr)dv=\frac{1-\lambda}{2\pi}\cdot\frac{\pi^2}4(\lambda^{-2}+1).
+\]
+(b) is Lemma~\ref{lem:I-asymptotics} with $\rho\ge0$. For the consequences put $\lambda=n_{i+1}/n_i$; if $\lambda\ge\frac12$ then $1+\lambda^{-2}\le5$ and $\frac{1-\lambda}{n_i}=\frac{n_i-n_{i+1}}{n_i^2}\le\frac1{n_{i+1}}-\frac1{n_i}$.
+\end{proof}
+
+Call a step $i$ \emph{$(V,T)$-singular} if $n_{i+1}\le V$ and $n_i\ge Tn_{i+1}$.
+
+\begin{proposition}[Bounded part]\label{prop:bounded}
+Let $k\ge3$ be odd, $\gcd(n,k)=1$, $T\ge2$ and $V\ge1$. If $\mathcal I$ is a set of steps none of which is $(V,T)$-singular, then
+\[
+\sum_{i\in\mathcal I}J_i\le\frac2\pi\log T+2.49+\frac2\pi\cdot\frac{\log k+K_0}V.
+\]
+In particular $|F_k(n)/k|$ is bounded by the right-hand side if no step is $(V,T)$-singular.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:I-bounds}, the steps with $n_{i+1}\ge\frac12n_i$ contribute at most $\frac{5\pi}8\sum_i(\frac1{n_{i+1}}-\frac1{n_i})<\frac{5\pi}8$, however long the runs of such steps are. If $i<j$ are steps with $n_{i+1}<\frac12n_i$ and $n_{j+1}<\frac12n_j$, then $n_{j+1}<\frac12n_j\le\frac12n_{i+1}$; so the values $w=n_{i+1}$ over these steps decrease by a factor larger than $2$ from one to the next, and $\sum_{w>W}\frac1w<\frac2W$ for every $W>0$. The steps with $n_{i+1}>V$ therefore contribute at most $\frac{2(\log k+K_0)}{\pi V}$, and those with $n_{i+1}\le V$, for which $n_i<Tn_{i+1}$, at most $\frac2\pi(\log T+K_0)$. Finally $\frac{5\pi}8+\frac{2K_0}\pi<2.49$.
+\end{proof}
+
+To identify the singular steps define integers $c_i,d_i$ $(i\ge-1)$ by $c_{-1}=1$, $c_0=0$, $d_{-1}=0$, $d_0=-1$ and $c_{i+1}=s_{i+1}(c_{i-1}-b_ic_i)$, $d_{i+1}=s_{i+1}(d_{i-1}-b_id_i)$. Since $n_{i+1}=s_{i+1}(n_{i-1}-b_in_i)$, induction gives
+\begin{equation}\label{eq:linear-form}
+n_i=c_in-d_ik\qquad(i\ge-1),
+\end{equation}
+and $c_id_{i+1}-c_{i+1}d_i=\pm1$, because it equals $-1$ for $i=-1$ and is multiplied by $-s_{i+1}$ at each step.
+
+\begin{proposition}[Steps and linear forms]\label{prop:steps}
+For every step $i$ $(0\le i<J)$:
+\begin{enumerate}[label=\upshape(\alph*),leftmargin=*,nosep]
+\item $k\mid c_{i+1}n-n_{i+1}$, and $\gcd\bigl(c_{i+1},(c_{i+1}n-n_{i+1})/k\bigr)=1$;
+\item if $i\ge1$ then $b_i$ is even and $b_i\ge2$; moreover $|c_1|=1<|c_2|<|c_3|<\cdots$ and $c_i\equiv i\pmod2$;
+\item $k=n_i|c_{i+1}|+s_{i+1}n_{i+1}|c_i|$, hence $\frac k{n_i+n_{i+1}}\le|c_{i+1}|\le\frac k{n_i-n_{i+1}}$;
+\item \textup{(sign law)} $\varepsilon_i=-(-1)^{c_{i+1}}\sgn(c_{i+1})$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) is~\eqref{eq:linear-form} together with $\gcd(c_{i+1},d_{i+1})=1$. (b) For $i\ge1$ both $n_{i-1}$ and $n_i$ are odd, so $\rho_i\equiv1-\lfloor n_{i-1}/n_i\rfloor\pmod2$ and in both cases $b_i$ is even; and $b_i\ge1$ because $n_{i-1}>n_i$. Next $c_1=s_1$, and if $|c_i|>|c_{i-1}|$ then $|c_{i+1}|\ge b_i|c_i|-|c_{i-1}|>|c_i|$. The parity follows from $c_{i+1}\equiv c_{i-1}\pmod2$. (c) $\Delta_i=n_ic_{i+1}-n_{i+1}c_i$ satisfies $\Delta_{-1}=-k$ and $\Delta_i=-s_{i+1}\Delta_{i-1}$, so $|\Delta_i|=k$. For $i\ge1$ we have $b_i|c_i|>|c_{i-1}|$, hence $\sgn c_{i+1}=-s_{i+1}\sgn c_i$; so $c_i$ and $c_{i+1}$ have opposite signs if $s_{i+1}=1$ and equal signs if $s_{i+1}=-1$, and in the latter case $n_i|c_{i+1}|>n_{i+1}|c_i|$. This gives the identity for $i\ge1$, and for $i=0$ it reads $k=n_0$. The bounds follow from $0\le|c_i|<|c_{i+1}|$. (d) We have $\sgn c_1=s_1=\varepsilon_0$ and $\sgn c_{i+1}=-s_{i+1}\sgn c_i$ for $i\ge1$, so $\sgn c_{i+1}=(-1)^i\varepsilon_i$; and $(-1)^{c_{i+1}}=(-1)^{i+1}$ by (b).
+\end{proof}
+
+\begin{proposition}[Converse]\label{prop:converse}
+Let $m\ge1$ be odd and $r\ne0$, and suppose that $k\mid rn-m$, $\gcd(r,(rn{-}m)/k)=1$ and $|r|m<k/2$. Then there is exactly one step $i$ with $(n_{i+1},c_{i+1})=(m,r)$.
+\end{proposition}
+
+\begin{proof}
+Let $\rho'_{-1}=n$, $\rho'_0=k$, $\rho'_{j-1}=q_j\rho'_j+\rho'_{j+1}$ $(0\le\rho'_{j+1}<\rho'_j)$ be the ordinary Euclidean algorithm, ending with $\rho'_t=1$, and define $C_{-1}=1$, $C_0=0$, $C_{j+1}=C_{j-1}{-}q_jC_j$, so that $\rho'_j\equiv C_jn\pmod k$ and $k=\rho'_{j-1}|C_j|{+}\rho'_j|C_{j-1}|$ (the argument of Proposition~\ref{prop:steps}(c)); in particular $|C_j|\le k/2$ for $j\ge1$.
+
+We first show that the algorithm of Proposition~\ref{prop:expansion} produces every odd $\rho'_j$, $j\ge1$, as some $n_{i+1}$. Say that it is \emph{at state $j$} if $(n_{i-1},n_i)=(\rho'_{j-1}+e\rho'_j,\rho'_j)$ for some $i$ and some $e\in\{0,1\}$; it starts at state $0$. At state $j$ with $\rho'_j>1$ the residue of $n_{i-1}$ modulo $n_i$ is $\rho'_{j+1}$. If $\rho'_{j+1}$ is odd, the next pair is $(\rho'_j,\rho'_{j+1})$, i.e.\ state $j+1$. If $\rho'_{j+1}$ is even, the next pairs are $(\rho'_j-(u-1)\rho'_{j+1},\rho'_j-u\rho'_{j+1})$ for $u=1,\dots,q_{j+1}$: indeed for $u<q_{j+1}$ we have $\rho'_j-u\rho'_{j+1}\ge\rho'_{j+1}+\rho'_{j+2}>\rho'_{j+1}$, so the residue is again the even number $\rho'_{j+1}$. The last of these pairs is $(\rho'_{j+1}+\rho'_{j+2},\rho'_{j+2})$, i.e.\ state $j+2$, and $\rho'_{j+2}\equiv\rho'_j$ is odd. Since two consecutive $\rho'_j$ are never both even, every $j\ge1$ with $\rho'_j$ odd is reached, and then $n_{i'+1}=\rho'_j$ for a step $i'$. Comparing~\eqref{eq:linear-form} with $\rho'_j\equiv C_jn$ gives $c_{i'+1}\equiv C_j\pmod k$; as $|c_{i'+1}|\le k/(n_{i'}-n_{i'+1})\le k/2$ (odd numbers differ by at least $2$), $|C_j|\le k/2$ and $k$ is odd, $c_{i'+1}=C_j$.
+
+Now write $rn-m=dk$. Then $\gcd(r,d)=1$ and $|\frac nk-\frac dr|=\frac m{|r|k}<\frac1{2r^2}$, so by Legendre's theorem $d/r$ is a convergent $P_l/Q_l$ of $n/k$ (the additional convergent of the second finite expansion of $n/k$ has denominator at least $k/2$, which is excluded by $|r|<k/(2m)$). Hence $m=|Q_ln-P_lk|$ is one of the remainders $\rho'_j$, $j\ge1$; it is odd, so it equals $n_{i+1}$ for a step $i$, and $c_{i+1}=C_j\equiv r\pmod k$. Both have absolute value less than $k/2$, so $c_{i+1}=r$. Uniqueness holds because the $n_i$ are distinct.
+\end{proof}
+
+\begin{theorem}[Explicit formula]\label{thm:explicit}
+Let $k\ge3$ be odd, $\gcd(n,k)=1$, $V\ge1$ and $T\ge4$, and let $\mathcal W$ be the set of pairs $(m,r)$ with $1\le m\le V$ odd, $r\ne0$, $k\mid rn-m$, $\gcd(r,(rn-m)/k)=1$ and $|r|m\le k/T$. Then
+\[
+\frac{F_k(n)}k=-\frac1\pi\sum_{(m,r)\in\mathcal W}(-1)^r\sgn(r)\,\frac{\log\frac k{|r|m}+K_0}m\;+\;E,
+\]
+where
+\[
+|E|\le\frac2\pi\log(T+1)+2.49+\frac2T+\frac2\pi\cdot\frac{\log k+K_0}V.
+\]
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:converse} each $(m,r)\in\mathcal W$ equals $(n_{i+1},c_{i+1})$ for exactly one step $i$, and its sign is $\varepsilon_i=-(-1)^r\sgn(r)$ by Proposition~\ref{prop:steps}(d). A step with $n_{i+1}\le V$ that does not come from $\mathcal W$ violates only $|c_{i+1}|n_{i+1}\le k/T$ (Proposition~\ref{prop:steps}(a)), so $k/T<|c_{i+1}|n_{i+1}\le kn_{i+1}/(n_i-n_{i+1})$ and $n_i<(T+1)n_{i+1}$; by Proposition~\ref{prop:bounded} with $T+1$ these steps, together with those with $n_{i+1}>V$, contribute at most $\frac2\pi\log(T+1)+2.49+\frac2\pi\frac{\log k+K_0}V$. For $(m,r)\in\mathcal W$ coming from step $i$, put $x=|r|m/k\le1/T\le\frac14$. Proposition~\ref{prop:steps}(c) gives $n_i|r|/k\in[1-x,1+x]$, so $|\log\frac{n_i|r|}k|\le2x$, and $m/n_i\le\frac43x$, so that $\rho(m/n_i)\le\frac{7\pi^2}{72}(\frac43x)^2\le1.71x^2$. By Lemma~\ref{lem:I-asymptotics}, $J_i=\frac{\log(n_i/m)+K_0-\rho(m/n_i)}{\pi m}=\frac{\log\frac k{|r|m}+K_0}{\pi m}+\vartheta\frac{2x+1.71x^2}{\pi m}$ with $|\vartheta|\le1$. Finally the steps from $\mathcal W$ have $n_i\ge3n_{i+1}$, so their values of $m$ decrease geometrically and $\sum_{\mathcal W}\frac1m\le\frac32$; the total error is at most $\frac3{2\pi}(\frac2T+\frac{1.71}{T^2})<\frac2T$.
+\end{proof}
+
+\begin{corollary}[Singularities of $F_k(p)$]\label{cor:singularities}
+Let $p>k$ be prime, let $u_k\in[1,k)$ satisfy $2pu_k\equiv1\pmod k$, and put $\theta_k=u_k/k=((2p)^{-1}\bmod k)/k$. Then $k\mid pr-m$ if and only if $2m\theta_k\equiv r/k\pmod1$. If $k\mid ap+c$ with $a\ge1$, $c$ odd, $\gcd(a,c)=1$ and $a|c|\le k/T$, then the sum in Theorem~\ref{thm:explicit} \textup{(}with $n=p$, $V\ge|c|$\textup{)} contains the term
+\[
+\sgn\bigl((-1)^ac\bigr)\,\frac{\log\frac k{a|c|}+K_0}{\pi|c|},
+\]
+which is negative if and only if $(-1)^ac<0$.
+\end{corollary}
+
+\begin{proof}
+Since $p^{-1}\equiv2u_k\pmod k$, $pr\equiv m$ is equivalent to $r\equiv2mu_k\pmod k$. If $k\mid ap+c$, put $(m,r)=(|c|,-a\sgn c)$; then $k\mid rp-m$, $\gcd(r,(rp-m)/k)=\gcd(a,(ap+c)/k)=1$ (as $\gcd(a,c)=1$), and $-(-1)^r\sgn(r)=(-1)^a\sgn c=\sgn((-1)^ac)$.
+\end{proof}
+
+For example, if $k\mid p+1$ then $F_k(p)=F_k(-1)=-F_k(1)$, the most negative value possible (Corollary~\ref{cor:Cm1}); if $k\mid2p-1$ and $k\ge9$, then for $T=4$ and $V=k$ the conditions $r\equiv2m\pmod k$ and $|r|\le k/(4m)$ force $r=2m$, and $\gcd(2m,m(2p-1)/k)\ge m$ forces $m=1$; so $\mathcal W=\{(1,2)\}$ and $F_k(p)/k=-\frac1\pi\log k+O(1)$ as well. In the same way $k\mid2p+1$ gives $\mathcal W=\{(1,-2)\}$ and $F_k(p)/k=\frac1\pi\log k+O(1)$, and $k\mid p-1$ gives $F_k(p)=F_k(1)$. Numerically, for the primes $10^6<p\le4\cdot10^6$ with the most negative values of $S(p)/p-\frac12\log p$, the deficit is carried mainly by moduli dividing $p+1$ and $2p-1$, and by the absence of the positive contributions of moduli dividing $p-1$ and $2p+1$ (Subsection~\ref{subsec:anatomy}).
