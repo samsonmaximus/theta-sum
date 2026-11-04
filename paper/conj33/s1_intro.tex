@@ -1,0 +1,108 @@
+\section{Introduction}\label{sec:intro}
+
+\subsection{The sum and the conjectures}
+For integers $h$ and $k\ge1$ let
+\begin{equation}\label{eq:Shk}
+S(h,k)=\sum_{j=1}^{k-1}(-1)^{j+1+\lfloor hj/k\rfloor},\qquad S(k)=\sum_{h=1}^{k-1}S(h,k).
+\end{equation}
+The sum $S(h,k)$ is one of the arithmetic sums attached to theta functions that were introduced by Hardy~\cite{b14} and studied by Berndt~\cite{b2} and by Berndt and Goldberg~\cite{b3}. It occurs in the transformation formula of $\vartheta_3(z)=\sum_{n\in\Z}e^{\pi in^2z}$: if $\bigl(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\bigr)$ lies in the theta group and $c>0$, then under $z\mapsto(az+b)/(cz+d)$ the function $\log\vartheta_3$ changes by elementary terms and the term $\frac{\pi i}4S(d,c)$ \cite[Theorem~4.1]{b2}, much as the Dedekind sum occurs in the transformation formula of the Dedekind eta function.\footnote{In~\cite{b2} the sum runs over $1\le j\le c$, which adds $1$ to $S(d,c)$ when $c+d$ is odd; see also \cite[Section~2]{b1}.}
+
+Berndt, Bhat, Meyer, Xie and Zaharescu~\cite{b1} studied the complete sums $S(k)$ for prime $k$. For an odd prime $p$,
+\[
+S(p)=\sum_{h=1}^{p-1}\sum_{j=1}^{p-1}(-1)^{j+1+\lfloor hj/p\rfloor}
+\]
+is a sum of $(p-1)^2$ signs. A few values:
+\begin{center}\small
+\begin{tabular}{l*{10}{r}}
+\toprule
+$p$ & 3 & 5 & 7 & 11 & 13 & 101 & 233 & 1009 & 3119 & 999983\\
+$S(p)$ & 2 & 4 & 10 & 14 & 20 & 268 & 440 & 4408 & 9194 & 6306294\\
+\bottomrule
+\end{tabular}
+\end{center}
+Independent random signs would give a sum of size about $p$ and of either sign. Instead $S(p)$ is positive in all computed cases and grows slightly faster than $p$. On the basis of such data the authors of~\cite{b1} made the following conjectures, in which $k$ denotes a prime.\footnote{We use the numbering of the published version of~\cite{b1}, which agrees with arXiv versions 2 and~3; the formal statements in~\cite{b11} follow the first arXiv version and number them differently (Appendix~\ref{app:lean}).}
+
+\begin{bconj}[positivity]{1.1}
+$S(k)>0$ for every prime $k>5$.
+\end{bconj}
+\begin{bconj}{3.1}
+$S(k)>2k$ for every prime $k>233$.
+\end{bconj}
+\begin{bconj}{3.2}
+$S(k)>3k$ for every prime $k>3119$.
+\end{bconj}
+\begin{bconj}[growth]{3.3}
+For any fixed $C_1,C_2,\varepsilon>0$ one has $C_1k<S(k)<C_2k^{1+\varepsilon}$ for all sufficiently large primes $k$.
+\end{bconj}
+
+They write that ``Conjecture~1.1 appears to be very difficult to prove'', and trace the difficulty to ``our lack of knowledge about the distribution of the residues of $hj$ modulo $k$'', that is, to the distribution of the points on the modular hyperbolas $hj\equiv c\pmod k$ (see Shparlinski's survey~\cite{b25}).
+
+\subsection{Results}
+We determine the size of $S(p)$ and prove Conjecture~3.3.
+
+\begin{theorem}\label{thm:main}
+\textup{(a)} For every odd prime $p$,
+\[
+|S(p)|\le\frac2{\pi^2}\,p\,(\log p+2)^2.
+\]
+\textup{(b)} As $p\to\infty$ over the primes,
+\[
+S(p)=\frac p2\log p+O\bigl(p(\log p)^{19/20}\bigr).
+\]
+In particular, Conjecture~\textup{3.3} holds, and for every fixed $B$ we have $S(p)>Bp$ for all sufficiently large primes $p$.
+\end{theorem}
+
+So the $(p-1)^2$ signs cancel almost completely, and what is left is a bias of order $\log p$ times the size of a random sum. Part~(a) is elementary. Part~(b) is the substance of the paper; it implies $S(p)>0$, $S(p)>2p$ and $S(p)>3p$ for all sufficiently large $p$. The threshold depends on the implied constant in the theorem of Bourgain and Garaev used in Section~\ref{sec:kloosterman}, which has not been computed, and on the largeness conditions in the proof, which as written require at least $\log\log p>4073$ (Remark~\ref{rem:optimality}(c)). So part~(b) says nothing about the primes within computational reach. For small primes we have the following computation (Section~\ref{sec:computations}).
+
+\begin{proposition}\label{prop:numerics}
+For all odd primes $p\le6\cdot10^6$ we have $S(p)>0$; $S(p)>p$ if $p>5$; $S(p)>2p$ if $p>233$; $S(p)>3p$ if $p>3119$; $S(p)>4p$ if $p>58013$; and $S(p)>5p$ if $p>869399$. None of these thresholds can be lowered.
+\end{proposition}
+
+So Conjectures~1.1, 3.1 and~3.2 hold for $p\le6\cdot10^6$ and for all sufficiently large $p$; the range in between remains open.
+
+The new ingredient of the proof is an elementary estimate for the large divisors of the terms of an arithmetic progression. Divisors are positive: for a nonzero integer $n$, $d\mid n$ means that $d$ is a positive divisor of $|n|$.
+
+\begin{theorem}\label{thm:divisors}
+Let $0<\gamma_0<1$. There is $L_0(\gamma_0)$ such that the following holds for every integer $q$ with $\log q\ge L_0(\gamma_0)$. Put $T=\exp((\log q)^{\gamma_0})$. Let $a$ be an integer coprime to $q$, let $R\ge1$, and let $\mathcal I$ be a set of at most $R$ consecutive integers such that $0<|a+qt|\le q^2$ for all $t\in\mathcal I$. Then
+\[
+\sum_{t\in\mathcal I}\ \sum_{\substack{d\mid a+qt\\ d>TR}}\frac1d\;\le\;T^{-\gamma_0/4}.
+\]
+\end{theorem}
+
+For $R$ random integers of size at most $q^2$ the left-hand side would be about $1/T$. The point of Theorem~\ref{thm:divisors} is that the length $R$ of the progression is arbitrary: bounds for divisor sums along progressions, such as Shiu's theorem~\cite{b24}, require the length to be at least a fixed power of the modulus, whereas we need every length from $1$ to about $q^{3/4}$.
+
+\subsection{The method}
+\emph{An exact formula.} A finite Fourier expansion modulo $2p$ turns the sum of signs into a sum of products of cotangents (Lemma~\ref{lem:dual}):
+\[
+S(p)=\frac2p\sum_{\substack{0<k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\,C_p(k),\qquad C_p(k)=\sum_{\substack{0<a<p\\ a\text{ odd}}}\cot\frac{\pi ka}{2p}.
+\]
+Since $|C_p(k)|\le C_p(1)\le\frac p\pi(\log p+2)$, this gives Theorem~\ref{thm:main}(a). The half-range cotangent sums satisfy a reciprocity law (Lemma~\ref{lem:reciprocity}),
+\[
+C_p(k)=\frac pk\,F_k(p)+I\Bigl(\frac kp\Bigr),\qquad F_k(n)=\sum_{t=1}^{(k-1)/2}\tan\frac{\pi nt}k,
+\]
+with an explicit integral $I$ satisfying $\pi\lambda I(\lambda)=\log\frac1\lambda+\kz+O(\lambda^2)$. The terms $I(k/p)$ produce the main term $\frac p2\log p+c_0p$, with an explicit constant $c_0=0.2399\ldots$. For $k\ge K_W=p^{3/4}(\log p)^4$ we use cancellation between different $k$: summed over an interval of $k$, the $C_p(k)$ become incomplete Kloosterman sums, and Kloosterman's bound shows that these moduli contribute $O(p/\log p)$. The result (Theorem~\ref{thm:decomp}) is
+\begin{equation}\label{eq:intro-decomp}
+S(p)=\frac p2\log p+c_0p+\frac{4p}\pi\sum_{\substack{3\le k<K_W\\ k\text{ odd}}}\frac{F_k(p)}{k^2}+O\Bigl(\frac p{\log p}\Bigr).
+\end{equation}
+Since $|F_k(p)|\le\frac k\pi(\log k+2)$, the sum over $k$ is trivially $O((\log p)^2)$. The problem is to show that it is $o(\log p)$, for every large prime $p$.
+
+\emph{The tangent sums.} The quotient $F_k(p)/k$ depends only on $\theta_k=u_k/k$, where $2pu_k\equiv1\pmod k$, and it is a weighted sum of signs along the multiples of $\theta_k$ (Lemma~\ref{lem:sign-form-tangent}):
+\[
+\frac{F_k(p)}k=-\sum_{\substack{0<n<k\\ n\text{ odd}}}\frac1k\cot\frac{\pi n}{2k}\,\sq(n\theta_k),\qquad \sq(y)=\sgn\bigl(\tfrac12-\{y\}\bigr).
+\]
+It is large when $\theta_k$ is close to a fraction with small denominator; for instance $F_k(p)/k=-\frac1\pi\log k+O(1)$ whenever $k\mid p+1$. Such moduli occur for infinitely many $p$, so the estimate has to be uniform in $p$. We split the sum over $n$ into a \emph{head} $n\le N$ and a \emph{tail} $n>N$, where $\log N\asymp(\log p)^{1/20}$.
+
+\emph{Heads.} Each head is $O(\log N)$. For $k<K_*=\exp((\log p)^{9/10})$ we use this bound; with the weights $1/k$ these moduli contribute $O(\log N\log K_*)=O((\log p)^{19/20})$, which is the error term in Theorem~\ref{thm:main}(b). For $K_*\le k<K_W$ we average the heads over $k$ in dyadic blocks. Expanding the sign function into a trigonometric polynomial turns them into short Kloosterman sums $\sum_{n\le N'}e(bn^*/p)$, where $n^*$ is the inverse of $n$ modulo $p$ and $\log N'\ge\frac12(\log p)^{9/10}$. Here we use the bound of Bourgain and Garaev~\cite[Theorem~16]{b8}, which saves a power of $\log p$ for such sums (Section~\ref{sec:kloosterman}).
+
+\emph{Tails.} The tail is small when the points $n\theta_k$ are well distributed modulo~$1$. An Erd\H{o}s--Tur\'an type argument shows that this holds unless $\|2m\theta_k\|<1/T$ for some $m\le\lceil(\log p)^2\rceil$, where $T=\exp((\log p)^{1/20})$. No estimate for exponential sums is available at this scale, so we count the exceptional moduli instead. Such a $k$ has a \emph{witness}: an integer $r$ with $0<|r|<k/T$ and $k\mid pr-m$. So $k$ is a divisor larger than $T|r|$ of a term of one of the progressions $\{pt\mp m\}$, and Theorem~\ref{thm:divisors} shows that the total $1/k$-mass of these moduli is negligible.
+
+\subsection{The external input and the formal verification}
+Apart from standard tools (Vaaler's approximation of the sawtooth function and the Rosser--Schoenfeld bound for $\prod_{\ell\le y}(1-1/\ell)^{-1}$), the proof uses one external result: Theorem~16 of Bourgain and Garaev~\cite{b8}, for sums of length $N$ with $\log N\ge\frac12(\log p)^{9/10}$. This lies far inside the range of $N$ covered by its proof, which is $\log N\ge(\log p)^{2/3}(\log\log p)^{O(1)}$ (Lemma~\ref{lem:bg}; Garaev and Shparlinski~\cite[(1.2)]{b12} state it as $\log N\ge(\log p)^{2/3}(\log\log p)^{c}$ for any fixed $c>3$). For $N\ge p^{4/7}$, which occurs here, the proof of~\cite[Theorem~16]{b8} rests on Weil's bound for Kloosterman sums, so Weil's bound enters the paper through this input. Everything else is proved here, including Kloosterman's bound for complete sums (Lemma~\ref{lem:kloosterman}), which is all that the decomposition of Section~\ref{sec:decomposition} needs.
+
+The deduction of Conjecture~3.3 from this input has been verified in the Lean proof assistant. Starting from the definition of $S$ in the formal-conjectures repository~\cite{b11}, the formalization proves the implication ``Lemma~\ref{lem:bg} $\Rightarrow$ Conjecture~3.3''; the bound of Lemma~\ref{lem:bg} enters as a hypothesis and is not formalized, and every other step is machine-checked. The formal proof follows the route of Sections~\ref{sec:notation}--\ref{sec:proof}, with minor differences; it establishes $S(p)/p\to\infty$ rather than the explicit exponent $\frac{19}{20}$ (Appendix~\ref{app:lean}). The code, the data and the Lean files are available at \url{https://github.com/samsonmaximus/theta-sum}.
+
+\subsection{Related work}
+Hardy sums and their reciprocity laws were developed by Berndt~\cite{b2}, Berndt and Goldberg~\cite{b3} and Sitaramachandrarao~\cite{b26}, and L\"ageler~\cite{b18} related $S(d,c)$ to even continued fractions. Reciprocity formulas, bounds and limiting distributions for cotangent sums were obtained by Bettin and Conrey~\cite{b5}, Bettin~\cite{b4} and Bettin and Drappeau~\cite{b6,b7}. These results concern averages over complete residue systems or over all denominators, whereas $S(p)$ involves essentially one point for each modulus $k$. For short Kloosterman sums see Bourgain and Garaev~\cite{b8,b9}, Korolev~\cite{b17} and Garaev and Shparlinski~\cite{b12}.
+
+\subsection{Organization}
+Sections~\ref{sec:notation}--\ref{sec:decomposition} prove the cotangent formula and Theorem~\ref{thm:main}(a), the reciprocity law, and the decomposition~\eqref{eq:intro-decomp}. Sections~\ref{sec:kloosterman} and~\ref{sec:tangent} state the input on short Kloosterman sums and treat heads and tails, and Section~\ref{sec:divisors} proves Theorem~\ref{thm:divisors} and can be read on its own. Section~\ref{sec:proof} proves Theorem~\ref{thm:main}(b), Section~\ref{sec:computations} describes the computations, and Appendix~\ref{app:lean} the formal verification.

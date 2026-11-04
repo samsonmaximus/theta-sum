@@ -1,0 +1,206 @@
+
+\section{Proof of Theorem~\ref{thm:main}}\label{sec:proof}
+
+Part~(a) of Theorem~\ref{thm:main} is Proposition~\ref{prop:upper}; for part~(b) we combine the reduction of Theorem~\ref{thm:decomp}(ii), which expresses $S(p)$ through $R_K(p)$ with $K=p^{3/4}(\log p)^4$, with the estimates of Sections~\ref{sec:kloosterman}--\ref{sec:divisors}. Writing $K_W$ for this cutoff, put
+\[
+\Sigma=R_{K_W}(p)=\sum_{\substack{3\le k<K_W\\ k\text{ odd}}}\frac{\Phi_k}{k}.
+\]
+For a parameter $N$ we split $\Phi_k=\Phi_k^{\le N}+\Phi_k^{>N}$ as in~\eqref{eq:Phik-sum}, calling $\Phi_k^{\le N}$ the \emph{head} and $\Phi_k^{>N}$ the \emph{tail} of $\Phi_k$, and $\Sigma$ is divided into four ranges, treated by four different tools, as in the table below, where $L=\log p$, $T=\exp(L^{1/20})$, $K_*=\exp(L^{9/10})$ and the entries are asymptotic as $p\to\infty$.
+
+\medskip
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{3.0cm}p{6.0cm}p{4.2cm}@{}}
+\toprule
+Range & Tool & Contribution to $|\Sigma|$\\
+\midrule
+heads, $k<K_*$ & trivial bound~\eqref{eq:head-trivial} & $\dfrac{L^{19/20}}{2\pi}\,(1+o(1))$\\
+heads, $K_*\le k<K_W$ & Lemma~\ref{lem:heads} and the Bourgain--Garaev bound (Corollary~\ref{cor:MK}) & $O\bigl(L^{7/10}(\log L)^4\bigr)$\\
+tails, generic $k$ & Diophantine condition $\|2m\theta_k\|\ge1/T$; Lemmas~\ref{lem:generic} and~\ref{lem:tails}(a) & $O(1)$\\
+tails, non-generic $k$ & Lemmas~\ref{lem:witnesses} and~\ref{lem:tails}(b); Theorem~\ref{thm:divisors} & $o(1)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\medskip
+
+The first range dominates and determines the exponent $\frac{19}{20}$. The exponent is $\frac{19}{20}=\frac1{20}+\frac9{10}$: the head of each $\Phi_k$ costs $\log N\approx L^{1/20}$, and there are $\log K_*=L^{9/10}$ logarithmic scales below $K_*$. The scale $L^{9/10}$ is chosen so that the Bourgain--Garaev bound is needed only for $\log K\ge(\log p)^{9/10}$ (Section~\ref{sec:kloosterman}).
+
+\subsection{Proof of Theorem~\ref{thm:main}(b)}
+
+\begin{proof}
+The proof splits $\Sigma$ at the cutoffs $N$ (head versus tail of each $\Phi_k$) and $K_*$ (trivial bound versus Bourgain--Garaev bound for the heads), and treats the tails by a dichotomy in the Diophantine behavior of $\theta_k$. Throughout, $p$ is a sufficiently large prime, $L=\log p$, and $o(1)$ denotes a quantity tending to $0$ as $p\to\infty$.
+
+\smallskip
+\emph{Step 1: parameters.} Put
+\[
+T=\exp\bigl(L^{1/20}\bigr),\quad\eta=\frac1T,\quad M=H=\lceil L^2\rceil,\quad N=\bigl\lceil TM(2+\log M)\bigr\rceil,
+\]
+\[
+K_*=\exp\bigl(L^{9/10}\bigr),\qquad K_W=p^{3/4}L^4 .
+\]
+Then $T=\exp((\log p)^{\gamma_0})$ with $\gamma_0=\frac1{20}$, which is the form of $T$ in Theorem~\ref{thm:divisors} for $q=p$. Since $\log M=2\log L+O(L^{-2})$ and $N\le TM(2+\log M)+1$,
+\begin{equation}\label{eq:logN}
+\log N=L^{1/20}+O(\log L),\qquad\text{so}\qquad 1+\log N=(1+o(1))L^{1/20}.
+\end{equation}
+We claim that for $p$ large
+\begin{equation}\label{eq:param-chain}
+M<N<K_*<K_W<\frac p4 .
+\end{equation}
+Indeed, $M<N$ is clear. Next, $\log N=L^{1/20}+O(\log L)<L^{9/10}=\log K_*$ for large $L$. Further $\log K_W=\frac34L+4\log L>L^{9/10}$ for large $L$. Finally $K_W<p/4$ is equivalent to $4L^4<p^{1/4}$, true for large $p$. Also
+\begin{equation}\label{eq:KW-range}
+p^{3/4}(\log p)^4=K_W\le p^{9/10}
+\end{equation}
+for large $p$ (as $L^4\le p^{3/20}$), and by the choice of $N$
+\begin{equation}\label{eq:etaN}
+\eta N\ge M(2+\log M).
+\end{equation}
+We use the elementary estimates, for real $X\ge3$,
+\begin{equation}\label{eq:sum-recip}
+\sum_{\substack{k\text{ odd}\\ 3\le k<X}}\frac1k\le\frac12\log X,\qquad
+\sum_{\substack{k\text{ odd}\\ 3\le k<X}}\frac{\log k}k\le1+\frac14(\log X)^2 .
+\end{equation}
+\emph{Proof of~\eqref{eq:sum-recip}.} The function $1/t$ is convex, so its value at the midpoint of $[k-1,k+1]$ is at most its mean over this interval: $\frac1k\le\frac12\int_{k-1}^{k+1}\frac{dt}t$. The intervals $[k-1,k+1]$ for odd $k\ge3$ are disjoint and, for $k<X$, lie in $[2,X+1]$; hence the first sum is at most $\frac12\log\frac{X+1}2\le\frac12\log X$. For the second, $t\mapsto\log t/t$ is decreasing on $[3,\infty)$ (its derivative is $(1-\log t)/t^2<0$ for $t>e$). Hence for odd $k\ge5$ we have $\frac{\log k}k\le\frac12\int_{k-2}^k\frac{\log t}t\,dt$. The intervals $[k-2,k]$ are disjoint and lie in $[3,X)$, so these terms sum to at most $\frac12\cdot\frac12\bigl((\log X)^2-(\log3)^2\bigr)\le\frac14(\log X)^2$. The term $k=3$ is $\frac{\log3}3<1$. \qed
+
+\smallskip
+\emph{Step 2: the reduction.} By~\eqref{eq:KW-range} the value $K=K_W$ is admissible in Theorem~\ref{thm:decomp}(ii), and~\eqref{eq:decomp-ii} gives
+\begin{equation}\label{eq:S-Sigma}
+S(p)=\frac p2\log p+c_0p+\frac{4p}{\pi}\,\Sigma+O\Bigl(\frac pL\Bigr),\qquad\Sigma=R_{K_W}(p)=\sum_{\substack{3\le k<K_W\\ k\text{ odd}}}\frac{\Phi_k}k .
+\end{equation}
+Write $\Sigma=\Sigma_{\mathrm{head}}+\Sigma_{\mathrm{tail}}$ with
+\[
+\Sigma_{\mathrm{head}}=\sum_{\substack{3\le k<K_W\\ k\text{ odd}}}\frac{\Phi_k^{\le N}}k,\qquad
+\Sigma_{\mathrm{tail}}=\sum_{\substack{3\le k<K_W\\ k\text{ odd}}}\frac{\Phi_k^{>N}}k .
+\]
+Recall that $\Phi_k^{>N}=0$ for $k\le N+1$ (Eq.~\eqref{eq:Phik-sum}). Further split $\Sigma_{\mathrm{head}}=\Sigma_{\mathrm{head}}^{<K_*}+\Sigma_{\mathrm{head}}^{\ge K_*}$ according to $k<K_*$ or $k\ge K_*$.
+
+\smallskip
+\emph{Step 3: heads with $k<K_*$.} By~\eqref{eq:head-trivial}, $|\Phi_k^{\le N}|\le\frac2\pi(1+\frac12\log N)=\frac1\pi(2+\log N)$, and by the first estimate in~\eqref{eq:sum-recip} (note $K_*\ge3$),
+\[
+\bigl|\Sigma_{\mathrm{head}}^{<K_*}\bigr|\le\frac1\pi(2+\log N)\cdot\frac12\log K_*=\frac1{2\pi}(2+\log N)L^{9/10}.
+\]
+By~\eqref{eq:logN},
+\begin{equation}\label{eq:head-low}
+\bigl|\Sigma_{\mathrm{head}}^{<K_*}\bigr|\le\Bigl(\frac1{2\pi}+o(1)\Bigr)L^{19/20}.
+\end{equation}
+
+\smallskip
+\emph{Step 4: heads with $K_*\le k<K_W$.} The idea is to apply Lemma~\ref{lem:heads} on dyadic blocks, where Corollary~\ref{cor:MK} supplies a saving of $(\log K)^{-3/2}$ in $\mathcal M_K/K$; the number of blocks is $O(L)$, and the saving at the bottom of the range, $(L^{9/10})^{-3/2}=L^{-27/20}$, is what remains.
+
+Put $K_j=2^jK_*$ and $B_j=[K_j,2K_j)\cap[K_*,K_W)$ for $j\ge0$. The odd $k$ with $K_*\le k<K_W$ are partitioned by the $B_j$, and $B_j\ne\varnothing$ only if $K_j<K_W$, that is $j<\log_2(K_W/K_*)\le\log_2K_W=(\frac34L+4\log L)/\log2<1.1\,L$ for large $L$. So at most $1.1L+1\le2L$ blocks are nonempty. Fix a nonempty $B_j$. By~\eqref{eq:param-chain}, $9\le K_*\le K_j<K_W<p/4$ and $N<K_*\le K_j$, and $2\le N$, $1\le H<p$. Hence Lemma~\ref{lem:heads} applies to $K=K_j$, $B=B_j$ and gives
+\[
+\Bigl|\sum_{\substack{k\in B_j\\ k\text{ odd}}}\frac{\Phi_k^{\le N}}k\Bigr|\le(1+\log N)\Bigl(\frac2H+10(1+\log H)\frac{\mathcal M_{K_j}}{K_j}\Bigr).
+\]
+Since $K_j\le p/2$ and $\log K_j\ge\log K_*=L^{9/10}$, Corollary~\ref{cor:MK} gives
+\begin{align*}
+\frac{\mathcal M_{K_j}}{K_j}&\le16\sqrt2\,C_{BG}\,(\log L)^3\,L\,(\log K_j)^{-3/2}\\
+&\le16\sqrt2\,C_{BG}\,(\log L)^3\,L\cdot L^{-27/20}=16\sqrt2\,C_{BG}\,(\log L)^3L^{-7/20}.
+\end{align*}
+Also $H=\lceil L^2\rceil\ge L^2$ and $1+\log H\le3\log L$ for large $L$. Summing over at most $2L$ blocks,
+\begin{align*}
+\bigl|\Sigma_{\mathrm{head}}^{\ge K_*}\bigr|
+&\le(1+\log N)\cdot2L\Bigl(\frac2{L^2}+10\cdot3\log L\cdot16\sqrt2\,C_{BG}(\log L)^3L^{-7/20}\Bigr)\\
+&=(1+\log N)\Bigl(\frac4L+960\sqrt2\,C_{BG}\,(\log L)^4L^{13/20}\Bigr).
+\end{align*}
+With $1+\log N\le2L^{1/20}$ from~\eqref{eq:logN} this gives
+\begin{equation}\label{eq:head-high}
+\bigl|\Sigma_{\mathrm{head}}^{\ge K_*}\bigr|\le1920\sqrt2\,C_{BG}\,L^{7/10}(\log L)^4+o(1)=O\bigl(L^{7/10}(\log L)^4\bigr),
+\end{equation}
+because $\frac1{20}+\frac{13}{20}=\frac7{10}$.
+
+\smallskip
+\emph{Step 5: generic tails.} The idea is that if $\theta_k$ is far from all rationals with denominator at most $M$ in the sense of $\|2m\theta_k\|$, then the partial sums of $\sq(n\theta_k)$ equidistribute, so that $D_k$ is small. Call an odd $k$ with $N+1<k<K_W$ \emph{generic} if $\|2m\theta_k\|\ge\eta$ for all $1\le m\le M$. Since $\eta=1/T\le\frac12$, $N\ge2$, and $k<K_W<p$, Lemma~\ref{lem:generic} and~\eqref{eq:etaN} give for generic $k$
+\[
+D_k\le\frac1M+\frac{2+\log M}{\eta N}\le\frac1M+\frac1M=\frac2M .
+\]
+Lemma~\ref{lem:tails}(a) applies (as $2\le N<k$) and gives
+\[
+|\Phi_k^{>N}|\le\frac\pi2D_k\log\frac kN\le\frac\pi M\log k .
+\]
+By the second estimate in~\eqref{eq:sum-recip} with $X=K_W$, $\log K_W=\frac34L+4\log L$ and $M\ge L^2$, the generic $k$ contribute to $\Sigma_{\mathrm{tail}}$ at most
+\begin{equation}\label{eq:generic}
+\frac\pi M\Bigl(1+\frac14\log^2K_W\Bigr)\le\frac\pi{L^2}\Bigl(1+\frac14\Bigl(\frac34L+4\log L\Bigr)^2\Bigr)=\frac{9\pi}{64}+o(1)=O(1).
+\end{equation}
+
+\smallskip
+\emph{Step 6: non-generic tails.} The idea is that a non-generic $k$ is a large divisor of one of the integers $pr\mp m$ with $r$ small, and such divisors have small total reciprocal mass by Theorem~\ref{thm:divisors}.
+
+Let $\mathcal N$ be the set of odd $k$ with $N+1<k<K_W$ that are not generic, that is, $\|2m\theta_k\|<\eta$ for some $1\le m\le M$. By Lemma~\ref{lem:tails}(b), for $k\in\mathcal N$
+\begin{equation}\label{eq:nongeneric-trivial}
+|\Phi_k^{>N}|\le\frac1\pi\log k\le\frac L\pi .
+\end{equation}
+Let $k\in\mathcal N$ and take such an $m$. Then $1\le m\le M<N<k<p$, so Lemma~\ref{lem:witnesses} (with $0<\eta\le\frac12$) gives an integer $r$ with $0<|r|<\eta k=k/T$ and $k\mid pr-m$. Call $(m,r)$ a \emph{witness} for $k$. Then
+\[
+k>T|r|,\qquad 1\le|r|<\frac kT<\frac{K_W}T .
+\]
+Let $R=2^i$, $i\ge0$ integer, with $R<K_W/T$. There are at most $\log_2K_W+1\le2L$ such $R$. For $1\le m\le M$ define
+\[
+A^+_{m,R}=\{pt-m:\ t\in\Z,\ R\le t<2R\},\qquad A^-_{m,R}=\{pt+m:\ t\in\Z,\ R\le t<2R\}.
+\]
+\emph{Admissibility in Theorem~\ref{thm:divisors} with $q=p$.} Each set is $\{a+pt:t\in\mathcal I\}$ with $a=\mp m$ and $\mathcal I=\{t:R\le t<2R\}$, a set of exactly $R$ consecutive integers. We have $\gcd(a,p)=1$ because $1\le m\le M<p$. The elements are positive and at most $2pR+M<2pK_W<p^2$: indeed, for $t\ge1$, $pt-m\ge p-M>0$, and $R<K_W/T\le K_W$ and $K_W<p/4$. So $0<|a+pt|\le p^2$ for all $t\in\mathcal I$. Finally $\log p=L\ge L_0(\gamma_0)$ for large $p$, and $T=\exp((\log p)^{\gamma_0})$ with $\gamma_0=\frac1{20}$ exactly.
+
+Let $k\in\mathcal N$ have a witness $(m,r)$ and let $R=2^i$ with $R\le|r|<2R$; then $R<K_W/T$ since $R\le|r|<K_W/T$. If $r>0$ then $|pr-m|=pr-m\in A^+_{m,R}$; if $r<0$ then $|pr-m|=p|r|+m\in A^-_{m,R}$. In both cases $k$ is a positive divisor of an element $n$ of $A^\pm_{m,R}$ with $k>T|r|\ge TR$. For a finite set $\mathcal A$ of positive integers and $Y>0$ put
+\[
+\Delta(\mathcal A;Y)=\sum_{n\in\mathcal A}\ \sum_{\substack{d\mid n\\ d>Y}}\frac1d .
+\]
+Assigning to each $k\in\mathcal N$ one witness and the corresponding $(m,R,\pm)$, we get
+\[
+\sum_{k\in\mathcal N}\frac1k\le\sum_{m=1}^M\ \sum_{\substack{R=2^i\\ R<K_W/T}}\bigl(\Delta(A^+_{m,R};TR)+\Delta(A^-_{m,R};TR)\bigr).
+\]
+Theorem~\ref{thm:divisors} (with $\gamma_0=\frac1{20}$, so $T^{-\gamma_0/4}=T^{-1/80}$) bounds each of the $\le2\cdot M\cdot2L$ terms by $T^{-1/80}=\exp(-L^{1/20}/80)$. Hence
+\[
+\sum_{k\in\mathcal N}\frac1k\le4ML\,\exp\Bigl(-\frac{L^{1/20}}{80}\Bigr).
+\]
+With~\eqref{eq:nongeneric-trivial} and $M\le L^2+1\le2L^2$, the non-generic $k$ contribute to $\Sigma_{\mathrm{tail}}$ at most
+\begin{equation}\label{eq:nongeneric}
+\frac L\pi\cdot4ML\,e^{-L^{1/20}/80}\le3L^4e^{-L^{1/20}/80}=\exp\Bigl(\log3+4\log L-\frac{L^{1/20}}{80}\Bigr)=o(1).
+\end{equation}
+
+\smallskip
+\emph{Step 7: conclusion.} Every odd $k$ with $3\le k<K_W$ is either $\le N+1$ (then $\Phi_k^{>N}=0$), generic, or in $\mathcal N$. Adding~\eqref{eq:head-low},~\eqref{eq:head-high},~\eqref{eq:generic} and~\eqref{eq:nongeneric},
+\[
+|\Sigma|\le\Bigl(\frac1{2\pi}+o(1)\Bigr)L^{19/20}+O\bigl(L^{7/10}(\log L)^4\bigr)+O(1)=O\bigl(L^{19/20}\bigr).
+\]
+Insert this in~\eqref{eq:S-Sigma}. Since $|c_0|$ is an absolute constant and $p/L\le pL^{19/20}$,
+\[
+S(p)=\frac12\,p\log p+O\bigl(p(\log p)^{19/20}\bigr),
+\]
+which is Theorem~\ref{thm:main}(b). In fact the proof gives $\frac{4}{\pi}|\Sigma|\le(\frac2{\pi^2}+o(1))L^{19/20}$.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:main}(a) and of the consequences}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}(a)]
+This is Proposition~\ref{prop:upper}: $|S(p)|\le\frac2{\pi^2}\,p(\log p+2)^2$ for every odd prime $p$.
+\end{proof}
+
+\begin{proof}[Proof of Conjecture~3.3 and of $S(p)>Bp$]
+Let $C_1,C_2,\varepsilon>0$ be given. By Theorem~\ref{thm:main}(b) there are $C$ and $p_0$ with $S(p)\ge\frac12p\log p-Cp(\log p)^{19/20}$ for $p\ge p_0$. Since $\frac12\log p-C(\log p)^{19/20}\to\infty$, it exceeds $C_1$, and indeed any fixed $B$, for all large $p$; thus $S(p)>C_1p$ and $S(p)>Bp$ for all sufficiently large primes. For the upper half, Theorem~\ref{thm:main}(a) gives $S(p)\le\frac2{\pi^2}p(\log p+2)^2$, and $(\log p+2)^2\le\frac{C_2\pi^2}2p^{\varepsilon}$ for all large $p$, so $S(p)<C_2p^{1+\varepsilon}$. Together, $C_1p<S(p)<C_2p^{1+\varepsilon}$ for all sufficiently large primes $p$, which is Conjecture~3.3.
+\end{proof}
+
+\begin{remark}\label{rem:sharper}
+The exponent $\frac{19}{20}$ comes from the choice of parameters. Using the Bourgain--Garaev bound throughout the range covered by its proof, together with a variant of Theorem~\ref{thm:divisors} for smaller $T$, the same method gives a smaller power of $\log p$; we do not pursue this here. In the computed range, $S(p)/p-\frac12\log p$ stays between $-2.2$ and $2.4$ (Section~\ref{sec:computations}).
+\end{remark}
+
+\subsection{Correspondence with the Lean formalization}
+
+The Lean proof (Appendix~\ref{app:lean}) follows the route of this section, with the parameters $T=\exp(L^{1/20})$, $M=H=\lceil L^2\rceil$, $K_*=\lceil\exp(L^{9/10})\rceil$, $K_W=p^{3/4}L^4$ and about $2L$ dyadic blocks; the choice of $N$ differs slightly from the one above. It establishes the upper bound of Theorem~\ref{thm:main}(a) and the statement $S(p)/p\to\infty$, from which Conjecture~3.3 follows; it does not establish the explicit exponent $\frac{19}{20}$. The Bourgain--Garaev bound enters the Lean proof as a hypothesis. In Lean, $K_W$ is rounded down to $\lfloor p^{3/4}(\log p)^4\rfloor$, which can lie just below the range of Theorem~\ref{thm:decomp}(ii) as stated; the two versions of $R_{K}(p)$ differ by at most one term, of size $O(p\log p/K_W)$, which is negligible. The following table lists the corresponding declarations.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}p{5.3cm}p{8.4cm}@{}}
+\toprule
+Step of the proof & Lean declaration\\
+\midrule
+Theorem~\ref{thm:decomp}(i): identity $S=\Psi+\mathcal T$; asymptotics of $\Psi$ with error $\le\varepsilon p$ & \raggedright\texttt{TheoremB.S\_eq\_Psi\_Phi}; \texttt{TheoremB.Psi\_asymp}\tabularnewline
+Theorem~\ref{thm:decomp}(ii), $K=\lfloor p^{3/4}(\log p)^4\rfloor$, error $O(p)$ (unspecified $c$ in place of $c_0$) & \raggedright\texttt{TheoremB.HBweak34\_of\_HK34}, \texttt{ThetaSum.hBweak34}\tabularnewline
+Theorem~\ref{thm:decomp}(ii), $K=\lfloor p^{3/4}(\log p)^4\rfloor$, constant $c_0$, error $\le\varepsilon p$ & \raggedright\texttt{ThetaSum.theorem\_B\_c0}\tabularnewline
+Lemma~\ref{lem:kloosterman} (Kloosterman's bound, fourth moment) & \raggedright\texttt{ThetaSum.hK34}, \texttt{kl\_four\_le}\tabularnewline
+Heads (Step~4) & \raggedright\texttt{block\_heads}, \texttt{block\_kloost}\tabularnewline
+Tails (Steps~5 and~6) & \raggedright\texttt{tails\_sum\_explicit}, \texttt{generic\_bound}, \texttt{nongeneric\_mass\_D}\tabularnewline
+Theorem~\ref{thm:divisors} & \raggedright\texttt{ThetaSum.theorem\_D}\tabularnewline
+Assembly (Steps~2--7) and Conjecture~3.3 & \raggedright\texttt{lower\_half\_gen}, \texttt{lower\_half\_HBweak34\_HBG}, \texttt{conjecture\_3\_3\_of\_BG}\tabularnewline
+\bottomrule
+\end{tabular}
+\end{center}

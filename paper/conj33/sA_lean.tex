@@ -1,0 +1,75 @@
+% Environment leancode: typewriter block for Lean listings (spaces and line breaks kept; $...$ math works; inside math \sb and \sp print _ and ^).
+\makeatletter
+\newenvironment{leancode}{%
+  \trivlist\item\relax
+  \leftskip\@totalleftmargin\rightskip\z@skip
+  \parindent\z@\parfillskip\@flushglue\parskip\z@skip
+  \@@par
+  \@tempswafalse
+  \def\par{%
+    \if@tempswa
+      \leavevmode\null\@@par\penalty\interlinepenalty
+    \else
+      \@tempswatrue
+      \ifhmode\@@par\penalty\interlinepenalty\fi
+    \fi}%
+  \ttfamily\small\frenchspacing\@noligs
+  \catcode`\_=12 \catcode`\^=12
+  \obeylines\@vobeyspaces}{\endtrivlist}
+\makeatother
+
+\section{The Lean formalization}\label{app:lean}
+
+The formal proof follows the route of Sections~\ref{sec:notation}--\ref{sec:proof}. It is written in the Lean~4 proof assistant~\cite{b35} with the Mathlib library~\cite{b34} and contains no unproved steps; its main theorem takes one hypothesis, a form of the Bourgain--Garaev bound, which is not formalized. The project (Lean and Mathlib version \lean{v4.35.0}) has about 17000 lines and is in the repository \url{https://github.com/samsonmaximus/theta-sum}. It contains no \texttt{sorry} and no \lean{native_decide}. The build succeeds, and for each of the 56 distinct declarations printed in \lean{ThetaSum/MainTheorems.lean}, \texttt{\#print axioms} reports only \texttt{propext}, \lean{Classical.choice} and \lean{Quot.sound}.
+
+Declaration names below lie in the namespace \lean{ThetaSum}, except \lean{theorem_A} and the names \lean{conjecture_4_*}, which lie in the namespace \lean{Arxiv.2501.03234} of~\cite{b11} (in Lean its last component is written in guillemets); names with the prefix \lean{TheoremB} or \lean{Recip} are written with their namespace.
+
+\subsection*{Definitions}
+The definitions $S'$ and $S$ are copied verbatim from the formal-conjectures file \lean{FormalConjectures/Arxiv/2501.03234/ArithmeticSumS.lean}~\cite{b11}:
+\begin{leancode}
+def S' (h k : $\N$) : $\Z$ :=
+  $\sum$ j $\in$ Finset.Ico 1 k, (-1 : $\Z$) ^ (j + 1 + $\lfloor$(h * j : $\mathbb{Q}$) / k$\rfloor\sb{+}$)
+def S (k : $\N$) : $\Z$ := $\sum$ h $\in$ Finset.Ico 1 k, S' h k
+\end{leancode}
+
+\subsection*{The hypotheses}
+The hypothesis \texttt{HBG} is the following statement, in which $n^*$ is the inverse of $n$ modulo $p$.
+
+\smallskip
+\noindent\textbf{(HBG)} There is a constant $C$ such that for all sufficiently large primes $p$, all $b\not\equiv0\pmod p$ and all $N<p$ with $\log N\ge\frac12(\log p)^{9/10}$,
+\[
+\Bigl|\sum_{n\le N}e\Bigl(\frac{bn^*}p\Bigr)\Bigr|\le C(\log\log p)^3(\log p)(\log N)^{-3/2}N .
+\]
+This is exactly Lemma~\ref{lem:bg}, in the same range. The Bourgain--Garaev bound~\cite[Theorem~16]{b8} is not formalized. The weaker hypothesis \texttt{HKS} asks for some $\delta>0$, $\theta<1$ and $C$ such that for large $p$, all $b\not\equiv0\pmod p$ and all $N<p$ with $\log N\ge(\log p)^\theta$,
+\[
+\Bigl|\sum_{n\le N}e(bn^*/p)\Bigr|\le CN(\log p)^{-\delta}.
+\]
+Lean proves \lean{ThetaSum.HKS_of_HBG}: (HBG) implies (HKS), with $\theta=\frac9{10}$ and $\delta=\frac14$.
+
+\subsection*{The main formal theorem}
+The theorem \lean{ThetaSum.conjecture_3_3_of_BG} (file \lean{ThetaSum/Headline.lean}) reads
+\begin{leancode}
+theorem conjecture_3_3_of_BG (hBG : HBG) : $\forall$ C$\sb{1}$ C$\sb{2}$ $\varepsilon$ : $\R$, 0 < C$\sb{1}$ $\to$ 0 < C$\sb{2}$ $\to$ 0 < $\varepsilon$ $\to$
+    $\forall\sp{f}$ k : $\N$ in Filter.atTop, k.Prime $\to$
+      C$\sb{1}$ * k < (S k : $\R$) $\wedge$ (S k : $\R$) < C$\sb{2}$ * (k : $\R$) ^ (1 + $\varepsilon$)
+\end{leancode}
+It proves Conjecture~3.3 (both halves) for the definition of $S$ in~\cite{b11}, assuming only (HBG). The same hypothesis gives the statement \lean{conjecture_4_4} of~\cite{b11} (Conjecture~4.4 of the first arXiv version: $S(k)>nk$ for each $n\in\N$ and all large primes $k$, which is equivalent to the lower half of Conjecture~3.3; \lean{conjecture_4_4_of_BG}), and Conjectures~1.1, 3.1 and~3.2 for all large $p$ (\lean{conjecture_1_1_eventually_of_BG}, \lean{conjecture_3_1_eventually_of_BG}, \lean{conjecture_3_2_eventually_of_BG}). The file \lean{ThetaSum/WeakHyp.lean} contains \lean{conjecture_3_3_of_HKS}, the same statement from (HKS).
+
+\subsection*{Numbering}
+The formal-conjectures file uses the numbering of the first arXiv version of~\cite{b1}: Conjecture~3.1 is \lean{conjecture_4_2}, Conjecture~3.2 is \lean{conjecture_4_3}, and \lean{conjecture_4_1} is the inequality $S(k)>k$ for primes $k>5$.
+
+\subsection*{What else is formalized}
+Without any hypothesis, Lean proves: Proposition~\ref{prop:upper} (\lean{theorem_A}) and the upper half of Conjecture~3.3 (\lean{conjecture_3_3_upper}); Theorem~\ref{thm:decomp}(i), where the identity is \lean{TheoremB.S_eq_Psi_Phi} and the asymptotic formula for $\Psi(p)$, with error at most $\varepsilon p$, is \lean{TheoremB.Psi_asymp}; Theorem~\ref{thm:decomp}(ii) in two forms, both for $K=\lfloor p^{3/4}(\log p)^4\rfloor$: \lean{ThetaSum.hBweak34}, with an unspecified constant $c$ in place of $c_0$ and error $O(p)$, and \lean{ThetaSum.theorem_B_c0}, with the constant $c_0$ and error at most $\varepsilon p$; Lemma~\ref{lem:kloosterman} (\lean{ThetaSum.hK34}); Theorem~\ref{thm:divisors} (\lean{ThetaSum.theorem_D}); Lemma~\ref{lem:counting} (\lean{ThetaSum.S_eq_lemma25}, with \lean{Tq_odd}, \lean{Ffl_add} and \lean{Ffl_recip}); and the finite checks for $p\le2\cdot10^4$ (\lean{S_pos_upto}, \lean{S_gt_self_upto}, \lean{S_gt_two_mul_upto}, \lean{S_gt_three_mul_upto}, \lean{S_233}, \lean{S_3119}), computed by the Lean kernel.
+
+The formalization also contains \lean{ThetaSum.theorem_C_star}, which gives the error term $p(\log p)^{2/3}(\log\log p)^{17/3}$ under the stronger hypothesis \lean{HBGfull} (the Bourgain--Garaev bound for $\log N\ge A(\log p)^{2/3}(\log\log p)^{8/3}$), and \lean{ThetaSum.theorem_D_star}, the variant of Theorem~\ref{thm:divisors} with $\log T\ge(\log\log q)^3$, stated for $\log\log q\ge1000$. These results are not used in this paper.
+
+The formal proofs differ from the paper in these respects. Some constants differ. Lemma~\ref{lem:generic} is formalized in an elementary version that does not use Vaaler's lemma. The reciprocity law (\lean{Recip.reciprocity}) is proved without contour integration. The Lean assembly proves $S(p)/p\to\infty$ (that is, $S(p)=\frac p2\log p+o(p\log p)$) rather than the explicit exponent $\frac{19}{20}$ of Theorem~\ref{thm:main}.
+
+\subsection*{How to check}
+In the directory \texttt{lean} of the repository, run
+\begin{leancode}
+lake exe cache get
+lake build
+lake env lean ThetaSum/MainTheorems.lean
+\end{leancode}
+The first command downloads the compiled Mathlib, the second builds the project (about 30 minutes on four cores), and the third prints the statement and the axioms of each headline result. The hypothesis \texttt{HBG} appears as an argument of the theorem, not as an axiom.

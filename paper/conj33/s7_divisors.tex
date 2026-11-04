@@ -1,0 +1,228 @@
+\section{Large divisors of the terms of an arithmetic progression}\label{sec:divisors}
+
+This section proves Theorem~\ref{thm:divisors}. It is self-contained and does not involve $S(p)$. In Section~\ref{sec:proof} it is applied with $q=p$ and $T=\exp((\log p)^{1/20})$.
+
+For $q\ge3$ put $L=\log q$ and $T=\exp(L^{\gamma_0})$. The theorem bounds the $1/d$-weighted mass of the divisors $d>TR$ of the $R$ terms of a progression $a+qt$ of moduli $q$ and size at most $q^2$. For a random set of $R$ integers of size at most $q^2$ this mass would be of order $1/T$, because a random integer $n$ has $\sum_{d\mid n,\,d>Y}1/d$ of average size $\sum_{d>Y}d^{-2}\approx1/Y$, and $Y=TR$. We prove the bound $T^{-\gamma_0/4}$ for every fixed $\gamma_0\in(0,1)$ and for every length $R\ge1$, with no assumption that $R$ is large compared with $q$; this is the difference from Shiu's theorem~\cite{b24}, which concerns progressions of length at least $q^\eta$ for a fixed $\eta>0$ and gives an upper bound of the correct order of magnitude for sums of multiplicative functions, not a power saving for the divisors beyond $TR$. We do not know whether Theorem~\ref{thm:divisors} follows from the results on divisors in short intervals and progressions in Hall and Tenenbaum~\cite{b37} or in Nair and Tenenbaum~\cite{b38}. The method is not new: writing a divisor as a smooth part times a rough part with few prime factors, and counting the rough parts by a binomial bound, is the device of the proofs of Shiu's theorem and of the theorem of Nair and Tenenbaum, and it goes back to Erd\H{o}s~\cite{b10}. Those theorems, and Henriot's version that is uniform in the discriminant~\cite{b15}, need the length to be at least a fixed power of the size of the terms. What is new here is the iteration in Lemma~\ref{lem:one-step}, which removes this condition at the price of a very large~$T$.
+
+The idea is to write a large divisor $d$ of a term as $d=d_1d_2$, where $d_1$ is the part of $d$ composed of primes up to some $y$. If $d_1$ is at most the length $R$ of the progression, then the terms divisible by $d_1$ are regularly spaced, and the rough part $d_2$, composed of large primes, can be chosen in few ways. If $d_1>R$, then $d_1$ has a divisor $s$ slightly below $R$, and the terms divisible by $s$ form a much shorter progression (Lemma~\ref{lem:one-step}). After a bounded number of such steps the progressions are so short that Rankin's trick (Lemma~\ref{lem:rankin}) finishes the proof.
+
+\subsection{Setup}
+
+Throughout, $q\ge3$ is an integer (not necessarily prime), $L=\log q$ and $X=q^2$. For a nonzero integer $n$, ``$d\mid n$'' means that $d$ is a positive divisor of $|n|$. Theorem~\ref{thm:divisors} states that, for $0<\gamma_0<1$, $L\ge L_0(\gamma_0)$, $T=\exp(L^{\gamma_0})$, every integer $a$ coprime to $q$, every $R\ge1$ and every set $\mathcal I$ of at most $R$ consecutive integers with $0<|a+qt|\le q^2$ for $t\in \mathcal I$,
+\begin{equation}\label{eq:div-restated}
+\sum_{t\in \mathcal I}\ \sum_{\substack{d\mid a+qt\\ d>TR}}\frac1d\;\le\;T^{-\gamma_0/4}=\exp\Bigl(-\frac{\gamma_0}{4}L^{\gamma_0}\Bigr).
+\end{equation}
+
+An \emph{admissible progression} is a set $A=\{a+qt:t\in \mathcal I\}$, where $\mathcal I$ is a set of consecutive integers, $\gcd(a,q)=1$, and $0<|a+qt|\le X$ for $t\in \mathcal I$; its \emph{length} is $|\mathcal I|$. For $Y>0$ put
+\[
+\Delta(A;Y)=\sum_{t\in \mathcal I}\sum_{\substack{d\mid a+qt\\ d>Y}}\frac1d .
+\]
+Then the left side of \eqref{eq:div-restated} is $\Delta(A;TR)$, where $A$ is an admissible progression of length at most $R$. We use two simple facts.
+\begin{enumerate}[label=(F\arabic*),leftmargin=*]
+\item Every divisor of an element of $A$ is coprime to $q$. If $e\ge1$ is coprime to $q$, the $t\in \mathcal I$ with $e\mid a+qt$ form one residue class modulo $e$, so their number is at most $|\mathcal I|/e+1$.
+\item If $Y\ge X$ then $\Delta(A;Y)=0$.
+\end{enumerate}
+For (F1): a prime dividing both $q$ and a divisor of $a+qt$ would divide $a$; and $e\mid a+qt$ is a congruence $qt\equiv-a\pmod e$ with $q$ invertible modulo $e$. For (F2): every divisor of $a+qt$ is at most $|a+qt|\le X$.
+
+For $y\ge2$ let $M(y)=\prod_{\ell\le y}(1-1/\ell)^{-1}=\sum_{P^+(e)\le y}1/e$, the sum over all integers $e\ge1$ whose prime factors are at most $y$ ($\ell$ denotes a prime). By Rosser and Schoenfeld~\cite[(3.30)]{b23}, for $x>1$,
+\begin{equation}\label{eq:RS330}
+M(x)<e^\gamma(\log x)\Bigl(1+\frac1{\log^2x}\Bigr).
+\end{equation}
+For $y\ge e$ we have $\log y+1/\log y\le1+\log y$, so \eqref{eq:RS330} gives
+\begin{equation}\label{eq:Mertens}
+M(y)\le e^\gamma(1+\log y)\qquad(y\ge2).
+\end{equation}
+For $2\le y<e$ we have $M(y)=2<e^\gamma(1+\log2)=3.01\ldots$ directly.
+
+\subsection{Three lemmas}
+
+\begin{lemma}[Rankin]\label{lem:rankin}
+For $Y>0$ and $0<\alpha<1$, $\Delta(A;Y)\le|\mathcal I|\,Y^{-\alpha}P(\alpha)$, where $P(\alpha)=\max_{1\le n\le X}\sigma_{\alpha-1}(n)$ and $\sigma_{\alpha-1}(n)=\sum_{d\mid n}d^{\alpha-1}$. If $0<\alpha\le\frac12$ and $L\ge3$, then
+\[
+\log P(\alpha)\le4(4L)^\alpha(\log\log(4L)+1).
+\]
+\end{lemma}
+
+\begin{proof}
+For $n\ne0$,
+\[
+\sum_{d\mid n,\,d>Y}\frac1d\le\sum_{d\mid n}\frac1d\Bigl(\frac dY\Bigr)^\alpha=Y^{-\alpha}\sigma_{\alpha-1}(|n|),
+\]
+which gives the first claim. For the second, $\sigma_{\alpha-1}(n)\le\prod_{\ell\mid n}(1-\ell^{\alpha-1})^{-1}$. Let $\ell_1<\dots<\ell_k$ be the prime factors of $n\le X$ and let $w_i$ be the $i$-th prime. Then $\ell_i\ge w_i$, and $w\mapsto(1-w^{\alpha-1})^{-1}$ is decreasing, so the product is at most $\prod_{i\le k}(1-w_i^{\alpha-1})^{-1}$. Moreover $\theta(w_k)=\log(w_1\cdots w_k)\le\log(\ell_1\cdots\ell_k)\le\log n\le2L$, where $\theta$ is Chebyshev's function. Since $\theta(\ell)\ge\ell/2$ for every prime $\ell\ge3$ (for $\ell\ge41$ by $\theta(x)>x(1-1/\log x)$ of Rosser and Schoenfeld~\cite{b23}, and for $\ell<41$ by inspection), we get $w_k\le4L$ (trivially if $w_k=2$). For $\alpha\le\frac12$ we have $\ell^{\alpha-1}\le2^{-1/2}$, and $-\log(1-x)\le x/(1-x)\le x/(1-2^{-1/2})\le4x$ for $0\le x\le2^{-1/2}$. Hence
+\[
+\log P(\alpha)\le4\sum_{\ell\le4L}\ell^{\alpha-1}\le4(4L)^\alpha\sum_{\ell\le4L}\frac1\ell\le4(4L)^\alpha(\log\log(4L)+1).
+\]
+For the last step, $\sum_{\ell\le x}1/\ell\le\sum_{\ell\le x}-\log(1-1/\ell)=\log M(x)$, and by \eqref{eq:RS330} this is at most $\gamma+\log\log x+1/\log^2x\le\log\log x+1$ for $x\ge12$; here $x=4L\ge12$.
+\end{proof}
+
+For $y\ge2$ put $N_y=\lfloor\log X/\log y\rfloor$ and, for $Z\ge1$,
+\[
+G_y(Z)=\sum_{0\le i\le\log Z/\log y}\binom{N_y}{i}.
+\]
+
+\begin{lemma}[One step]\label{lem:one-step}
+Let $A$ be an admissible progression of length at most $R$, let $T'\ge1$ and $2\le y\le R$, and let $\mathcal{S}$ be the set of integers $s$ with $R/y<s\le R$ and $P^+(s)\le y$. For $s\in\mathcal{S}$ let $A_s=\{n/s:\ n\in A,\ s\mid n\}$. Then each nonempty $A_s$ is an admissible progression of length at most $R/s+1\le2R/s$, and
+\[
+\Delta(A;T'R)\le\frac{2M(y)}{T'}\sum_{j\ge0}2^{-j}G_y(2^{j+1}T'R)+\sum_{s\in\mathcal{S}}\frac1s\,\Delta\Bigl(A_s;\frac{T'R}{s}\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+The terms with a small smooth part $d_1$ are counted by (F1) and the number of choices of the rough part; the terms with a large smooth part have a divisor $s\in\mathcal S$ and pass to $A_s$.
+
+Write $A=\{a+qt:t\in \mathcal I\}$. \emph{The progressions $A_s$.} Let $s\in\mathcal{S}$ with $A_s\ne\emptyset$. By (F1), $\gcd(s,q)=1$ and the $t\in \mathcal I$ with $s\mid a+qt$ are $t=t_s+sv$, with $v$ running over a set of at most $|\mathcal I|/s+1$ consecutive integers. Then $(a+qt)/s=a'+qv$ with $a'=(a+qt_s)/s$, and $\gcd(a',q)=1$ because $a'+qv$ divides $a+qt$. The elements of $A_s$ are nonzero and at most $X/s\le X$ in absolute value. So $A_s$ is admissible of length at most $|\mathcal I|/s+1\le R/s+1\le2R/s$, as $s\le R$.
+
+\emph{The decomposition.} Consider the pairs $(n,d)$ with $n\in A$, $d\mid n$ and $d>T'R$, and write $d=d_1d_2$, where $d_1$ is the largest $y$-smooth divisor of $d$ and $d_2$ is $y$-rough, that is, has no prime factor $\le y$. These pairs give $\Delta(A;T'R)=\sum_{(n,d)}1/d$. We split them according to whether $d_1\le R$ or $d_1>R$.
+
+\emph{Case $d_1\le R$.} Fix $j\ge0$ and consider the pairs with $2^jT'R<d\le2^{j+1}T'R$. The map $(n,d)\mapsto(d_1,n,d_2)$ is injective. Given $d_1$ (which is coprime to $q$ by (F1)), there are at most $R/d_1+1\le2R/d_1$ elements $n$ with $d_1\mid n$, by (F1). Given $n$, the prime factors of $d_2$, counted with multiplicity, form a sub-multiset of size at most $\log d_2/\log y\le\log(2^{j+1}T'R)/\log y$ of the multiset of prime factors of $n$ that exceed $y$. That multiset has at most $N_y$ elements, because $y^{\Omega}\le|n|\le X$ if $\Omega$ is the number of prime factors of $n$ exceeding $y$; and a multiset with at most $N_y$ elements has at most $\binom{N_y}{i}$ sub-multisets of size $i$. So there are at most $G_y(2^{j+1}T'R)$ choices for $d_2$. Since $1/d<2^{-j}/(T'R)$ and $\sum_{P^+(d_1)\le y}1/d_1=M(y)$, these pairs contribute at most
+\[
+\sum_{j\ge0}\ \sum_{P^+(d_1)\le y}\frac{2R}{d_1}\cdot\frac{2^{-j}}{T'R}\,G_y(2^{j+1}T'R)=\frac{2M(y)}{T'}\sum_{j\ge0}2^{-j}G_y(2^{j+1}T'R).
+\]
+
+\emph{Case $d_1>R$.} List the prime factors of $d_1$, with multiplicity, in non-decreasing order, and let $s$ be the first partial product that exceeds $R/y$. It exists because $d_1>R\ge R/y$, and $s\le(R/y)\cdot y=R$ because the previous partial product is at most $R/y$ (the empty product is $1\le R/y$) and every prime factor is at most $y$. So $s\in\mathcal{S}$ and $s\mid d\mid n$. The map $(n,d)\mapsto(s,n/s,d/s)$ is injective, $d/s\mid n/s$, $d/s>T'R/s$, and $1/d=\frac1s\cdot\frac1{d/s}$. So these pairs contribute at most $\sum_{s\in\mathcal{S}}\frac1s\Delta(A_s;T'R/s)$.
+\end{proof}
+
+\begin{lemma}\label{lem:Gy}
+Let $y\ge2$ and $Z\ge1$. Then $G_y(2^jZ)\le(1+N_y)^{1+j\log2/\log y}G_y(Z)$ for $j\ge0$. If $1+N_y\le y^{1/3}$, then
+\[
+\sum_{j\ge0}2^{-j}G_y(2^{j+1}Z)\le2.7\,(1+N_y)\,G_y(2Z).
+\]
+Moreover $\sum_{0\le i\le m}\binom Ni\le(eN/m)^m$ for all integers $N,m$ with $1\le m\le N$.
+\end{lemma}
+
+\begin{proof}
+Write $N=N_y$. Since $\binom N{i+1}\le N\binom Ni$, we have $\sum_{i\le m+1}\binom Ni\le(1+N)\sum_{i\le m}\binom Ni$. Passing from $Z$ to $2^jZ$ raises the upper limit $\lfloor\log Z/\log y\rfloor$ by at most $\lceil j\log2/\log y\rceil\le1+j\log2/\log y$, which gives the first claim.
+
+For the second claim, apply the first claim with $2Z$ in place of $Z$ and $(1+N)^{j\log2/\log y}\le(y^{1/3})^{j\log2/\log y}=2^{j/3}$. For $j\ge1$ this gives $G_y(2^{j+1}Z)\le(1+N)2^{j/3}G_y(2Z)$, while the term $j=0$ is $G_y(2Z)$. Hence the sum is at most
+\[
+G_y(2Z)\Bigl(1+(1+N)\sum_{j\ge1}2^{-2j/3}\Bigr)\le G_y(2Z)\bigl(1+1.7025(1+N)\bigr).
+\]
+If $N=0$ then $G_y\equiv1$ and the sum equals $2$. If $N\ge1$ then $1\le\frac12(1+N)$, and the sum is at most $2.21(1+N)G_y(2Z)$. In both cases the bound $2.7(1+N)G_y(2Z)$ holds.
+
+The last claim is the standard bound
+\[
+\sum_{i\le m}\binom Ni\le\sum_{i\le m}\frac{N^i}{i!}\le\Bigl(\frac Nm\Bigr)^m\sum_{i\ge0}\frac{m^i}{i!}=\Bigl(\frac{eN}m\Bigr)^m ,
+\]
+using $(N/m)^i\le(N/m)^m$ for $i\le m\le N$.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:divisors}}\label{subsec:proof-divisors}
+
+The proof is an induction over a chain of progressions of decreasing length $R$. Put $\kappa=\log T=L^{\gamma_0}$. We measure the supremum of $\Delta(A;T_jR)$ over progressions of length at most $R$ by a quantity $b_j$; we bound it by the Rankin bound when $R$ is at most $T^\beta$, and by $6L\,b_{j+1}$ plus a tiny error when $R$ is larger, using Lemmas~\ref{lem:one-step} and~\ref{lem:Gy}. After at most $\lceil1/\gamma_0\rceil+1$ steps all lengths are below $T^\beta$.
+
+\smallskip\noindent\emph{Overview.} For $j\ge0$ let $b_j$ be the supremum of $\Delta(A;2^{-j}TR)$ over admissible progressions $A$ of length at most $R$, for $R\le e^{x_j}$; we must show $b_0\le T^{-\gamma_0/4}$. Lemma~\ref{lem:one-step} splits a large divisor $d$ of a term into its $y$-smooth part $d_1$ and the rough rest $d_2$. If $d_1\le R$, the terms divisible by $d_1$ are regularly spaced and $d_2$ can be chosen in few ways (Lemma~\ref{lem:Gy}); this gives a tiny contribution $E_1=\exp(-\frac{2+\gamma_0}3\kappa+o(\kappa))$. If $d_1>R$, then $d_1$ has a divisor $s$ with $R/y<s\le R$, and the terms divisible by $s$ form an admissible progression of length at most $2R/s<2y$, so that $b_j\le E_b+E_1+6L\,b_{j+1}$, where $E_b$ is the base-case bound below. With $y=(2^{-j}TR)^{1/u}$ and $u\approx\kappa/(3\log L)$, the logarithm of the length falls from $x_j$ to $x_{j+1}=\log2+(\kappa+x_j)/u$, a contraction by a factor of about $u$, a power of $L$ up to logarithmic factors. Hence from $x_0=2L$ a bounded number $J\le j_0=\lceil1/\gamma_0\rceil+1$ of steps leads to $x_J\le\beta\kappa$, that is, to lengths at most $T^\beta$, where $\beta=\gamma_0/8$. For such lengths Rankin's trick (Lemma~\ref{lem:rankin}) with $\alpha=\gamma_0/2$ gives the base case $b_J\le E_b=\exp(-c_{\gamma_0}\kappa+o(\kappa))$ with $c_{\gamma_0}>\frac38\gamma_0$. Iterating the recursion at most $j_0$ times costs only a factor $(j_0+1)(6L)^{j_0}=e^{o(\kappa)}$, and the outcome is $b_0\le T^{-\gamma_0/4}$.
+
+\medskip\noindent\emph{Step 0: what ``$L$ large'' means.} Write $\Lambda=\log L$, $j_0=\lceil1/\gamma_0\rceil+1$, $\alpha=\gamma_0/2$, $\beta=\gamma_0/8$ and
+\[
+c_{\gamma_0}=\tfrac38\gamma_0+\tfrac1{16}\gamma_0^2,\qquad
+\eta_b=\alpha j_0\log2+4(4L)^{\alpha}(\log\log(4L)+1),\qquad
+\eta_1=\frac\kappa\Lambda+2\Lambda+\log\bigl(32.4\cdot2^{j_0}\bigr).
+\]
+Let $L_0(\gamma_0)\ge3$ be so large that for all $L\ge L_0(\gamma_0)$ the following inequalities hold.
+\begin{enumerate}[label=(L\arabic*),leftmargin=*]
+\item $\kappa\ge93\Lambda$ and $\kappa\ge4(1+8/\gamma_0)\Lambda$.
+\item $\beta\kappa\ge8\Lambda$.
+\item $L^{\gamma_0}\ge(4\Lambda)^{j_0}$.
+\item $j_0\log2\le\beta\kappa/2$.
+\item $\eta_1\le\frac{11}{48}\kappa$.
+\item $\log\bigl(2(j_0+1)\bigr)+j_0\log(6L)+\eta_b\le\frac{\gamma_0}8\kappa$.
+\end{enumerate}
+Each of these compares $\kappa=L^{\gamma_0}$ with a quantity that is $O_{\gamma_0}(L^{\gamma_0/2}\log\log L)$ or $O_{\gamma_0}(\log L)$ (for (L3), $L^{\gamma_0}$ with a power of $\log L$), so $L_0(\gamma_0)$ exists. Below, ``for $L\ge L_0$'' refers to these inequalities only; no other largeness is used. Since $\kappa=L^{\gamma_0}<L$ we have $\kappa\le L$, and $\Lambda\ge\log3>1$.
+
+\medskip\noindent\emph{Step 1: the parameters.} Put
+\[
+u=\Bigl\lfloor\frac\kappa{3\Lambda}\Bigr\rfloor,\qquad R_b=T^\beta,\qquad T_j=2^{-j}T .
+\]
+Define $x_0=2L$, $x_{j+1}=\log2+(\kappa+x_j)/u$ and $J=\min\{j:\ x_j\le\beta\kappa\}$ (finiteness of $J$ is shown in (P3) below). For $j\le J$ and real $R\ge1$ let $B_j(R)$ be the supremum of $\Delta(A;T_jR)$ over all admissible progressions $A$ of length at most $R$ (the supremum of the empty set is $0$), and let $b_j=\sup\{B_j(R):1\le R\le e^{x_j}\}$. For $L\ge L_0$ we have the following.
+\begin{enumerate}[label=(P\arabic*),leftmargin=*]
+\item $u\ge\frac\kappa{3\Lambda}-1\ge\frac\kappa{4\Lambda}$ (as $\kappa\ge12\Lambda$), so by (L1) $u\ge1+8/\gamma_0$; also $u\ge93/3-1=30$. Since $\beta=\gamma_0/8$, $(u-1)\beta\ge1$. Also $\kappa/u\le\kappa/(\frac\kappa{3\Lambda}-1)=3\Lambda/(1-3\Lambda/\kappa)\le3.1\Lambda$, as $3\Lambda/\kappa\le1/31$.
+\item The recursion $x_{j+1}=\log2+\kappa/u+x_j/u$ has the fixed point $x^*=(\log2+\kappa/u)\frac u{u-1}$ and $x_j-x^*=u^{-j}(x_0-x^*)$. Since $u\ge30$, $0<x^*\le(0.7+3.1\Lambda)\cdot\frac{30}{29}\le4\Lambda$ (as $\Lambda\ge1$), and $x_0-x^*\le x_0=2L$, so
+\[
+x_j\le4\Lambda+2Lu^{-j}.
+\]
+\item $J\le j_0$. Indeed, by (P1) and (L3), $u^{j_0}\ge(L^{\gamma_0}/(4\Lambda))^{j_0}=L^{\gamma_0j_0}/(4\Lambda)^{j_0}\ge L^{1+\gamma_0}/(4\Lambda)^{j_0}\ge L$, using $\gamma_0j_0\ge1+\gamma_0$. Hence $2Lu^{-j_0}\le2\le4\Lambda$, and by (P2) and (L2), $x_{j_0}\le8\Lambda\le\beta\kappa$. In particular $J$ is bounded in terms of $\gamma_0$ alone, and $2^J\le2^{j_0}$. Also $J\ge1$, since $x_0=2L>L>\beta\kappa$.
+\item $J\log2\le\beta\kappa/2$, by (P3) and (L4).
+\item $u\log2<\kappa/3$, because $u\le\kappa/(3\Lambda)$ and $\log2<\Lambda$.
+\item $x_j\le2L$ for all $j$. By induction, if $x_j\le2L$ then $x_{j+1}\le\log2+(\kappa+2L)/u\le\log2+3L/30\le2L$, since $\kappa\le L$ and $u\ge30$.
+\end{enumerate}
+Note that $x_j>\beta\kappa$ for $j<J$ by the definition of $J$, so $e^{x_j}>R_b$ for $j<J$, while $e^{x_J}\le R_b$.
+
+\medskip\noindent\emph{Step 2: the base case.} Let $j\le J$ and $1\le R\le R_b$. Since $\alpha=\gamma_0/2\le\frac12$ and $L\ge3$, Lemma~\ref{lem:rankin} applies with $Y=T_jR$ and $|\mathcal I|\le R$:
+\[
+B_j(R)\le R^{1-\alpha}T_j^{-\alpha}P(\alpha)\le R_b^{1-\alpha}\,2^{\alpha J}\,T^{-\alpha}P(\alpha),
+\]
+because $R^{1-\alpha}$ is increasing in $R$ and $T_j^{-\alpha}=2^{j\alpha}T^{-\alpha}\le2^{\alpha J}T^{-\alpha}$. Now $R_b^{1-\alpha}T^{-\alpha}=\exp((\beta(1-\alpha)-\alpha)\kappa)$ and
+\[
+\beta(1-\alpha)-\alpha=\frac{\gamma_0}8\Bigl(1-\frac{\gamma_0}2\Bigr)-\frac{\gamma_0}2=-\frac38\gamma_0-\frac1{16}\gamma_0^2=-c_{\gamma_0}.
+\]
+By (P3) $\alpha J\log2\le\alpha j_0\log2$, and by Lemma~\ref{lem:rankin} $\log P(\alpha)\le4(4L)^\alpha(\log\log4L+1)$. Hence
+\begin{equation}\label{eq:div-Eb}
+B_j(R)\le E_b:=\exp\bigl(-c_{\gamma_0}\kappa+\eta_b\bigr)\qquad(j\le J,\ 1\le R\le R_b),
+\end{equation}
+where $\eta_b=O_{\gamma_0}(L^{\gamma_0/2}\log\log L)=o(\kappa)$, so $E_b=\exp(-(\frac38\gamma_0+\frac1{16}\gamma_0^2)\kappa+o(\kappa))$. In particular $b_J\le E_b$, because $e^{x_J}\le R_b$.
+
+\medskip\noindent\emph{Step 3: the recursive step.} Let $j<J$ and $R_b<R\le e^{x_j}$, and put $y=(T_jR)^{1/u}$, that is, $u\log y=\log(T_jR)$. Let $A$ be admissible of length at most $R$. We verify the hypotheses of Lemmas~\ref{lem:one-step} and~\ref{lem:Gy} and bound their output.
+\begin{enumerate}[label=(\alph*),leftmargin=*]
+\item \emph{$T_j\ge1$ and $y\le R$.} We have $\log T_j\ge\kappa-J\log2>0$ by (P4). Since $\log R>\beta\kappa$ and $(u-1)\beta\ge1$ by (P1), $\log T_j\le\kappa\le(u-1)\beta\kappa<(u-1)\log R$, so $\log y=(\log T_j+\log R)/u<\log R$.
+\item \emph{Lower bound for $y$.} By (P4), $\log(T_jR)\ge\kappa-J\log2+\beta\kappa\ge(1+\frac\beta2)\kappa$. As $u\le\kappa/(3\Lambda)$,
+\[
+\log y\ge\Bigl(1+\frac\beta2\Bigr)\frac\kappa u\ge\Bigl(3+\frac{3\beta}2\Bigr)\Lambda\ge(3+\beta)\Lambda,
+\]
+so $y\ge L^{3+\beta}\ge27$ and, in particular, $y\ge2$.
+\item \emph{$1+N_y\le y^{1/3}$.} Since $\log X=2L$, $N_y\le2L/\log y\le2L/(3\Lambda)$, so $1+N_y\le1+\frac23L\le L$ (as $L\ge3$). Also $y^{1/3}\ge L^{1+\beta/3}\ge L$. Thus $1+N_y\le L\le y^{1/3}$.
+\item \emph{Upper limit in $G_y(2T_jR)$.} It is $\lfloor\log(2T_jR)/\log y\rfloor=\lfloor u+u\log2/\log(T_jR)\rfloor=u$, because $0<u\log2<\kappa\le\log(T_jR)$ by (P5).
+\item \emph{The size of $G_y(2T_jR)$.} If $u\le N_y$, then $1\le u\le N_y$ and, using $u\log y=\log(T_jR)\ge\kappa$, $N_y/u\le2L/(u\log y)\le2L/\kappa=2L^{1-\gamma_0}$. Thus $eN_y/u\le2eL^{1-\gamma_0}$ and $eN_y/u\ge e>1$. Lemma~\ref{lem:Gy} with $m=u$, and $u\le\kappa/(3\Lambda)$, give
+\[
+G_y(2T_jR)=\sum_{i\le u}\binom{N_y}i\le\Bigl(\frac{eN_y}u\Bigr)^u\le\bigl(2eL^{1-\gamma_0}\bigr)^{\kappa/(3\Lambda)}=\exp\Bigl(\frac{1-\gamma_0}3\kappa+\frac{\log(2e)}{3\Lambda}\kappa\Bigr),
+\]
+where the second inequality uses that the base $2eL^{1-\gamma_0}$ is at least the base $eN_y/u\ge1$ and $u\le\kappa/(3\Lambda)$. If $u>N_y$, then $G_y(2T_jR)\le2^{N_y}\le2^u\le\exp(\kappa\log2/(3\Lambda))$ by (P5). Since $\log(2e)/3<1$ in both cases
+\begin{equation}\label{eq:div-G}
+G_y(2T_jR)\le\exp\Bigl(\frac{1-\gamma_0}3\kappa+\frac\kappa\Lambda\Bigr).
+\end{equation}
+\item \emph{$M(y)\le6L$.} By (P6) and $u\ge30$, $\log y\le(\log T_j+\log R)/u\le(\kappa+x_j)/u\le3L/30\le L$. Hence $M(y)\le e^\gamma(1+L)\le6L$ by \eqref{eq:Mertens}.
+\end{enumerate}
+By (a) and (b), Lemma~\ref{lem:one-step} applies to $A$ with $T'=T_j$, and by (c) and (d) Lemma~\ref{lem:Gy} applies with $Z=T_jR$. With \eqref{eq:div-G}, (c) and (e) we get
+\[
+\Delta(A;T_jR)\le\frac{2\cdot6L}{T_j}\cdot2.7L\cdot\exp\Bigl(\frac{1-\gamma_0}3\kappa+\frac\kappa\Lambda\Bigr)+\sum_{s\in\mathcal{S}}\frac1s\Delta\Bigl(A_s;\frac{T_jR}s\Bigr).
+\]
+For the first term, $T_j\ge2^{-J}T\ge2^{-j_0}T$ by (P3), and $12\cdot2.7=32.4$. So it is at most
+\[
+32.4\cdot2^{j_0}L^2\exp\Bigl(-\kappa+\frac{1-\gamma_0}3\kappa+\frac\kappa\Lambda\Bigr)=\exp\Bigl(-\frac{2+\gamma_0}3\kappa+\eta_1\Bigr)=:E_1,
+\]
+with $\eta_1=\kappa/\Lambda+2\Lambda+\log(32.4\cdot2^{j_0})=o(\kappa)$; thus $E_1=\exp(-\frac{2+\gamma_0}3\kappa+o(\kappa))$.
+
+In the second term, $A_s$ has length at most $R':=2R/s$ by Lemma~\ref{lem:one-step}, and $T_jR/s=T_{j+1}R'$, because $T_{j+1}R'=\frac12T_j\cdot2R/s$. Moreover $2\le R'<2y$, because $R/y<s\le R$, and so, using $R\le e^{x_j}$,
+\[
+\log R'<\log2+\log y=\log2+\frac{\log T_j+\log R}u\le\log2+\frac{\kappa+x_j}u=x_{j+1}.
+\]
+Since $j+1\le J$, this gives $\Delta(A_s;T_jR/s)\le B_{j+1}(R')\le b_{j+1}$. As $\sum_{s\in\mathcal{S}}1/s\le M(y)\le6L$,
+\begin{equation}\label{eq:div-Bj}
+B_j(R)\le E_1+6L\,b_{j+1}\qquad(j<J,\ R_b<R\le e^{x_j}).
+\end{equation}
+
+\medskip\noindent\emph{Step 4: conclusion.} For $j<J$ and $1\le R\le e^{x_j}$ either $R\le R_b$ and $B_j(R)\le E_b$ by \eqref{eq:div-Eb}, or $R>R_b$ and \eqref{eq:div-Bj} applies. So $b_j\le E_b+E_1+6L\,b_{j+1}$ for $j<J$, and $b_J\le E_b$. Iterating, and using $6L\ge1$,
+\[
+b_0\le(E_b+E_1)\sum_{i<J}(6L)^i+(6L)^JE_b\le(J+1)(6L)^J(E_b+E_1)\le(j_0+1)(6L)^{j_0}(E_b+E_1).
+\]
+Next, $E_1\le E_b$: since $c_{\gamma_0}\le\frac38+\frac1{16}=\frac7{16}$ for $\gamma_0<1$, we have $\frac{2+\gamma_0}3-c_{\gamma_0}\ge\frac23-\frac7{16}=\frac{11}{48}$, so $E_1\le E_b$ follows from $\eta_1\le\frac{11}{48}\kappa+\eta_b$, which holds by (L5) and $\eta_b\ge0$. Therefore, by (L6) and $c_{\gamma_0}>\frac38\gamma_0$,
+\[
+\log b_0\le\log\bigl(2(j_0+1)\bigr)+j_0\log(6L)-c_{\gamma_0}\kappa+\eta_b\le-c_{\gamma_0}\kappa+\frac{\gamma_0}8\kappa\le-\frac{\gamma_0}4\kappa .
+\]
+That is, $b_0\le e^{-\gamma_0\kappa/4}=T^{-\gamma_0/4}$.
+
+Finally let $a$, $R$ and $\mathcal I$ be as in the theorem, $A=\{a+qt:t\in \mathcal I\}$. If $\mathcal I=\emptyset$ the sum is zero. Otherwise $A$ is admissible of length at most $R$. If $R\ge X$, then $TR>X$ and $\Delta(A;TR)=0$ by (F2). Otherwise $1\le R<X$, so $\log R<2L=x_0$, and $\Delta(A;TR)\le B_0(R)\le b_0\le T^{-\gamma_0/4}$, since $T_0=T$. This is \eqref{eq:div-restated}. \qed
+
+\begin{remark}\label{rem:optimality}
+(a) \emph{Near-optimality.} Let $0<\varepsilon<\gamma_0$. The same proof with $\alpha=\gamma_0-\varepsilon/3$ and $\beta=\varepsilon/3$ gives the bound $T^{-\gamma_0+\varepsilon}$ for $L\ge L_0(\gamma_0,\varepsilon)$. The changes are as follows. The base case exponent is $\beta(1-\alpha)-\alpha=-\gamma_0+\frac23\varepsilon-\frac13\gamma_0\varepsilon+\frac19\varepsilon^2\le-\gamma_0+\varepsilon$ (since $\frac13\varepsilon+\frac13\gamma_0\varepsilon-\frac19\varepsilon^2\ge0$), and $\frac{2+\gamma_0}3>\gamma_0$ for $\gamma_0<1$, so the first term of the recursive step is smaller; if $\alpha>\frac12$ one uses $\log P(\alpha)\ll_\alpha L^\alpha/\log L$ in place of the bound of Lemma~\ref{lem:rankin} (the proof is the same, with $-\log(1-x)\le x/(1-2^{\alpha-1})$ for $0\le x\le 2^{\alpha-1}$, and the prime number theorem for $\sum_{\ell\le4L}\ell^{\alpha-1}$); the parameters $u$ and $x_j$ are unchanged, $J\le j_0$ because $\kappa=L^{\gamma_0}$ is unchanged, and (L1)--(L6) are adjusted to $\beta=\varepsilon/3$ (in (L1), $8/\gamma_0$ becomes $3/\varepsilon$).
+
+This is essentially optimal, as the following example shows. Let $q$ be a prime, $R=1$, and let $z$ be maximal with $\theta(z)\le2L$, so that $z=(2+o(1))L$ and $P_z=\prod_{\ell\le z}\ell\le q^2$. For $L$ large $q>z$, so $a=P_z$ is coprime to $q$, and with $\mathcal I=\{0\}$ the progression is the single number $P_z$. Put $k=\lfloor\kappa/\log(z/2)\rfloor+1$. The products of $k$ distinct primes from $(z/2,z]$ are divisors of $P_z$ in $(e^{\kappa},z^k]$, since $(z/2)^k>e^\kappa=T$, and there are at least $\binom{\pi(z)-\pi(z/2)}k\ge\bigl((\pi(z)-\pi(z/2))/k\bigr)^k$ of them. Each has reciprocal at least $z^{-k}$, so
+\[
+\Delta(A;T)\ge\Bigl(\frac{\pi(z)-\pi(z/2)}{kz}\Bigr)^k .
+\]
+By the prime number theorem, $\pi(z)-\pi(z/2)=(1+o(1))L/\Lambda$, $z=(2+o(1))L$, $\log(z/2)=\Lambda+o(1)$, so $k=(\kappa/\Lambda)(1+o(1/\Lambda))$ (the rounding adds $O(1)=o(\kappa/\Lambda^2)$), and $kz/(\pi(z)-\pi(z/2))=(2+o(1))\kappa$. Since $\log\kappa=\gamma_0\Lambda$, this gives $\Delta(A;T)\ge\exp\bigl(-k(\log(2\kappa)+o(1))\bigr)=T^{-\gamma_0-(\log2+o(1))/\Lambda}$. Thus no bound $T^{-\gamma_0-\delta}$ with a fixed $\delta>0$ can hold for $T=\exp((\log q)^{\gamma_0})$, $R=1$ and prime $q$.
+
+
+(b) The proof uses only (F1), (F2), Rankin's trick, Mertens' theorem in the form \eqref{eq:Mertens} and the inequality $\theta(\ell)\ge\ell/2$ for primes $\ell\ge3$; in particular it does not use Shiu's theorem~\cite{b24}. The large size of $T$ is essential for the argument: the base case needs $T^\alpha$ to beat $P(\alpha)=\exp(O(L^\alpha\log\log L))$, which is impossible if $T$ is a power of $\log q$. The threshold $L_0(\gamma_0)$ given by the proof is effective but has not been optimized.
+
+(c) \emph{Size of the threshold.} The theorem is purely asymptotic. For $\gamma_0=\frac1{20}$, the value used in Section~\ref{sec:proof}, we have $j_0=21$, and condition (L3) reads $\Lambda\ge420\log(4\Lambda)$ with $\Lambda=\log\log q$; it holds only for $\log\log q>4073$. Below such sizes the inequality of Theorem~\ref{thm:divisors} can fail. For example, for $q=10^{12}+39$, $R=1$, $\mathcal I=\{0\}$ and $a=985496152350226952635200$, which is coprime to $q$ and at most $q^2$, the left-hand side is $5.155\ldots$, while $T^{-\gamma_0/4}=0.985\ldots$; the mechanism is that of the example in~(a). So the theorem, as proved, says nothing about values of $q$ within computational reach.
+\end{remark}

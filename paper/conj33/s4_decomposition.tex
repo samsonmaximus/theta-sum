@@ -1,0 +1,190 @@
+\section{The exact decomposition}\label{sec:decomposition}
+
+Inserting the reciprocity law (Lemma~\ref{lem:reciprocity}) into the dual formula~\eqref{eq:dual} gives an exact identity $S(p)=\Psi(p)+\Tpart(p)$, in which the smooth part $\Psi(p)$ is an explicit sum equal to $\frac p2\log p+c_0p+O(1)$ (the source of the main term) and $\Tpart(p)$ is a weighted sum of the tangent sums $F_k(p)$. Only the moduli $k<p^{3/4}(\log p)^4$ matter in $\Tpart(p)$: for larger $k$ the sums $C_p(k)$ add up, over $k$ in an interval, to incomplete Kloosterman sums, and Kloosterman's bound $2p^{3/4}$, proved in full below, shows that these $k$ contribute $O(p/\log p)$. The resulting formula~\eqref{eq:decomp-ii} reduces the asymptotics of $S(p)$ to the study of $\sum_{k<p^{3/4}(\log p)^4}F_k(p)/k^2$, which is carried out in Sections~\ref{sec:kloosterman}--\ref{sec:proof}.
+
+\begin{theorem}\label{thm:decomp}
+\textup{(i)} For every odd prime $p$ we have the identity $S(p)=\Psi(p)+\Tpart(p)$, where
+\[
+\Psi(p)=\frac2p\sum_{\substack{0<k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\,I\Bigl(\frac kp\Bigr),\qquad\Tpart(p)=2\sum_{\substack{3\le k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\,\frac{F_k(p)}k,
+\]
+and $\Psi(p)=\frac p2\log p+c_0p+O(1)$.
+
+\textup{(ii)} For every odd prime $p$ and every real $K$ with $p^{3/4}(\log p)^4\le K\le p^{9/10}$,
+\begin{equation}\label{eq:decomp-ii}
+S(p)=\frac p2\log p+c_0p+\frac{4p}\pi R_K(p)+O\Bigl(\frac p{\log p}\Bigr),\qquad R_K(p)=\sum_{\substack{3\le k<K\\ k\text{ odd}}}\frac{F_k(p)}{k^2}.
+\end{equation}
+The same holds with $R_K(p)$ replaced by the sum of $F_k(p)/k^2$ over all odd $k$ with $3\le k<p$. All implied constants are absolute.
+\end{theorem}
+
+The range of $K$ in~(ii) is empty unless $(\log p)^4\le p^{3/20}$, which forces $\log p>129$, that is, $p>10^{56}$; so~(ii) is a statement about very large $p$, and the asymptotic content is the $O(p/\log p)$ error. In part~(i), $\Psi(p)$ depends on $p$ only through the numbers $k/p$, and in $\Tpart(p)$ the sum $F_k(p)$ depends only on the residue of $p$ modulo $k$. In part~(ii) the upper limit $p^{9/10}$ is a matter of convenience: for $k<K$ the proof replaces $\frac2k\cot\frac{\pi k}{2p}$ by $\frac{4p}{\pi k^2}$, at a cost $O(K^2\log K/p)$.
+
+\begin{proof}[Proof of Theorem~\textup{\ref{thm:decomp}(i)}]
+\emph{Idea.} The identity is Lemma~\ref{lem:reciprocity} inserted into~\eqref{eq:dual}. For the evaluation of $\Psi(p)$, Lemma~\ref{lem:I-asymptotics} replaces $I(k/p)$ by its leading terms. The resulting error is $O(1)$, and the sum over $k$ is completed to all odd $k$ and evaluated by the Dirichlet series $\sum_{k\text{ odd}}k^{-s}=(1-2^{-s})\zeta(s)$.
+
+\emph{The identity.} By Lemma~\ref{lem:reciprocity} with $m=p$ we have $C_p(k)=\frac pkF_k(p)+I(k/p)$ for odd $k<p$. Inserting this into~\eqref{eq:dual} gives $S(p)=\Psi(p)+\Tpart(p)$; the term $k=1$ does not contribute to $\Tpart(p)$ because $F_1=0$.
+
+\emph{Reduction to an explicit sum.} Since $\cot\frac{\pi k}{2p}=\frac{2p}{\pi k}h(\frac kp)$, Lemma~\ref{lem:I-asymptotics} gives
+\[
+\Psi(p)=\frac{4p}{\pi^2}\sum_{\substack{0<k<p\\ k\text{ odd}}}\frac{h(k/p)}{k^2}\Bigl(\log\frac pk+\kz-\rho\Bigl(\frac kp\Bigr)\Bigr).
+\]
+Put $A_k=\log\frac pk+\kz\ (>0)$. Since $0\le1-h(x)\le x^2$ for $0<x<1$, $0\le h\le1$, and $0\le\rho(x)\le\frac{7\pi^2}{72}x^2$, replacing $h(\frac kp)\bigl(A_k-\rho(\frac kp)\bigr)$ by $A_k$ changes it by $A_k(1-h)+h\rho$, which lies between $0$ and
+\[
+\Bigl(\frac kp\Bigr)^2\Bigl(A_k+\frac{7\pi^2}{72}\Bigr)\le\Bigl(\frac kp\Bigr)^2\Bigl(\log\frac pk+2\Bigr),
+\]
+because $\kz+\frac{7\pi^2}{72}<2$. So the total change in $\Psi(p)$ is at most
+\[
+\frac{4}{\pi^2p}\sum_{k<p}\Bigl(\log\frac pk+2\Bigr)\le\frac{12}{\pi^2},
+\]
+since $\sum_{k\le p}\log\frac pk=p\log p-\log p!\le p$. Next, extending the sum over $k$ to all odd $k\ge1$ costs at most
+\[
+\frac{4p}{\pi^2}\sum_{k\ge p}\Bigl(\log\frac kp+\kz\Bigr)k^{-2}=O(1).
+\]
+Hence
+\[
+\Psi(p)=\frac{4p}{\pi^2}\sum_{k\text{ odd}}\frac{\log p+\kz-\log k}{k^2}+O(1)=\frac{4p}{\pi^2}\Bigl(\frac{\pi^2}{8}(\log p+\kz)-\sum_{k\text{ odd}}\frac{\log k}{k^2}\Bigr)+O(1),
+\]
+where we used $\sum_{k\text{ odd}}k^{-2}=\pi^2/8$.
+
+\emph{The constant.} Differentiating $\sum_{k\text{ odd}}k^{-s}=(1-2^{-s})\zeta(s)$ at $s=2$ gives
+\[
+\sum_{k\text{ odd}}\frac{\log k}{k^2}=-\frac{\log2}{4}\zeta(2)-\frac34\zeta'(2).
+\]
+Since $\zeta(2)=\pi^2/6$, therefore $\Psi(p)=\frac p2(\log p+\kz)+\frac{p\log2}6+\frac{3p}{\pi^2}\zeta'(2)+O(1)=\frac p2\log p+c_0p+O(1)$, with $c_0$ as in~\eqref{eq:c0}.
+\end{proof}
+
+\subsection*{Kloosterman's bound}
+
+For an integer $b$ with $p\nmid b$ and an integer $\nu$ put
+\[
+\operatorname{Kl}(b,\nu;p)=\sum_{z=1}^{p-1}e\Bigl(\frac{bz^*+\nu z}{p}\Bigr),
+\]
+where $z^*$ is the inverse of $z$ modulo $p$. The bound $|\operatorname{Kl}(b,\nu;p)|\le2p^{3/4}$ is due to Kloosterman; it is weaker than Weil's bound $2\sqrt p$ for $p\nmid\nu$, and we prove it in full.
+
+\begin{lemma}[Kloosterman's bound; cf.\ \cite{b36}]\label{lem:kloosterman}
+Let $p$ be an odd prime, $p\nmid b$ and $\nu\in\Z$. Then
+\[
+|\operatorname{Kl}(b,\nu;p)|\le\bigl(3p^2(p-2)\bigr)^{1/4}\le2p^{3/4}.
+\]
+\end{lemma}
+
+\begin{proof}
+\emph{Idea.} The sum depends only on $b\nu$ modulo $p$. The fourth moment of $\operatorname{Kl}(a,c;p)$ over all pairs $(a,c)$ modulo $p$ equals $p^2$ times the number of solutions of a pair of equations in $(\mathbb F_p^\times)^4$, and these solutions can be listed. Since each value $\operatorname{Kl}(1,\nu;p)$ is taken at $p-1$ pairs $(a,c)$, the fourth moment bounds it.
+
+Throughout, $\operatorname{Kl}(a,c)=\operatorname{Kl}(a,c;p)$ is defined by the same formula for all $a,c\in\mathbb F_p$ (including $a=0$), and $x^*$ denotes the inverse in $\mathbb F_p^\times$.
+
+\emph{Step 1: reduction to $\operatorname{Kl}(1,\cdot)$.} Let $b\in\mathbb F_p^\times$. The substitution $z=bw$ permutes $\mathbb F_p^\times$, and $bz^*=bb^*w^*=w^*$, $cz=cbw$. Hence $\operatorname{Kl}(b,c)=\operatorname{Kl}(1,bc)$ for every $c\in\mathbb F_p$. Therefore $\operatorname{Kl}(b,\nu)$ depends only on $b\nu\bmod p$, and it suffices to prove $|\operatorname{Kl}(1,a)|^4\le3p^2(p-2)$ for all $a\in\mathbb F_p$. (For $a=0$ this is the elementary evaluation $\operatorname{Kl}(1,0)=\sum_{z\ne0}e(z^*/p)=-1$.)
+
+\emph{Step 2: the fourth moment.} For $x=(x_1,x_2,x_3,x_4)\in(\mathbb F_p^\times)^4$ put
+\[
+A(x)=x_1^*+x_2^*-x_3^*-x_4^*,\qquad B(x)=x_1+x_2-x_3-x_4.
+\]
+Writing $|\operatorname{Kl}(a,c)|^4=\operatorname{Kl}(a,c)^2\,\overline{\operatorname{Kl}(a,c)}^{\,2}$ and expanding,
+\[
+|\operatorname{Kl}(a,c)|^4=\sum_{x\in(\mathbb F_p^\times)^4}e\Bigl(\frac{aA(x)+cB(x)}p\Bigr).
+\]
+Summing over $a,c\in\mathbb F_p$ and using $\sum_{a\in\mathbb F_p}e(ar/p)=p\cdot\mathbf 1[r=0]$ gives
+\[
+\sum_{a,c\in\mathbb F_p}|\operatorname{Kl}(a,c)|^4=p^2N,\qquad N=\#\{x\in(\mathbb F_p^\times)^4:\ A(x)=0,\ B(x)=0\}.
+\]
+
+\emph{Step 3: counting the solutions.} We show $N=3(p-1)(p-2)$. The conditions say $x_1+x_2=x_3+x_4=:s$ and $x_1^*+x_2^*=x_3^*+x_4^*$. Since $x_1^*+x_2^*=s\,(x_1x_2)^*$ and $x_3^*+x_4^*=s\,(x_3x_4)^*$, the second condition reads $s\,(x_1x_2)^*=s\,(x_3x_4)^*$.
+
+\emph{Case $s=0$.} The conditions reduce to $x_2=-x_1$ and $x_4=-x_3$, with $x_1,x_3\in\mathbb F_p^\times$ arbitrary. This gives $(p-1)^2$ solutions.
+
+\emph{Case $s\ne0$.} The second condition is equivalent to $x_1x_2=x_3x_4$. Then $x_3,x_4$ are the two roots of $X^2-sX+x_1x_2$, which has $x_1,x_2$ as roots; so $(x_3,x_4)\in\{(x_1,x_2),(x_2,x_1)\}$. Conversely both choices are solutions. The pairs $(x_1,x_2)\in(\mathbb F_p^\times)^2$ with $x_1+x_2\ne0$ number $(p-1)^2-(p-1)=(p-1)(p-2)$. For each of them there are two choices of $(x_3,x_4)$, which coincide exactly when $x_1=x_2$; and $x_1=x_2$ with $s=2x_1\ne0$ holds for $p-1$ pairs (as $p$ is odd). So this case gives $2(p-1)(p-2)-(p-1)=(p-1)(2p-5)$ solutions.
+
+The cases are disjoint, so $N=(p-1)^2+(p-1)(2p-5)=(p-1)(3p-6)=3(p-1)(p-2)$.
+
+\emph{Step 4: conclusion.} Fix $a\in\mathbb F_p$. For each $b\in\mathbb F_p^\times$ the pair $(b,b^*a)$ satisfies $\operatorname{Kl}(b,b^*a)=\operatorname{Kl}(1,bb^*a)=\operatorname{Kl}(1,a)$ by Step~1, and the $p-1$ pairs are distinct. All terms in the fourth moment are nonnegative, so
+\[
+(p-1)\,|\operatorname{Kl}(1,a)|^4\le\sum_{a',c\in\mathbb F_p}|\operatorname{Kl}(a',c)|^4=3p^2(p-1)(p-2).
+\]
+Hence $|\operatorname{Kl}(1,a;p)|^4\le3p^2(p-2)<3p^3$, so $|\operatorname{Kl}(1,a;p)|<3^{1/4}p^{3/4}<2p^{3/4}$. By Step~1 this proves the lemma for all $b$ with $p\nmid b$ and all $\nu$.
+\end{proof}
+
+\begin{lemma}\label{lem:incomplete}
+Let $p$ be an odd prime, $c$ an integer with $p\nmid c$, and $J\subset[1,p)$ an interval. Then
+\[
+\Big|\sum_{\substack{k\in J\\ k\text{ odd}}}e\Bigl(\frac{c\overline{k}}{2p}\Bigr)\Big|\le2p^{3/4}(\log p+2).
+\]
+\end{lemma}
+
+\begin{proof}
+\emph{Step 1: reduction modulo $p$.} Let $2^*=(p+1)/2$, the inverse of $2$ modulo $p$. Since $\frac1{2p}=\frac{2^*}{p}-\frac12$, we have $e(cx/2p)=(-1)^ce(c\,2^*x/p)$ for odd $x$. Apply this to the odd residue $x=\overline{k}$, which is $\equiv k^*\pmod p$. This gives $e(c\overline{k}/2p)=(-1)^ce(c\,2^*k^*/p)$. For $k=2j+1$ and $y=j+2^*$ we have $2y=2j+p+1\equiv k\pmod p$, so $k^*\equiv2^*y^*$ and $y\not\equiv0$. Hence the sum in question equals $\pm\sum_{y\in J'}e(by^*/p)$ with $b=c\,(2^*)^2\not\equiv0\pmod p$ and $J'=\{j+2^*:\ 2j+1\in J\}$. This is a set of at most $(p-1)/2$ consecutive integers, none of them divisible by $p$.
+
+\emph{Step 2: completion.} Since $J'$ consists of at most $p$ consecutive integers, none divisible by $p$, orthogonality gives
+\[
+\sum_{y\in J'}e\Bigl(\frac{by^*}{p}\Bigr)=\frac1p\sum_{s\bmod p}\Bigl(\sum_{y\in J'}e\Bigl(\frac{sy}{p}\Bigr)\Bigr)
+\operatorname{Kl}(b,-s;p).
+\]
+
+\emph{Step 3: the bound.} Here $|\operatorname{Kl}(b,0;p)|=1$, and $|\operatorname{Kl}(b,-s;p)|\le2p^{3/4}$ for $p\nmid s$ by Lemma~\ref{lem:kloosterman}. Since $|\sum_{y\in J'}e(sy/p)|\le1/(2\|s/p\|)$ and $\sum_{s=1}^{p-1}1/\|s/p\|=2p\sum_{s\le(p-1)/2}1/s\le2p(1+\log p)$, the sum is at most
+\[
+\frac{|J'|}{p}+\frac{2p^{3/4}}{p}\cdot\frac12\sum_{s=1}^{p-1}\frac1{\|s/p\|}\le1+2p^{3/4}(1+\log p)\le2p^{3/4}(\log p+2),
+\]
+where the last step uses $1\le2p^{3/4}$.
+\end{proof}
+
+\begin{lemma}\label{lem:Cp-interval}
+For every odd prime $p$ and every interval $J\subset[1,p)$,
+\[
+\Big|\sum_{\substack{k\in J\\ k\text{ odd}}}C_p(k)\Big|\le\frac4{\pi^2}\,p^{7/4}(\log p+2)^3.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $\tilde\sigma$ be the function on $\Z/2p\Z$ that equals $\sigma$ outside $\{0,p\}$ and vanishes at $0$ and $p$. Then $\tilde\sigma=f-\delta_0+\delta_p$ with $f$ as in the proof of Lemma~\ref{lem:dual}. By~\eqref{eq:fourier-coeff}, the Fourier coefficients of $\tilde\sigma$ vanish for even frequencies, and for odd $s$ they equal $\hat f(s)-\frac1p=-\frac ip\cot\frac{\pi s}{2p}$. In particular the coefficient at $s=p$ vanishes, and the sum of the absolute values of all coefficients is $\frac2pC_p(1)$. By~\eqref{eq:sign-form},
+\[
+\sum_{\substack{k\in J\\ k\text{ odd}}}C_p(k)=\sum_{\substack{0<n<p\\ n\text{ odd}}}\cot\frac{\pi n}{2p}
+\sum_{\substack{0<s<2p,\ s\ne p\\ s\text{ odd}}}\hat{\tilde\sigma}(s)
+\sum_{\substack{k\in J\\ k\text{ odd}}}e\Bigl(\frac{sn\overline{k}}{2p}\Bigr).
+\]
+Since $0<s<2p$, $s\ne p$ and $0<n<p$, we have $p\nmid sn$, and Lemma~\ref{lem:incomplete} bounds the inner sum by $2p^{3/4}(\log p+2)$. Therefore the left-hand side is at most
+\[
+C_p(1)\cdot\frac2pC_p(1)\cdot2p^{3/4}(\log p+2),
+\]
+and Lemma~\ref{lem:Cm1-elementary}, $C_p(1)\le\frac p\pi(\log p+2)$, gives $\frac{2}{p}\cdot\frac{p^2}{\pi^2}(\log p+2)^2\cdot2p^{3/4}(\log p+2)=\frac4{\pi^2}p^{7/4}(\log p+2)^3$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\textup{\ref{thm:decomp}(ii)}]
+\emph{Idea.} Split $\Tpart(p)$ at $K$. For $k\ge K$, write $F_k(p)$ through $C_p(k)$ by Lemma~\ref{lem:reciprocity}; the $I(k/p)$-terms are negligible, and the $C_p(k)$ are summed over dyadic intervals with Lemma~\ref{lem:Cp-interval}. For $k<K$ the weight $\frac2k\cot\frac{\pi k}{2p}$ is replaced by $\frac{4p}{\pi k^2}$, using the trivial bound for $F_k(p)$.
+
+Let $K$ be in the range $p^{3/4}(\log p)^4\le K\le p^{9/10}$ (nonempty only for large $p$, as noted above) and write $\Tpart(p)=\Tpart_{<K}(p)+\Tpart_{\ge K}(p)$, where $\Tpart_{<K}$ and $\Tpart_{\ge K}$ are the parts of the sum with $k<K$ and $k\ge K$. Write $L=\log p$.
+
+\emph{Step 1: large $k$, the terms $I(k/p)$.} By Lemma~\ref{lem:reciprocity}, for odd $k<p$,
+\[
+2\cot\frac{\pi k}{2p}\,\frac{F_k(p)}{k}=\frac2p\cot\frac{\pi k}{2p}\Bigl(C_p(k)-I\Bigl(\frac kp\Bigr)\Bigr).
+\]
+By Corollary~\ref{cor:Cm1}(c) and $\cot\frac{\pi k}{2p}\le\frac{2p}{\pi k}$, the terms $I(k/p)$ contribute at most
+\[
+\frac2p\sum_{K\le k<p}\frac{2p}{\pi k}\cdot\frac{p}{\pi k}\Bigl(\log\frac pk+2\Bigr)\le\frac{4p}{\pi^2}(L+2)
+\sum_{k\ge K}\frac1{k^2}\ll\frac{pL}{K}\le\frac{p^{1/4}}{L^3}\ll\frac p{L}.
+\]
+
+\emph{Step 2: large $k$, the terms $C_p(k)$.} Cover $[K,p)$ by the intervals $B_j=[2^jK,2^{j+1}K)\cap[K,p)$, $j\ge0$. On $B_j$ the weight $\cot(\pi k/2p)$ is positive and decreasing, and it is at most $2p/(\pi2^jK)$, since $\cot x\le1/x$. Abel summation and Lemma~\ref{lem:Cp-interval}, applied to the subintervals of $B_j$, give
+\[
+\Big|\sum_{k\in B_j}\cot\frac{\pi k}{2p}\,C_p(k)\Big|\le\frac{2p}{\pi2^jK}\cdot\frac4{\pi^2}\,p^{7/4}(L+2)^3.
+\]
+Summing over $j$ (with $\sum_{j\ge0}2^{-j}=2$) and multiplying by $\frac2p$, we obtain at most
+\[
+\frac{32}{\pi^3}\,\frac{p^{7/4}(L+2)^3}{K}\ll\frac{p^{7/4}L^3}{p^{3/4}L^4}=\frac pL.
+\]
+Together with Step~1 this gives $\Tpart_{\ge K}(p)\ll p/L$.
+
+\emph{Step 3: small $k$.} For $3\le k<K$ we have $2\cot\frac{\pi k}{2p}\frac1k=\frac{4p}{\pi k^2}h(\frac kp)$ and $0\le1-h(\frac kp)\le\frac{k^2}{p^2}$. By Corollary~\ref{cor:Cm1}(b), $|F_k(p)|\le\frac k\pi(\log k+2)$, so
+\[
+\bigg|\Tpart_{<K}(p)-\frac{4p}{\pi}R_K(p)\bigg|\le\frac4{\pi p}\sum_{\substack{k<K\\ k\text{ odd}}}|F_k(p)|
+\le\frac4{\pi^2p}\sum_{\substack{k<K\\ k\text{ odd}}}k(\log k+2)\ll\frac{K^2\log K}{p}\ll p^{4/5}L.
+\]
+Here we used $K\le p^{9/10}$, so that $K^2\le p^{9/5}$ and $\log K\le L$. Combining Steps 1--3 with part~(i), and using $p^{4/5}L\ll p/L$, we obtain~\eqref{eq:decomp-ii}.
+
+\emph{Step 4: the sum over all $k<p$.} Take $K=p^{3/4}L^4$, which lies in the range of~\eqref{eq:decomp-ii} (for the $p$ for which that range is nonempty). By~\eqref{eq:decomp-ii} it suffices to show that
+\[
+\frac{4p}{\pi}\sum_{\substack{K\le k<p\\ k\text{ odd}}}\frac{F_k(p)}{k^2}\ll\frac p{L}.
+\]
+By Lemma~\ref{lem:reciprocity}, this sum equals $\sum_{K\le k<p}\frac4{\pi k}\bigl(C_p(k)-I(\frac kp)\bigr)$. Steps~1 and~2 apply verbatim with the positive decreasing weight $\frac4{\pi k}$ in place of $\frac2p\cot\frac{\pi k}{2p}$: the bound $\frac2p\cot\frac{\pi k}{2p}\le\frac4{\pi k}$ was the only property of the weight used in Step~1, and in Step~2 the weight on $B_j$ is at most $\frac4{\pi2^jK}=\frac2p\cdot\frac{2p}{\pi2^jK}$, as before. This proves the last assertion of part~(ii).
+\end{proof}
+
+\begin{remark}\label{rem:weil}
+With Weil's bound $|\operatorname{Kl}(b,\nu;p)|\le2\sqrt p$ for $p\nmid\nu$ in place of Lemma~\ref{lem:kloosterman}, the same proof gives Theorem~\ref{thm:decomp}(ii) for the cutoff $K\ge\sqrt p(\log p)^4$. This is not needed here, because the cutoff $p^{3/4}(\log p)^4$ is sufficient for the rest of the argument; Theorem~\ref{thm:decomp} uses no deep input. Weil's bound does enter the paper, however, through the bound for short Kloosterman sums used in Section~\ref{sec:kloosterman}: for sums of length $N\ge p^{4/7}$ the proof of that bound rests on it (see the proof of Lemma~\ref{lem:bg}).
+\end{remark}

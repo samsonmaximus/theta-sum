@@ -1,0 +1,152 @@
+\section{Notation and the cotangent formula}\label{sec:notation}
+
+This section fixes the notation and expands the sign $(-1)^{\lfloor n/p\rfloor}$ in a finite Fourier series modulo $2p$, which gives the cotangent formula~\eqref{eq:dual} for $S(p)$ (Lemma~\ref{lem:dual}), the starting point of Section~\ref{sec:decomposition}, and the sign form of the sums $C_p(k)$ (Lemma~\ref{lem:sign-form}), used in Proposition~\ref{prop:upper} and Lemma~\ref{lem:Cp-interval}. The same two lemmas give the upper bound $|S(p)|\le\frac2{\pi^2}p(\log p+2)^2$ of Proposition~\ref{prop:upper}, which is part~(a) of Theorem~\ref{thm:main} and is used in Section~\ref{sec:proof}. Nothing in this section depends on the later ones apart from the definition of $S(p)$ in Section~\ref{sec:intro}.
+
+\subsection{Notation}
+Throughout, $p$ is an odd prime. We write $e(x)=e^{2\pi ix}$, $\|x\|$ for the distance from $x$ to the nearest integer, $\{x\}=x-\lfloor x\rfloor$, and $\dpar{x}$ for the sawtooth function: $\dpar{x}=\{x\}-\frac12$ for $x\notin\Z$ and $\dpar{x}=0$ for $x\in\Z$. The symbols $\ll$ and $O(\cdot)$ have their usual meaning; implied constants are absolute unless a dependence is indicated by a subscript.
+
+\emph{Signs.} For $m\in\Z$ with $p\nmid m$ we put
+\[
+\sigma(m)=(-1)^{\lfloor m/p\rfloor};
+\]
+thus $\sigma(m)=1$ if $m\bmod2p\in(0,p)$ and $\sigma(m)=-1$ if $m\bmod2p\in(p,2p)$, and $\sigma$ is $2p$-periodic and odd. For $y\in\R\setminus\frac12\Z$ we put
+\[
+\sq(y)=\sgn\Bigl(\frac12-\{y\}\Bigr).
+\]
+Then $\sigma(m)=\sq(m/2p)$ for $p\nmid m$, since $m/2p\in\frac12\Z$ if and only if $p\mid m$.
+
+\emph{Inverses.} For $k$ coprime to $2p$, $\overline k$ denotes an integer with $k\overline k\equiv1\pmod{2p}$; it is odd. For $n$ coprime to $p$, $n^*$ denotes an inverse of $n$ modulo $p$. If $k$ is odd and $p\nmid k$, then $k\overline k\equiv1\pmod{2p}$ implies $k\overline k\equiv1\pmod p$, hence
+\[
+\overline k\equiv k^*\pmod p.
+\]
+
+\emph{Sums.} For coprime odd positive integers $m,k$ let
+\[
+C_m(k)=\sum_{\substack{0<a<m\\ a\text{ odd}}}\cot\frac{\pi ka}{2m}.
+\]
+For odd $k\ge3$ and $n\in\Z$ the tangent sums are
+\begin{equation}\label{eq:Fk}
+F_k(n)=\sum_{t=1}^{(k-1)/2}\tan\frac{\pi nt}k,
+\end{equation}
+and $F_1=0$. No term of~\eqref{eq:Fk} is singular: $nt/k\equiv\frac12\pmod1$ would mean $2nt\equiv k\pmod{2k}$, which is impossible because $k$ is odd. For $K>3$ we put
+\[
+R_K(n)=\sum_{\substack{3\le k<K\\ k\text{ odd}}}\frac{F_k(n)}{k^2}.
+\]
+The function
+\begin{equation}\label{eq:I}
+I(\lambda)=\frac1\pi\int_0^\infty\frac{\cosh v-\cosh\lambda v}{\sinh v\,\sinh\lambda v}\,dv\qquad(\lambda>0)
+\end{equation}
+and the constants
+\begin{equation}\label{eq:K0}
+\kz=\gamma+\log\frac4\pi=0.8187801401\ldots,
+\end{equation}
+where $\gamma$ is Euler's constant, and
+\begin{equation}\label{eq:c0}
+c_0=\frac{\kz}2+\frac{\log2}6+\frac3{\pi^2}\zeta'(2)=0.2399341036\ldots
+\end{equation}
+enter the reciprocity law and the main term of $S(p)$ (Sections~\ref{sec:reciprocity} and~\ref{sec:decomposition}).
+
+\emph{The function $h$.} Let $h(x)=\frac{\pi x}2\cot\frac{\pi x}2$ for $0<x\le1$ and $h(0)=1$. Then $h$ decreases from $1$ to $0$ on $[0,1]$, is continuously differentiable there, and
+\[
+0\le1-h(x)\le x^2\qquad(0\le x\le1).
+\]
+Indeed, $1-y\cot y=\sum_{n\ge1}2\zeta(2n)(y/\pi)^{2n}$ for $|y|<\pi$ has positive Taylor coefficients, so $(1-h(x))/x^2$ is nonnegative and increasing on $(0,1]$, and its value at $x=1$ is $1-h(1)=1$.
+
+\subsection{The cotangent formula and the upper bound}
+Recall that $S(p)=\sum_{h=1}^{p-1}S(h,p)$, with $S(h,k)$ as in~\eqref{eq:Shk}. The first lemma uses the reflection $b\mapsto p-b$ to show that the terms with even $a$ cancel.
+
+\begin{lemma}\label{lem:elementary}
+For every odd prime $p$ and $1\le a\le p-1$ put $U(a)=\sum_{b=1}^{p-1}(-1)^{\lfloor ab/p\rfloor}$. Then
+\begin{enumerate}[label=\upshape(\alph*),leftmargin=*,nosep]
+\item $S(p)=\sum_{a,b=1}^{p-1}(-1)^{\lfloor ab/p\rfloor}=\sum_{a,b=1}^{p-1}\sigma(ab)$;
+\item $U(a)=0$ for even $a$, so that $S(p)=\sum_{0<a<p,\ a\text{ odd}}U(a)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For $1\le a,j\le p-1$ we have $p\nmid aj$, hence $\lfloor(p-a)j/p\rfloor=j-1-\lfloor aj/p\rfloor$ and
+\[
+j+1+\Bigl\lfloor\frac{(p-a)j}p\Bigr\rfloor\equiv\Bigl\lfloor\frac{aj}p\Bigr\rfloor\pmod2.
+\]
+Thus $S(p-a,p)=U(a)$, and summing over $a$ gives the first equality in~(a); the second is the definition of $\sigma$. If $a$ is even, then $\lfloor a(p-b)/p\rfloor=a-1-\lfloor ab/p\rfloor\equiv1+\lfloor ab/p\rfloor\pmod2$, so the terms $b$ and $p-b$ of $U(a)$ cancel; since $p$ is odd, $b\mapsto p-b$ has no fixed point. This proves $U(a)=0$, and the last claim of~(b) follows from~(a).
+\end{proof}
+
+\begin{lemma}[Dual formula]\label{lem:dual}
+For odd $a$ with $0<a<p$,
+\[
+U(a)=\frac2p\sum_{\substack{0<k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\cot\frac{\pi ka}{2p},
+\]
+and consequently
+\begin{equation}\label{eq:dual}
+S(p)=\frac2p\sum_{\substack{0<k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\,C_p(k).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The idea is to expand $f(n)=(-1)^{\lfloor n/p\rfloor}$ in a Fourier series modulo $2p$, whose coefficients are cotangents, and to sum the resulting geometric series in $b$.
+
+\emph{Step 1: the Fourier coefficients.} The function $f$ has period $2p$ and satisfies $f(n+p)=-f(n)$. Hence its Fourier coefficients $\hat f(\nu)=\frac1{2p}\sum_{n=0}^{2p-1}f(n)e(-\nu n/2p)$ vanish for even $\nu$, and for odd $\nu$, with $\zeta=e(-\nu/2p)$ (so that $\zeta^p=-1$),
+\begin{equation}\label{eq:fourier-coeff}
+\hat f(\nu)=\frac1{2p}(1-\zeta^p)\sum_{n=0}^{p-1}\zeta^n=\frac2{p(1-\zeta)}=\frac1p\Bigl(1-i\cot\frac{\pi\nu}{2p}\Bigr);
+\end{equation}
+for $\nu=p$ this equals $1/p$.
+
+\emph{Step 2: the sum over $b$.} Let $a$ be odd, $0<a<p$. Then $U(a)=\sum_\nu\hat f(\nu)\sum_{b=1}^{p-1}e(\nu ab/2p)$, where $\nu$ runs over the odd residues modulo $2p$. For $\nu=p$ the inner sum is $\sum_{b=1}^{p-1}(-1)^{ab}=\sum_{b=1}^{p-1}(-1)^b=0$. For odd $\nu\ne p$ put $\vartheta=\nu a/2p$; then $e(p\vartheta)=-1$ because $\nu a$ is odd, $e(\vartheta)\ne1$ because $p\nmid\nu a$, and
+\[
+\sum_{b=1}^{p-1}e(b\vartheta)=\frac{1-e(p\vartheta)}{1-e(\vartheta)}-1=\frac{1+e(\vartheta)}{1-e(\vartheta)}=i\cot(\pi\vartheta).
+\]
+Hence
+\[
+U(a)=\frac1p\sum_{\substack{0<\nu<2p,\ \nu\ne p\\ \nu\text{ odd}}}\Bigl(\cot\frac{\pi\nu}{2p}\cot\frac{\pi\nu a}{2p}+i\cot\frac{\pi\nu a}{2p}\Bigr).
+\]
+
+\emph{Step 3: symmetry.} Under $\nu\mapsto2p-\nu$ both $\cot(\pi\nu/2p)$ and $\cot(\pi\nu a/2p)$ change sign (the second because $a$ is an integer). So the imaginary part of the sum vanishes, while the product of the two cotangents is invariant. The terms $\nu$ and $2p-\nu$ are thus equal, and exactly one of them lies in $(0,p)$; this gives the formula for $U(a)$. Equation~\eqref{eq:dual} follows by summing over odd $a$ and using Lemma~\ref{lem:elementary}(b).
+\end{proof}
+
+\begin{lemma}[Sign form]\label{lem:sign-form}
+Let $k$ be odd with $p\nmid k$. Then
+\begin{equation}\label{eq:sign-form}
+C_p(k)=\sum_{\substack{0<n<p\\ n\text{ odd}}}\sigma(n\overline k)\cot\frac{\pi n}{2p}.
+\end{equation}
+In particular $|C_p(k)|\le C_p(1)$.
+\end{lemma}
+
+\begin{proof}
+For odd $n$ with $0<n<p$ let $w_n\in(0,2p)$ be the residue of $n\overline k$ modulo $2p$; it is odd, and it is different from $p$ because $\overline k$ is prime to $2p$ and $p\nmid n$. Put $a_n=w_n$ if $w_n<p$ and $a_n=2p-w_n$ otherwise. Then $a_n$ is odd, $0<a_n<p$, and $ka_n\equiv\sigma(n\overline k)\,n\pmod{2p}$, so that $\cot(\pi ka_n/2p)=\sigma(n\overline k)\cot(\pi n/2p)$. The map $n\mapsto a_n$ is a bijection of the set of odd integers in $(0,p)$ onto itself; its inverse sends $a$ to the element of $\{ka\bmod2p,\ 2p-(ka\bmod2p)\}$ that lies in $(0,p)$. Summing over $n$ gives~\eqref{eq:sign-form}, and the bound follows since $\cot(\pi n/2p)>0$ for $0<n<p$.
+\end{proof}
+
+Combining~\eqref{eq:dual} and~\eqref{eq:sign-form} gives the symmetric formula
+\[
+S(p)=\frac2p\sum_{\substack{0<k,n<p\\ k,n\text{ odd}}}\cot\frac{\pi k}{2p}\,\cot\frac{\pi n}{2p}\,\sigma(n\overline k).
+\]
+
+\begin{lemma}\label{lem:Cm1-elementary}
+For odd $m\ge3$, $C_m(1)\le\frac m\pi(\log m+2)$.
+\end{lemma}
+
+\begin{proof}
+We have $\cot y\le1/y$ for $0<y\le\pi/2$, so $\cot\frac{\pi a}{2m}\le\frac{2m}{\pi a}$ for odd $a<m$. Also $\sum_{a\text{ odd},\,3\le a\le m}1/a\le\frac12\log m$, because $1/a\le\frac12\int_{a-2}^a dx/x$ and the integrals telescope. Hence $C_m(1)\le\frac{2m}\pi\bigl(1+\frac12\log m\bigr)=\frac m\pi(\log m+2)$.
+\end{proof}
+
+\begin{proposition}\label{prop:upper}
+For every odd prime $p$,
+\[
+|S(p)|\;\le\;\frac2p\,C_p(1)^2\;\le\;\frac2{\pi^2}\,p\,(\log p+2)^2.
+\]
+\end{proposition}
+
+\begin{proof}
+By~\eqref{eq:dual}, Lemma~\ref{lem:sign-form} and the positivity of $\cot(\pi k/2p)$ for $0<k<p$,
+\[
+|S(p)|\le\frac2p\sum_{\substack{0<k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}\,|C_p(k)|\le\frac2p\,C_p(1)\sum_{\substack{0<k<p\\ k\text{ odd}}}\cot\frac{\pi k}{2p}=\frac2p\,C_p(1)^2,
+\]
+since $C_p(1)=\sum_{k\text{ odd}}\cot\frac{\pi k}{2p}$. This is the first inequality. As $p\ge3$, Lemma~\ref{lem:Cm1-elementary} gives $C_p(1)\le\frac p\pi(\log p+2)$, and hence $\frac2pC_p(1)^2\le\frac2{\pi^2}p(\log p+2)^2$.
+\end{proof}
+
+\begin{corollary}
+For all $C_2>0$ and $\varepsilon>0$ we have $S(p)<C_2p^{1+\varepsilon}$ for all sufficiently large primes $p$.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:upper}, $S(p)/p^{1+\varepsilon}\le\frac2{\pi^2}(\log p+2)^2p^{-\varepsilon}\to0$.
+\end{proof}

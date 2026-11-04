@@ -1,0 +1,199 @@
+\section{Heads and tails of the tangent sums}\label{sec:tangent}
+
+This section provides the tools for the terms of~\eqref{eq:decomp-ii} with $k<p^{3/4}(\log p)^4$: a formula for
+$F_k(p)/k$ in terms of $\theta_k$ alone, bounds for its head on average over $k$, and bounds for its tail for each $k$
+separately. Section~\ref{sec:proof} combines them.
+
+\emph{The split.} Lemma~\ref{lem:sign-form-tangent} writes $\Phi_k=F_k(p)/k$ as a sum over odd $n<k$ of the weights $c_n(k)\le\frac2{\pi n}$ times the signs $\sq(n\theta_k)$.
+For a parameter $N$ the \emph{head} $\Phi_k^{\le N}$ is the part with $n\le N$, and the \emph{tail} $\Phi_k^{>N}$ is the rest.
+The head is bounded trivially by $\log N$ (eq.~\eqref{eq:head-trivial}), which suffices for small $k$, and for larger $k$ is bounded on average over $k$ in a dyadic interval by Lemma~\ref{lem:heads}.
+Its proof expands $\sq$ in a Fourier series (Lemmas~\ref{lem:vaaler} and~\ref{lem:square-wave}) and uses the bound for $\mathcal{M}_K$ from Section~\ref{sec:kloosterman}.
+The tail is bounded for each $k$ separately: Lemma~\ref{lem:tails} reduces it to the quantity $D_k$, which is small when $\theta_k$ is not close to a rational number with small denominator (Lemma~\ref{lem:generic}).
+Lemma~\ref{lem:witnesses} converts the opposite case into a divisibility $k\mid pr-m$ with $|r|$ small, which is handled by Theorem~\ref{thm:divisors} in Section~\ref{sec:divisors}.
+
+\begin{lemma}\label{lem:sign-form-tangent}
+Let $k$ be odd with $3\le k<p$, let $u_k\in[1,k)$ satisfy $2pu_k\equiv1\pmod k$, and put $\theta_k=u_k/k$.
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item $F_k(p)=\sum_{n\text{ odd},\,0<n<k}\cot\frac{\pi n}{2k}\,\sigma(n\overline{k})$.
+\item For odd $n$ with $0<n<k$ we have $\sigma(n\overline{k})=-\sgn(\frac12-\{n\theta_k\})$; hence
+\[
+F_k(p)=-\sum_{\substack{0<n<k\\ n\text{ odd}}}\cot\frac{\pi n}{2k}\,\sgn\Bigl(\frac12-\{n\theta_k\}\Bigr)
+\]
+depends only on $\theta_k$.
+\item $\theta_k\equiv\frac1{2pk}-\frac{\overline{k}}{2p}\pmod 1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The idea is to identify, for each odd $n$, the residue $t$ with $pt\equiv(k-n)/2\pmod k$ with the integer $j$ defined by $kw=n+2pj$, where $w\equiv n\overline{k}\pmod{2p}$.
+Then the sign $\sigma(n\overline{k})$ is read off from the position of $t$ relative to $k/2$.
+
+(a) As $t$ runs over $1,\dots,k-1$, $x=pt\bmod k$ runs over $1,\dots,k-1$; write $t_x$ for the corresponding $t$, and
+let $\delta(t)=1$ for $t\le(k-1)/2$ and $\delta(t)=-1$ otherwise. Since $\tan(\pi pt/k)=\tan(\pi x/k)$ and $\sum_{x=1}^{k-1}\tan(\pi x/k)=0$, we get
+\[
+F_k(p)=\sum_{x=1}^{k-1}\tan\frac{\pi x}k\cdot\frac{1+\delta(t_x)}{2}=\frac12\sum_{x=1}^{k-1}\tan\frac{\pi x}k\,\delta(t_x).
+\]
+As $t_{k-x}=k-t_x$, the terms $x$ and $k-x$ coincide, and writing $x=(k-n)/2$ with $n$ odd, $0<n<k$, we obtain
+$F_k(p)=\sum_n\cot\frac{\pi n}{2k}\,\delta(t_{(k-n)/2})$, where $t_{(k-n)/2}\equiv-nu_k\pmod k$ (multiply $pt\equiv(k-n)/2$ by $2u_k$).
+On the other hand,
+let $w\in(0,2p)$ with $w\equiv n\overline{k}\pmod{2p}$. Then $kw=n+2pj$ for an integer $j$, and $0<kw<2pk$,
+$0<n<k<p$ give $0\le j\le k-1$; moreover $j\equiv-nu_k\pmod k$, and $j\ne0$ since $j=0$ would give $kw=n$, so $k\mid n$. Thus $j=t_{(k-n)/2}$.
+Finally $\sigma(n\overline{k})=1$ if and only if $w<p$, i.e.\ $n+2pj<pk$, i.e.\ $j<\frac k2-\frac n{2p}$; as
+$0<\frac n{2p}<\frac12$ and $k$ is odd, this means $j\le\frac{k-1}2$. Hence $\sigma(n\overline{k})=\delta(j)$, proving (a).
+
+(b) With $j$ as above, $j=k-(nu_k\bmod k)=k(1-\{n\theta_k\})$, so $j\le\frac{k-1}2$ if and only if
+$\{n\theta_k\}>\frac12$ (note $\{n\theta_k\}\in\frac1k\Z$ and $k$ is odd, so $\{n\theta_k\}\neq\frac12$).
+Thus $\sigma(n\overline{k})=1$ if and only if $\sgn(\frac12-\{n\theta_k\})=-1$.
+
+(c) Since $2pu_k+k\overline{k}\equiv1$ modulo $k$ and modulo $2p$, we have $2pu_k+k\overline{k}=1+2pkm$ with
+$m\in\Z$; divide by $2pk$.
+\end{proof}
+
+Throughout the rest of the paper we write, for odd $k$ with $3\le k<p$,
+\begin{gather*}
+\sq(y)=\sgn\Bigl(\frac12{-}\{y\}\Bigr)\ \ (y\notin\tfrac12\Z),\qquad
+\Phi_k=\frac{F_k(p)}{k},\\
+c_n(k)=\frac1k\cot\frac{\pi n}{2k}=\frac2{\pi n}\,h\Bigl(\frac nk\Bigr)\ \ (0<n<k),
+\end{gather*}
+where $\sq$ is the function of Section~\ref{sec:notation}. For $p\nmid m$ we have $\sigma(m)=\sq(m/2p)$, because $\{m/2p\}<\frac12$ exactly when $m\bmod2p\in(0,p)$. By
+Lemma~\ref{lem:sign-form-tangent},
+\begin{equation}\label{eq:Phik-sum}
+\Phi_k=\sum_{\substack{0<n<k\\ n\text{ odd}}}c_n(k)\,\sigma(n\overline{k}),\qquad
+\sigma(n\overline{k})=\sq\Bigl(\frac{n\overline{k}}{2p}\Bigr)=-\sq(n\theta_k),
+\end{equation}
+and none of the arguments of $\sq$ lies in $\frac12\Z$ (if $n\theta_k\in\frac12\Z$ then $k\mid2nu_k$, so $k\mid n$, since $\gcd(2u_k,k)=1$; and $p\nmid n\overline{k}$). For
+$N\ge1$ we split $\Phi_k=\Phi_k^{\le N}+\Phi_k^{>N}$, where $\Phi_k^{\le N}$ is the part of the sum in
+\eqref{eq:Phik-sum} with $n\le N$; thus $\Phi_k^{>N}=0$ if $k\le N+1$. Since $0\le h\le1$, we have
+$0<c_n(k)\le\frac2{\pi n}$, and since $\sum_{n\text{ odd},\,3\le n\le X}\frac1n\le\frac12\log X$,
+\begin{equation}\label{eq:head-trivial}
+|\Phi_k^{\le N}|\le\frac2\pi\Bigl(1+\frac12\log N\Bigr).
+\end{equation}
+
+\begin{lemma}[Vaaler \cite{b27}; see {\cite[Theorem~A.6]{b13}}]\label{lem:vaaler}
+For every integer $H\ge1$ there are complex numbers $a_\nu$, $1\le|\nu|\le H$, with $|a_\nu|\le\frac1{2\pi|\nu|}$,
+such that for all real $x$
+\[
+\Big|\dpar{x}-\sum_{1\le|\nu|\le H}a_\nu e(\nu x)\Big|\le\Delta_H(x):=\frac1{2H+2}\sum_{|\nu|\le H}
+\Bigl(1-\frac{|\nu|}{H+1}\Bigr)e(\nu x).
+\]
+\end{lemma}
+
+Note that $\Delta_H\ge0$ (it is a multiple of the Fej\'er kernel).
+
+\begin{lemma}[The square wave]\label{lem:square-wave}
+Let $H\ge1$. There are $b_\nu$ $(1\le|\nu|\le H)$ with $b_\nu=0$ for even $\nu$ and $|b_\nu|\le\frac2{\pi|\nu|}$
+such that, with
+\[
+T_H(y)=\sum_{1\le|\nu|\le H}b_\nu e(\nu y),\qquad E_H(y)=\frac2{H+1}\sum_{\substack{|\nu|\le H\\ \nu\text{ even}}}
+\Bigl(1-\frac{|\nu|}{H+1}\Bigr)e(\nu y),
+\]
+we have $E_H\ge0$ and $|\sq(y)-T_H(y)|\le E_H(y)$ for all $y\notin\frac12\Z$.
+\end{lemma}
+
+\begin{proof}
+For $y\notin\frac12\Z$ we have $\sq(y)=2\dpar{y+\frac12}-2\dpar{y}$. Indeed, put $f=\{y\}\ne0,\frac12$. If $f<\frac12$, then $\{y+\frac12\}=f+\frac12$ and $\dpar{y+\frac12}-\dpar{y}=f-(f-\frac12)=\frac12$; if $f>\frac12$, then $\{y+\frac12\}=f-\frac12$ and the difference is $(f-1)-(f-\frac12)=-\frac12$. These are $\frac12\sq(y)$ in the two cases.
+Applying Lemma~\ref{lem:vaaler} at $y$ and at
+$y+\frac12$, and using $e(\nu(y+\frac12))=(-1)^\nu e(\nu y)$, gives the claim with $b_\nu=2a_\nu((-1)^\nu-1)$ and error $2\Delta_H(y)+2\Delta_H(y+\frac12)=E_H(y)$,
+which is $\ge0$.
+\end{proof}
+
+\begin{lemma}[Heads]\label{lem:heads}
+Let $9\le K\le p/2$, let $B\subset[K,2K)$ be an interval, and let $H,N$ be integers with $1\le H<p$ and $2\le N<K$.
+Then
+\[
+\Big|\sum_{\substack{k\in B\\ k\text{ odd}}}\frac{\Phi_k^{\le N}}{k}\Big|\le(1+\log N)\Bigl(\frac2H+10\,(1+\log H)\,
+\frac{\mathcal{M}_K}{K}\Bigr),
+\]
+where $\mathcal{M}_K$ is defined in~\eqref{eq:MK}.
+\end{lemma}
+
+\begin{proof}
+The idea is to replace $\sq$ by its truncated Fourier series (Lemma~\ref{lem:square-wave}); the resulting exponential sums over $k$ are controlled by $\mathcal{M}_K$ after Abel summation, and the error term of the approximation is a Fej\'er-type average of the same sums.
+
+\emph{Step 1: expansion.} Put $y_{kn}=n\overline{k}/2p$, $\varphi_n(x)=h(n/x)/x$ and $w_{kn}=c_n(k)/k=\frac2{\pi n}\varphi_n(k)>0$ for odd
+$k\in B$ and odd $n\le N$ (note $n<K\le k$). By \eqref{eq:Phik-sum} the sum to be estimated is
+$\sum_{k,n}w_{kn}\sq(y_{kn})$. Let $Z(\nu)=\sum_{k,n}w_{kn}e(\nu y_{kn})$. By Lemma~\ref{lem:square-wave} and $w_{kn}>0$,
+\begin{equation}\label{eq:heads-expand}
+\Big|\sum_{k,n}w_{kn}\sq(y_{kn})-\sum_\nu b_\nu Z(\nu)\Big|\le\sum_{k,n}w_{kn}E_H(y_{kn})\le\frac2{H+1}\Bigl(Z(0)+
+\sum_{\substack{0<|\nu|\le H\\ \nu\text{ even}}}|Z(\nu)|\Bigr).
+\end{equation}
+
+\emph{Step 2: the terms $\nu=0$ and $\nu\ne0$.} The number of odd $k\in B$ is at most $\frac K2+1$, so $\sum_{k\in B\text{ odd}}\frac1k\le\frac12+\frac1K\le1$. By the argument of~\eqref{eq:head-trivial},
+$\sum_{n\text{ odd},\,n\le N}c_n(k)\le\frac2\pi(1+\frac12\log N)$, hence
+\[
+Z(0)\le\frac2\pi\Bigl(1+\frac12\log N\Bigr)\le1+\log N.
+\]
+For $\nu\ne0$ with $|\nu|\le H<p$ we have $p\nmid\nu n$, since $n<K\le p/2$. On $[K,2K]$ we have $0<\varphi_n\le1/K$ and
+\[
+|\varphi_n'(x)|=\Bigl|\frac n{x^3}h'\Bigl(\frac nx\Bigr)+\frac{h(n/x)}{x^2}\Bigr|\le\frac{1+\pi^2/4}{x^2},
+\]
+because $n/x\le1$ and $|h'|\le\pi^2/4$ on $[0,1]$: the power series of $1-h$ has positive coefficients, so $-h'$ is increasing on $[0,1]$, and $-h'(1)=\pi^2/4$. Partial summation over the odd $k\in B$, with the sums of $e(\nu n\overline{k}/2p)$ over sub-intervals of $B$ bounded by $\mathcal{M}_K$, gives
+\begin{align*}
+\Big|\sum_k\varphi_n(k)e\Bigl(\frac{\nu n\overline{k}}{2p}\Bigr)\Big|&\le\mathcal{M}_K\Bigl(\frac1K+\int_K^{2K}\frac{1+\pi^2/4}{x^2}\,dx\Bigr)\\
+&=\mathcal{M}_K\Bigl(\frac1K+\frac{1+\pi^2/4}{2K}\Bigr)\le\frac{3\mathcal{M}_K}K.
+\end{align*}
+Summing over $n$ with the weights $\frac2{\pi n}$, as for $Z(0)$, we get $|Z(\nu)|\le3(1+\log N)\mathcal{M}_K/K$.
+
+\emph{Step 3: conclusion.} We have $\sum_{\nu\text{ odd},\,|\nu|\le H}|b_\nu|\le\frac4\pi(1+\frac12\log H)$, and there are at most $H$ even $\nu$ with $0<|\nu|\le H$. By~\eqref{eq:heads-expand}, the quantity $|\sum_{k,n}w_{kn}\sq(y_{kn})|$ to be estimated is at most $|\sum_\nu b_\nu Z(\nu)|$ plus the right side of~\eqref{eq:heads-expand}, hence at most
+\begin{align*}
+&(1+\log N)\Bigl[\frac2{H+1}\Bigl(1+3H\frac{\mathcal{M}_K}K\Bigr)+\frac4\pi\Bigl(1+\frac12\log H\Bigr)\frac{3\mathcal{M}_K}K\Bigr]\\
+&\qquad\le(1+\log N)\Bigl[\frac2{H+1}+\Bigl(6+\frac{12}\pi+\frac6\pi\log H\Bigr)\frac{\mathcal{M}_K}{K}\Bigr].
+\end{align*}
+Since $6+\frac{12}\pi<10$ and $\frac6\pi<10$, this implies the lemma.
+\end{proof}
+
+\begin{lemma}[Tails]\label{lem:tails}
+Let $k$ be odd with $3\le k<p$ and let $2\le N<k$. For $N\le t<k$ put $G_k(t)=\sum_{n\text{ odd},\,N<n\le t}\sq(n\theta_k)$
+and $D_k=\sup_{N\le t<k}|G_k(t)|/t$. Then \textup{(a)} $|\Phi_k^{>N}|\le\frac\pi2D_k\log\frac kN$, and
+\textup{(b)} $|\Phi_k^{>N}|\le\frac1\pi\log k$.
+\end{lemma}
+
+\begin{proof}
+(a) By \eqref{eq:Phik-sum}, $\Phi_k^{>N}=-\sum_{N<n<k}c(n)\sq(n\theta_k)$, where $c(t)=\frac1k\cot\frac{\pi t}{2k}$ is
+decreasing on $[N,k]$ with $c(k)=0$. Partial summation, $G_k(N)=0$ and $c(k)=0$ give
+$\Phi_k^{>N}=\int_N^kG_k(t)c'(t)\,dt$. Since $\sin u\ge\frac{2u}\pi$ on $[0,\frac\pi2]$,
+$|c'(t)|=\frac\pi{2k^2}\csc^2\frac{\pi t}{2k}\le\frac\pi{2t^2}$, so
+\[
+|\Phi_k^{>N}|\le\int_N^kD_kt\cdot\frac\pi{2t^2}\,dt=\frac\pi2D_k\log\frac kN.
+\]
+(b) follows from $c_n(k)\le\frac2{\pi n}$ and $\sum_{n\text{ odd},\,3\le n<k}\frac1n\le\frac12\log k$ (here $n\ge3$ because $N\ge2$).
+\end{proof}
+
+\begin{lemma}[Generic $\theta$]\label{lem:generic}
+Let $M\ge1$ and $N\ge2$ be integers and $0<\eta\le\frac12$, and let $\theta\in\R$ satisfy $\|2m\theta\|\ge\eta$ for
+$1\le m\le M$. Let $\mathcal{S}$ be a set of consecutive odd integers in $(N,t]$, $t\ge N$, with
+$n\theta\notin\frac12\Z$ for $n\in\mathcal{S}$. Then
+\[
+\frac1t\Big|\sum_{n\in\mathcal{S}}\sq(n\theta)\Big|\le\frac1M+\frac{2+\log M}{\eta N}.
+\]
+In particular, $D_k\le\frac1M+\frac{2+\log M}{\eta N}$ if $\|2m\theta_k\|\ge\eta$ for $1\le m\le M$.
+\end{lemma}
+
+\begin{proof}
+Write $\mathcal{S}=\{n_0+2j:0\le j<|\mathcal{S}|\}$. For $1\le|\nu|\le M$,
+\[
+\Big|\sum_{n\in\mathcal{S}}e(\nu n\theta)\Big|=\Big|\sum_je(2\nu j\theta)\Big|\le\frac1{2\|2\nu\theta\|}\le\frac1{2\eta}.
+\]
+Lemma~\ref{lem:square-wave} with $H=M$ gives, using $\sum_{n\text{ odd}\le M}\frac1n\le1+\frac12\log M$ and that there are at most $M$ even $\nu$ with $0<|\nu|\le M$,
+\[
+\Big|\sum_{n\in\mathcal{S}}\sq(n\theta)\Big|\le\sum_{\nu\text{ odd}}\frac2{\pi|\nu|}\cdot\frac1{2\eta}+\frac2{M+1}
+\Bigl(|\mathcal{S}|+\frac M{2\eta}\Bigr)\le\frac{2|\mathcal{S}|}{M+1}+\frac1\eta\Bigl(1+\frac2\pi+\frac1\pi\log M\Bigr).
+\]
+Now $|\mathcal{S}|\le\frac{t-N}2+1\le\frac t2$ since $N\ge2$, and $t\ge N$, so dividing by $t$ gives
+\[
+\frac1t\Big|\sum_{n\in\mathcal{S}}\sq(n\theta)\Big|\le\frac1{M+1}+\frac{1}{\eta N}\Bigl(1+\frac2\pi+\frac1\pi\log M\Bigr)\le\frac1M+\frac{2+\log M}{\eta N}.
+\]
+For the last statement take
+$\mathcal{S}=\{n\text{ odd}:N<n\le t\}$ with $t<k$; by the remark after \eqref{eq:Phik-sum},
+$n\theta_k\notin\frac12\Z$.
+\end{proof}
+
+\begin{lemma}[Witnesses]\label{lem:witnesses}
+Let $k$ be odd with $3\le k<p$, let $1\le m<k$ and $0<\eta\le\frac12$. If $\|2m\theta_k\|<\eta$, then there is an
+integer $r$ with $0<|r|<\eta k$ and $k\mid pr-m$.
+\end{lemma}
+
+\begin{proof}
+Choose $b\in\Z$ with $|2mu_k/k-b|<\eta$ and put $r=2mu_k-bk$; then $|r|<\eta k$ and $pr\equiv2pu_k\,m\equiv m\pmod
+k$. If $r=0$ then $k\mid2mu_k$; since $\gcd(2u_k,k)=1$ (because $2pu_k\equiv1\pmod k$), this gives $k\mid m$, which is impossible for $1\le m<k$.
+\end{proof}

@@ -1,0 +1,17 @@
+# build outputs and caches
+lean/.lake/
+paper/checks/*.npy
+__pycache__/
+*.pyc
+*.aux
+*.log
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+paper/conj33/*.pdf
+paper/conj33/*.out
+paper/conj33/t_*
+paper/conj33/test_*
+paper/conj33/_*
+paper/conj33/zz_*

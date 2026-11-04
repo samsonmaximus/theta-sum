@@ -1,0 +1,132 @@
+\section{A reciprocity law for half-range cotangent sums}\label{sec:reciprocity}
+
+The sums $C_p(k)$ in~\eqref{eq:dual} have length about $p/2$, like the original problem. The reciprocity law of this section (Lemma~\ref{lem:reciprocity}), proved by integrating a product of a tangent and a cotangent around a rectangle, writes $C_p(k)$ as $\frac pkF_k(p)+I(k/p)$, where $F_k(p)$ is a tangent sum of length $(k-1)/2$; Lemma~\ref{lem:I-asymptotics} gives the asymptotics of $I$, and Corollary~\ref{cor:Cm1} the resulting bounds for $C_m(1)$, $F_k(r)$ and $I(\lambda)$. Section~\ref{sec:decomposition} uses these results and the dual formula: the terms $I(k/p)$ produce the main term of $S(p)$, and the tangent sums produce its fluctuations.
+
+\begin{lemma}[Reciprocity]\label{lem:reciprocity}
+Let $m$ and $k$ be coprime odd positive integers. Then
+\[
+C_m(k)=\frac mk\,F_k(m)+I\Bigl(\frac km\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+\emph{Idea.} The function $f(z)=-\frac\pi2\tan\frac{\pi z}2\cot\frac{\pi kz}{2m}$ has residues $\cot\frac{\pi ka}{2m}$ at the odd integers $a$ and $-\frac mk\tan\frac{\pi mn}{k}$ at the points $2mn/k$ in the strip $0<\operatorname{Re}z<m$. A contour integral over the boundary of the strip, a rectangle with height tending to infinity, turns the sum of the residues into $I(k/m)$.
+
+\emph{Step 1: the residues in the strip.} The poles of $f$ with $0<\operatorname{Re}z<m$ are real and of two kinds.
+\begin{enumerate}[label=(\roman*),leftmargin=2em]
+\item The odd integers $a\in(0,m)$. There $\tan(\pi z/2)$ has a simple pole with residue $-2/\pi$, and $\cot(\pi ka/2m)$ is finite because $ka$ is odd. So the residue of $f$ is $\cot(\pi ka/2m)$.
+\item The points $z_n=2mn/k$ with $1\le n\le(k-1)/2$, where $\cot(\pi kz/2m)$ has a simple pole with residue $2m/(\pi k)$. These points are not integers, because $k\nmid2mn$ (we have $(k,m)=1$ and $0<n<k$). Hence $\tan(\pi z_n/2)=\tan(\pi mn/k)$ is finite, and the residue of $f$ is $-\frac mk\tan(\pi mn/k)$.
+\end{enumerate}
+Since $C_m(k)=\sum_{a}\cot(\pi ka/2m)$ over odd $a\in(0,m)$ and $F_k(m)=\sum_n\tan(\pi mn/k)$, the sum of the residues in the strip is
+\[
+C_m(k)-\frac mkF_k(m).
+\]
+
+\emph{Step 2: the function on the boundary.} On the lines $\operatorname{Re}z=0$ and $\operatorname{Re}z=m$ the function $f$ is analytic. At $z=0$ a simple zero of $\tan(\pi z/2)$ cancels a simple pole of $\cot(\pi kz/2m)$. At $z=m$ a simple pole of $\tan(\pi z/2)$ ($m$ odd) cancels a simple zero of $\cot(\pi kz/2m)$ ($k$ odd). There are no other singularities on these lines. For real $y\ne0$,
+\[
+f(iy)=-\frac\pi2\tanh\frac{\pi y}2\coth\frac{\pi ky}{2m},\qquad f(m+iy)=-\frac\pi2\coth\frac{\pi y}2\tanh\frac{\pi ky}{2m}.
+\]
+Both functions of $y$ decay exponentially as $|y|\to\infty$ after subtracting their limit $-\pi/2$, and the differences $f(m+iy)-f(iy)$ are integrable over $\R$. As $|\operatorname{Im}z|\to\infty$ we have $\tan(\pi z/2)\to\pm i$ and $\cot(\pi kz/2m)\to\mp i$, uniformly in $\operatorname{Re}z$ and with exponentially small error, so $f(z)\to-\pi/2$.
+
+\emph{Step 3: the contour integral.} Integrate $f$ counterclockwise over the boundary of the rectangle with vertices $-iT$, $m-iT$, $m+iT$, $iT$. As $T\to\infty$ the bottom side contributes $\to-\frac{\pi m}2$ and the top side, traversed from right to left, contributes $\to+\frac{\pi m}2$. The two vertical sides contribute $i\int_{-T}^T\bigl(f(m+iy)-f(iy)\bigr)\,dy$. By the residue theorem and Step~2,
+\[
+C_m(k)-\frac mkF_k(m)=\frac1{2\pi i}\cdot i\cdot\frac\pi2\int_\R\Bigl(\tanh\frac{\pi y}2\coth\frac{\pi ky}{2m}-\coth\frac{\pi y}2\tanh\frac{\pi ky}{2m}\Bigr)\,dy.
+\]
+
+\emph{Step 4: the integral is $I(k/m)$.} For $u\ne0$ and $\lambda>0$ we have the identity
+\begin{equation}\label{eq:tanh-identity}
+\tanh u\coth\lambda u-\coth u\tanh\lambda u=\frac{2(\cosh2u-\cosh2\lambda u)}{\sinh2u\,\sinh2\lambda u}.
+\end{equation}
+Indeed, the left side equals $(\sinh^2u\cosh^2\lambda u-\cosh^2u\sinh^2\lambda u)/(\sinh u\cosh u\sinh\lambda u\cosh\lambda u)$. The numerator equals $\cosh^2u-\cosh^2\lambda u=\frac12(\cosh2u-\cosh2\lambda u)$, and the denominator equals $\frac14\sinh2u\sinh2\lambda u$. Put $\lambda=k/m$ and $u=\pi y/2$ in Step~3. The integrand is even in $y$, the prefactor is $\frac14$, and $2u=\pi y$. Hence the right-hand side of Step~3 equals
+\[
+\frac14\cdot2\int_0^\infty\frac{2(\cosh\pi y-\cosh\lambda\pi y)}{\sinh\pi y\,\sinh\lambda\pi y}\,dy=\frac1\pi\int_0^\infty\frac{\cosh v-\cosh\lambda v}{\sinh v\,\sinh\lambda v}\,dv=I(\lambda),
+\]
+with $v=\pi y$.
+\end{proof}
+
+\begin{lemma}\label{lem:I-asymptotics}
+For $\lambda>0$ write $\pi\lambda I(\lambda)=\log\frac1\lambda+\kz-\rho(\lambda)$. Then $0\le\rho(\lambda)\le\frac{7\pi^2}{72}\lambda^2$. Moreover $I(1/\lambda)=-\lambda I(\lambda)$.
+\end{lemma}
+
+\begin{proof}
+\emph{Idea.} After the substitution $v=2u$, the integrand of $\pi I(\lambda)$ splits into a main part, whose integral is a Frullani integral and gives $\lambda^{-1}(\log\frac1\lambda+\kz)$, and two nonnegative remainders of size $O(1)$, which produce $\rho$.
+
+\emph{Step 1: a decomposition of the integrand.} By~\eqref{eq:tanh-identity} and the substitution $v=2u$,
+\[
+\pi I(\lambda)=\int_0^\infty\bigl(\tanh u\coth\lambda u-\coth u\tanh\lambda u\bigr)\,du.
+\]
+Write $\coth x=\frac1x+\varkappa(x)$, where $0\le\varkappa(x)\le x/3$ for $x>0$ (from $\varkappa(x)=\sum_{n\ge1}\frac{2x}{x^2+\pi^2n^2}$). Put $\phi(x)=x/\sinh x$ and $\psi(x)=2/(e^x+1)=1-\tanh(x/2)$. Then
+\begin{multline*}
+\tanh u\coth\lambda u-\coth u\tanh\lambda u
+=\frac{\phi(2\lambda u)-\psi(2u)}{\lambda u}\\
+-(1-\tanh u)\,\varkappa(\lambda u)-(\coth u-1)\tanh\lambda u.
+\end{multline*}
+To check this, write $\tanh u\coth\lambda u=\frac{\tanh u}{\lambda u}+\varkappa(\lambda u)-(1-\tanh u)\varkappa(\lambda u)$ and $\coth u\tanh\lambda u=\tanh\lambda u+(\coth u-1)\tanh\lambda u$. Then use $\tanh u=1-\psi(2u)$ and $\varkappa(\lambda u)-\tanh\lambda u=\coth\lambda u-\tanh\lambda u-\frac1{\lambda u}=\frac2{\sinh2\lambda u}-\frac1{\lambda u}=\frac{\phi(2\lambda u)-1}{\lambda u}$. All three terms are integrable on $(0,\infty)$, and the last two are nonnegative.
+
+\emph{Step 2: the Frullani integral.} Since $\phi$ is continuous with $\phi(0)=1$ and $\phi(\infty)=0$, Frullani's theorem gives
+\[
+\begin{aligned}
+\int_0^\infty\bigl(\phi(2\lambda u)-\psi(2u)\bigr)\frac{du}u&=\int_0^\infty\bigl(\phi(2\lambda u)-\phi(2u)\bigr)\frac{du}u+\int_0^\infty\bigl(\phi(2u)-\psi(2u)\bigr)\frac{du}u\\
+&=\log\frac1\lambda+\int_0^\infty\bigl(\phi(x)-\psi(x)\bigr)\frac{dx}x.
+\end{aligned}
+\]
+
+\emph{Step 3: the value of the constant.} For $\operatorname{Re}s>0$, expanding the integrands in powers of $e^{-x}$ gives the Mellin transforms
+\begin{align*}
+\int_0^\infty\phi(x)x^{s-1}dx&=2\Gamma(s+1)(1-2^{-s-1})\zeta(s+1)=\frac1s+\log2+O(s),\\
+\int_0^\infty\psi(x)x^{s-1}dx&=2\Gamma(s)(1-2^{1-s})\zeta(s)=\frac1s+\log\frac\pi2-\gamma+O(s).
+\end{align*}
+For the second expansion we used $\zeta(0)=-\frac12$ and $\zeta'(0)=-\frac12\log2\pi$. Since $\phi-\psi=O(x)$ near $0$ and decays exponentially at $\infty$, letting $s\to0^+$ in the difference gives
+\[
+\int_0^\infty(\phi-\psi)\,\frac{dx}x=\log2-\log\frac\pi2+\gamma=\kz.
+\]
+
+\emph{Step 4: the remainders.} Steps 1--3 give $\pi\lambda I(\lambda)=\log\frac1\lambda+\kz-\rho(\lambda)$ with $\rho(\lambda)=\lambda(J_1+J_2)$, where
+\begin{gather*}
+J_1=\int_0^\infty(1-\tanh u)\varkappa(\lambda u)\,du,\qquad J_2=\int_0^\infty(\coth u-1)\tanh(\lambda u)\,du.
+\end{gather*}
+Both are nonnegative. Using $\varkappa(x)\le x/3$, $\tanh x\le x$, $1-\tanh u=2\sum_{n\ge1}(-1)^{n-1}e^{-2nu}$ and $\coth u-1=2\sum_{n\ge1}e^{-2nu}$, we get
+\begin{gather*}
+J_1\le\frac\lambda3\int_0^\infty u(1-\tanh u)\,du=\frac{\pi^2\lambda}{72},\qquad
+J_2\le\lambda\int_0^\infty u(\coth u-1)\,du=\frac{\pi^2\lambda}{12}.
+\end{gather*}
+Thus $0\le\rho(\lambda)\le(\frac{\pi^2}{72}+\frac{\pi^2}{12})\lambda^2=\frac{7\pi^2}{72}\lambda^2$.
+
+\emph{Step 5: the symmetry.} The substitution $v\mapsto\lambda v$ in~\eqref{eq:I} gives $I(1/\lambda)=-\lambda I(\lambda)$.
+\end{proof}
+
+\begin{corollary}\label{cor:Cm1}
+\textup{(a)} For odd $m\ge1$ we have $F_m(1)=C_m(1)=I(1/m)$.
+
+\textup{(b)} For odd $k\ge3$ and every integer $r$, $|F_k(r)|\le F_k(1)\le\frac k\pi(\log k+2)$.
+
+\textup{(c)} For $0<\lambda\le1$, $|I(\lambda)|\le\frac1{\pi\lambda}\bigl(\log\frac1\lambda+2\bigr)$.
+\end{corollary}
+
+\begin{proof}
+(a) The substitution $a=m-2t$ gives
+\[
+F_m(1)=\sum_{1\le t<m/2}\tan\frac{\pi t}m=\sum_{\substack{0<a<m\\ a\text{ odd}}}\cot\frac{\pi a}{2m}=C_m(1),
+\]
+and Lemma~\ref{lem:reciprocity} with $k=1$ gives $C_m(1)=mF_1(m)+I(1/m)=I(1/m)$, since $F_1=0$.
+
+(b) \emph{Idea.} If $(r,k)=1$, then $F_k(r)$ is a signed rearrangement of $F_k(1)$. In general $F_k(r)=F_{k'}(r')$ with $k'=k/(r,k)$ by periodicity and oddness, and $F_{k'}(1)\le F_k(1)$ by (a) and Lemma~\ref{lem:I-asymptotics}. The upper bound for $F_k(1)$ is (a) together with Lemma~\ref{lem:Cm1-elementary}.
+
+\emph{Step 1: the upper bound.} By (a) and Lemma~\ref{lem:Cm1-elementary}, $F_k(1)=C_k(1)\le\frac k\pi(\log k+2)$ for odd $k\ge3$.
+
+\emph{Step 2: coprime $r$.} Let $(r,k)=1$. The classes $\pm rt\bmod k$, $1\le t\le(k-1)/2$, are distinct, so $t\mapsto x(t)$, where $x(t)\in[1,\frac{k-1}2]$ and $x(t)\equiv\pm rt\pmod k$, is a bijection of $\{1,\dots,\frac{k-1}2\}$. Since $\tan(\pi(k-x)/k)=-\tan(\pi x/k)$, we get $F_k(r)=\sum_{x=1}^{(k-1)/2}\pm\tan(\pi x/k)$. All these tangents are positive, so $|F_k(r)|\le F_k(1)$.
+
+\emph{Step 3: reduction of general $r$.} Let $g=(r,k)>1$, and put $k'=k/g$ and $r'=r/g$, so that $(r',k')=1$, $k'$ is odd and $g\ge3$. The function $t\mapsto\tan(\pi r't/k')$ has period $k'$ and is odd, so its sum over a complete period vanishes. Since $(k-1)/2=k'\frac{g-1}2+\frac{k'-1}2$, the sum over $1\le t\le(k-1)/2$ consists of $\frac{g-1}2$ complete periods and the sum over $1\le t\le(k'-1)/2$. Hence $F_k(r)=F_{k'}(r')$, and by Step~2, $|F_k(r)|\le F_{k'}(1)$. (If $k'=1$ this is $0$, and $F_k(1)\ge0$ is a sum of positive tangents, so $|F_k(r)|\le F_k(1)$.)
+
+\emph{Step 4: $F_{k'}(1)\le F_k(1)$ for $k'\ge3$.} Here $k=gk'\ge3k'\ge9$. By (a) and Lemma~\ref{lem:I-asymptotics} with $\lambda=1/m$, for odd $m\ge3$
+\[
+\pi F_m(1)=\pi I(1/m)=m\bigl(\log m+\kz-\rho(1/m)\bigr),\qquad 0\le\rho(1/m)\le\frac{7\pi^2}{72m^2}.
+\]
+Hence $\pi F_{k'}(1)\le k'(\log k'+\kz)$ and $\pi F_k(1)\ge k(\log k+\kz)-\frac{7\pi^2}{72k}$. The function $x\mapsto x(\log x+\kz)$ is increasing for $x\ge1$ (its derivative is $\log x+\kz+1>0$), so $k\ge3k'$ gives $k(\log k+\kz)\ge3k'(\log k'+\log3+\kz)$. Since $\log k'+\kz>0$,
+\[
+\pi F_k(1)-\pi F_{k'}(1)\ge3k'(\log k'+\kz)+3k'\log3-k'(\log k'+\kz)-\frac{7\pi^2}{72k}\ge3k'\log3-\frac{7\pi^2}{72k}>0,
+\]
+because $3k'\log 3\ge9\log3>9$ and $\frac{7\pi^2}{72k}<1$. Together with Step~3 this gives $|F_k(r)|\le F_k(1)$ for all $r$, and with Step~1 the claim.
+
+(c) By Lemma~\ref{lem:I-asymptotics}, $\pi\lambda I(\lambda)=\log\frac1\lambda+\kz-\rho(\lambda)$ with $0\le\rho(\lambda)\le\frac{7\pi^2}{72}\lambda^2<1$ for $\lambda\le1$. As $\log\frac1\lambda\ge0$ and $0<\kz<1$, we get $-1<\pi\lambda I(\lambda)<\log\frac1\lambda+\kz<\log\frac1\lambda+2$, hence $|\pi\lambda I(\lambda)|\le\log\frac1\lambda+2$.
+\end{proof}

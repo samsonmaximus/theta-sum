@@ -1,0 +1,110 @@
+\section{Short Kloosterman sums}\label{sec:kloosterman}
+
+For a prime $p$, an integer $b\not\equiv0\pmod p$ and $N<p$, the sums $\sum_{n\le N}e(bn^*/p)$, where $n^*$ is the inverse of $n$ modulo $p$, are the \emph{short Kloosterman sums}; by completion, Weil's bound for complete Kloosterman sums gives $\ll\sqrt p\log p$ for them, which is trivial for $N<\sqrt p$, and nontrivial bounds for smaller $N$ are known only when $\log N$ is at least about $(\log p)^{2/3}$, and then they save only a power of $\log p$ (see Garaev and Shparlinski~\cite[\S1.1]{b12}, Bourgain and Garaev~\cite{b8,b9} and Korolev~\cite{b17}; but see the remark on~\cite{b17} in~\cite[\S1.1]{b12}). The bound of Bourgain and Garaev~\cite{b8} is the only external input of this paper, and it is used here for $\log N\ge\frac12(\log p)^{9/10}$, far inside the range covered by its proof (Lemma~\ref{lem:bg}). This section defines the quantity $\mathcal{M}_K$, which measures cancellation in sums of $e(c\overline{k}/2p)$ over odd $k$ in a dyadic interval, and reduces it to the sums $\sum_{n\le N}e(bn^*/p)$ (Lemma~\ref{lem:reduction}); Corollary~\ref{cor:MK} then bounds $\mathcal{M}_K$ for $\log K\ge(\log p)^{9/10}$, and Lemma~\ref{lem:heads} in Section~\ref{sec:tangent} uses $\mathcal{M}_K$.
+
+\subsection{The theorem of Bourgain and Garaev}
+For a large prime $p$, Bourgain and Garaev~\cite[Theorem~16]{b8} state the following.
+\begin{quote}
+\emph{Theorem 16. The following bound holds:}
+\[
+\max_{(a,p)=1}\Bigl|\sum_{n\le N}e_p(an^*)\Bigr|\ll\frac{(\log\log p)^3\log p}{(\log N)^{3/2}}\,N,
+\]
+\emph{where the implied constant is absolute.}
+\end{quote}
+Here $e_p(x)=e(x/p)$. The statement has no hypothesis on $N$; it is nontrivial only when $(\log N)^{3/2}$ is larger than $(\log p)(\log\log p)^3$. We use it only in the range of $N$ that its proof covers, stated in the next lemma.
+
+\begin{lemma}[Input from Bourgain--Garaev]\label{lem:bg}
+There are absolute constants $C_{BG}$ and $p_0$ such that for every prime $p\ge p_0$, every $b\not\equiv0\pmod p$ and every $N<p$ with $\log N\ge\frac12(\log p)^{9/10}$,
+\[
+\Big|\sum_{1\le n\le N}e\Bigl(\frac{bn^*}{p}\Bigr)\Big|\le C_{BG}\,\frac{(\log\log p)^3\log p}{(\log N)^{3/2}}\,N.
+\]
+\end{lemma}
+
+\begin{proof}
+As stated in~\cite{b8}, Theorem~16 has no hypothesis on $N$, so the lemma is a special case of it. Since the theorem is used only in this range, we indicate why its proof covers the range, so that the reader can check this against~\cite{b8} (page numbers refer to arXiv v1, the only arXiv version).
+
+The proof puts $\varepsilon=\log N/\log p$. For $\varepsilon\ge\frac47$ the bound follows from Weil's bound for incomplete Kloosterman sums (p.~54), since then $\sqrt p\log p\ll Np^{-1/14}\log p$, which is smaller than the right-hand side of the lemma. This case does occur: Section~\ref{sec:proof} applies the lemma with $N$ up to about $p^{3/4}(\log p)^4$. So Weil's bound enters the paper through Lemma~\ref{lem:bg}, although Kloosterman's weaker bound suffices in Section~\ref{sec:decomposition}. For $\varepsilon<\frac47$ the proof takes $\alpha=1/\log\log p$ and, at the end (p.~60),
+\[
+\beta=\frac{C\log\log p}{\varepsilon^{3/2}(\log p)^{1/2}}
+\]
+with a sufficiently large absolute constant $C$. On p.~55 it works with $\beta<(\log\log p)^{-3}$. This holds if and only if
+\begin{align*}
+\varepsilon^{3/2}>\frac{C(\log\log p)^4}{(\log p)^{1/2}}
+&\iff\varepsilon>\frac{C^{2/3}(\log\log p)^{8/3}}{(\log p)^{1/3}}\\
+&\iff\log N>C^{2/3}(\log p)^{2/3}(\log\log p)^{8/3}.
+\end{align*}
+In the range of the lemma, $\varepsilon\ge\frac12(\log p)^{-1/10}$, so
+\[
+C\log\log p\,(\log p)^{-1/2}\le\beta\le2^{3/2}C\log\log p\,(\log p)^{-7/20},
+\]
+and the other requirements of the proof hold for large $p$, for example:
+\begin{itemize}[leftmargin=2em]
+\item $\beta>2\log\log N/\log N$, because $\log N\ge\frac12(\log p)^{9/10}$;
+\item $\alpha>\beta$, because $\beta\le(\log p)^{-1/3}$ for large $p$;
+\item $\varepsilon\beta>(\log p)^{-1/2}$, because $\varepsilon\beta=C\log\log p/(\varepsilon^{1/2}(\log p)^{1/2})$ and $\varepsilon\le1$.
+\end{itemize}
+The remaining conditions on pp.~55--59 ($\alpha<0.1$; $\beta\log\log p<0.1$; de Bruijn's condition in the two estimates for smooth numbers; $\varepsilon\alpha>(\log p)^{-1/2}$; and $(2k_j)^{k_j}<p^{1/10}$) also hold for large $p$ in this range.
+Finally, $\frac12(\log p)^{9/10}>C^{2/3}(\log p)^{2/3}(\log\log p)^{8/3}$ for large $p$, so every $N$ in the lemma lies in the range covered by the proof.
+\end{proof}
+
+\subsection{Reduction and the bound for \texorpdfstring{$\mathcal{M}_K$}{M\_K}}
+For $6\le K\le p/2$ let
+\begin{equation}\label{eq:MK}
+\mathcal{M}_K=\max\Bigl\{\Big|\sum_{\substack{k\in I\\ k\text{ odd}}}e\Bigl(\frac{c\overline{k}}{2p}\Bigr)\Big|:\ p\nmid c,\
+I\subset[K,2K)\text{ an interval}\Bigr\}.
+\end{equation}
+Here $\overline{k}$ is the inverse of $k$ modulo $2p$, as in Section~\ref{sec:notation}; the sum is over odd $k$ with $K\le k<2K\le p$, so $k$ is prime to $2p$.
+
+\begin{lemma}[Reduction to initial sums]\label{lem:reduction}
+Let $6\le K\le p/2$. Then
+\[
+\mathcal{M}_K\le4\max\Bigl\{\Big|\sum_{1\le n\le N'}e\Bigl(\frac{bn^*}{p}\Bigr)\Big|:\ p\nmid b,\ \frac K2-1\le N'<2K\Bigr\},
+\]
+where $N'$ runs over integers.
+\end{lemma}
+
+\begin{proof}
+Let $2^*=(p+1)/2$, the inverse of $2$ modulo $p$. Since $\frac1{2p}=\frac{2^*}{p}-\frac12$, we have
+$e(cx/2p)=(-1)^ce(c\,2^*x/p)$ for odd $x$. Apply this to the odd residue $x=\overline{k}$, which satisfies $\overline{k}\equiv k^*\pmod p$:
+\[
+e\Bigl(\frac{c\overline{k}}{2p}\Bigr)=(-1)^ce\Bigl(\frac{ak^*}{p}\Bigr),\qquad a=c\,2^*.
+\]
+For an interval $I=[u,v]\cap\Z\subset[K,2K)$ we have, because $(2j)^*=2^*j^*$,
+\[
+\sum_{\substack{k\in I\\ k\text{ odd}}}e\Bigl(\frac{ak^*}{p}\Bigr)=\sum_{k\in I}e\Bigl(\frac{ak^*}{p}\Bigr)-\sum_{u/2\le j\le v/2}e\Bigl(\frac{a\,2^*j^*}{p}\Bigr).
+\]
+Each of the two sums on the right is the difference of two initial sums $\sum_{n\le N'}e(bn^*/p)$, namely
+\[
+\sum_{k\in I}=\Sigma_{a}(v)-\Sigma_{a}(u-1),\qquad \sum_{u/2\le j\le v/2}=\Sigma_{a2^*}(\lfloor v/2\rfloor)-\Sigma_{a2^*}(\lceil u/2\rceil-1),
+\]
+where $\Sigma_b(N')=\sum_{1\le n\le N'}e(bn^*/p)$. Here $b\in\{a,a\,2^*\}$ is prime to $p$ because $p\nmid c$, and
+$N'\in\{v,\,u-1,\,\lfloor v/2\rfloor,\,\lceil u/2\rceil-1\}\subset[\frac K2-1,2K)$; all these $N'$ are below $p$ since $v<2K\le p$.
+The four initial sums give the factor $4$.
+\end{proof}
+
+\begin{corollary}\label{cor:MK}
+There is an absolute constant $p_1$ such that for every prime $p\ge p_1$ and every $K$ with $\log K\ge(\log p)^{9/10}$ and $K\le p/2$,
+\[
+\frac{\mathcal{M}_K}K\le16\sqrt2\,C_{BG}\,\frac{(\log\log p)^3\log p}{(\log K)^{3/2}},
+\]
+where $C_{BG}$ is the constant of Lemma~\ref{lem:bg}.
+\end{corollary}
+
+\begin{proof}
+Take $p_1\ge p_0$ so large that $K\ge e^{(\log p)^{9/10}}\ge9$ and $\log3\le\frac12(\log p)^{9/10}$ for $p\ge p_1$. Then $K\ge9>6$, and Lemma~\ref{lem:reduction} applies. Let $N'$ be an integer with $\frac K2-1\le N'<2K$; then $N'<2K\le p$.
+
+\emph{Step 1: $N'$ is in the range of Lemma~\ref{lem:bg}.} In the proof of Lemma~\ref{lem:reduction} the lengths $N'$ that occur satisfy $N'\le v<2K\le p$, so $N'<p$. As $K\ge6$, $N'\ge\frac K2-1\ge\frac K3$, hence
+\[
+\log N'\ge\log K-\log3\ge(\log p)^{9/10}-\tfrac12(\log p)^{9/10}=\tfrac12(\log p)^{9/10}.
+\]
+
+\emph{Step 2: $\log N'\ge\frac12\log K$.} As $K\ge9$, $N'\ge\frac K2-1\ge\sqrt K$ (the function $\frac K2-1-\sqrt K$ is increasing for $K\ge1$ and equals $\frac12$ at $K=9$).
+
+\emph{Step 3: the constant.} By Lemma~\ref{lem:bg}, Step~2 and $N'\le2K$,
+\[
+\frac{1}{K}\Big|\sum_{n\le N'}e\Bigl(\frac{bn^*}{p}\Bigr)\Big|\le\frac{N'}{K}\,C_{BG}\frac{(\log\log p)^3\log p}{(\log N')^{3/2}}\le2\cdot2^{3/2}\,C_{BG}\frac{(\log\log p)^3\log p}{(\log K)^{3/2}}.
+\]
+Lemma~\ref{lem:reduction} multiplies this by $4$, which gives the constant $4\cdot2\cdot2^{3/2}=16\sqrt2$.
+\end{proof}
+
+Section~\ref{sec:proof} uses Corollary~\ref{cor:MK} for the moduli $\exp((\log p)^{9/10})\le k<p^{3/4}(\log p)^4$.

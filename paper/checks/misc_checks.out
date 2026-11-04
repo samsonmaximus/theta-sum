@@ -1,0 +1,11 @@
+kappa0 = 0.8187801401720233052975489816456968555459
+c0     = 0.2399341036320694676850476643893461879171
+Lemma 3.2: lambda = 0.5  rho/((7pi^2/72) lambda^2) = 0.944319182426
+Lemma 3.2: lambda = 0.1  rho/((7pi^2/72) lambda^2) = 0.997067360467
+Lemma 3.2: lambda = 0.01  rho/((7pi^2/72) lambda^2) = 0.999970161577
+Lemma 3.2: lambda = 0.001  rho/((7pi^2/72) lambda^2) = 0.999999701563
+kappa0 + 7pi^2/72 = 1.7783250125 (< 2)
+Theorem 4.1(ii): range nonempty iff log p >= 129.74948  i.e. p >= 10^56.349
+Remark 7.4(c): Lambda = 420 log(4 Lambda) at Lambda = 4073.379509
+  q = 1000000000039 prime: True, gcd(a, q) = 1, a <= q^2: True
+  T = 3.2560359  sum_{d | a, d > T} 1/d = 5.1551917  T^(-gamma0/4) = 0.98535196

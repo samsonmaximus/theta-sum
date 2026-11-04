@@ -1,0 +1,99 @@
+\section{Computations}\label{sec:computations}
+
+This section proves the counting formula that underlies the computation of $S(p)$, describes the algorithm and its checks, and proves Proposition~\ref{prop:numerics}. It then compares the computed values with the asymptotic formula of Theorem~\ref{thm:main}. The data and programs are available at \url{https://github.com/samsonmaximus/theta-sum}.
+
+\subsection{A counting formula}
+For integers $x\ge0$ and $y\ge1$ put
+\[
+W(x,y)=\sum_{c=1}^{\lfloor(y-1)/2\rfloor}\Bigl\lfloor\frac{cx}{y}\Bigr\rfloor .
+\]
+
+\begin{lemma}[Counting formula]\label{lem:counting}
+For odd $a$ with $1\le a<p$,
+\[
+U(a)=(p-1)a-4W(2p,a),\qquad\text{hence}\qquad S(p)=\frac{(p-1)^3}4-4\sum_{\substack{3\le a\le p-2\\ a\text{ odd}}}W(2p,a).
+\]
+Moreover, for integers $q,r\ge0$ and $y\ge1$, with $A=\lfloor(y-1)/2\rfloor$,
+\begin{equation}\label{eq:Lambda-shift}
+W(qy+r,y)=q\binom{A+1}2+W(r,y),
+\end{equation}
+and for coprime integers $r,y\ge1$
+\begin{equation}\label{eq:Lambda-recip}
+W(r,y)+W(y,r)=\Bigl\lfloor\frac{y-1}2\Bigr\rfloor\Bigl\lfloor\frac{r-1}2\Bigr\rfloor .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The idea is to count, for each $c$, the $b$ with $\lfloor ab/p\rfloor=c$; this turns $U(a)$ into an alternating sum of $\lfloor cp/a\rfloor$, of which only the even $c$ need be kept. The last identity is a count of lattice points on the two sides of a line.
+
+\emph{Step 1: the formula for $U(a)$.} Let $a$ be odd and $U(a)=\sum_{b=1}^{p-1}(-1)^{\lfloor ab/p\rfloor}$ as in Lemma~\ref{lem:elementary}. For $0\le c\le a$ let $M_c$ be the number of $b\in[1,p-1]$ with $ab<cp$. Then $M_0=0$ and $M_a=p-1$. For $1\le c\le a-1$ we have $M_c=\lfloor cp/a\rfloor$: the condition is $b<cp/a$, which implies $b<p$, and $a\nmid cp$ because $a$ is coprime to $p$ and $a\nmid c$. For $0\le c\le a-1$ the integer $\lfloor ab/p\rfloor$ equals $c$ for exactly $M_{c+1}-M_c$ values of $b$ (note that $ab\ne cp$ for $1\le b\le p-1$, $c\ge1$). Summation by parts gives, since $a$ is odd,
+\[
+U(a)=\sum_{c=0}^{a-1}(-1)^c(M_{c+1}-M_c)=-(-1)^aM_a-2\sum_{c=1}^{a-1}(-1)^cM_c=(p-1)-2\sum_{c=1}^{a-1}(-1)^c\Bigl\lfloor\frac{cp}a\Bigr\rfloor .
+\]
+Pairing $c$ with $a-c$ and using $\lfloor cp/a\rfloor+\lfloor(a-c)p/a\rfloor=p-1$ (as $cp/a\notin\Z$) gives $\sum_{c=1}^{a-1}\lfloor cp/a\rfloor=(p-1)(a-1)/2$. The terms with $c=2c'$ even sum to $\sum_{c'=1}^{(a-1)/2}\lfloor 2c'p/a\rfloor=W(2p,a)$, because $\lfloor(a-1)/2\rfloor=(a-1)/2$. Therefore
+\[
+\sum_{c=1}^{a-1}(-1)^c\Bigl\lfloor\frac{cp}a\Bigr\rfloor=2W(2p,a)-\frac{(p-1)(a-1)}2,
+\]
+and $U(a)=(p-1)+(p-1)(a-1)-4W(2p,a)=(p-1)a-4W(2p,a)$.
+
+\emph{Step 2: the formula for $S(p)$.} By Lemma~\ref{lem:elementary}(b), $S(p)=\sum U(a)$ over odd $a$ with $1\le a\le p-2$. There are $(p-1)/2$ such $a$, and $\sum a=((p-1)/2)^2$, so $\sum(p-1)a=(p-1)^3/4$. Finally $W(2p,1)=0$.
+
+\emph{Step 3: the two relations.} Identity \eqref{eq:Lambda-shift} follows from $\lfloor c(qy+r)/y\rfloor=cq+\lfloor cr/y\rfloor$ and $\sum_{c=1}^Ac=\binom{A+1}2$. For \eqref{eq:Lambda-recip} put $B=\lfloor(r-1)/2\rfloor$. For $1\le c\le A$ we have $cr/y<r/2$, and $y\nmid cr$ (otherwise $y\mid c$, as $\gcd(r,y)=1$). So $\lfloor cr/y\rfloor$ is the number of integers $d\ge1$ with $dy<cr$, and each such $d$ satisfies $d<r/2$, that is, $d\le B$. Thus $W(r,y)$ is the number of lattice points $(c,d)$ with $1\le c\le A$, $1\le d\le B$ and $dy<cr$. In the same way $W(y,r)=\sum_{d=1}^B\lfloor dy/r\rfloor$ is the number of those points with $cr<dy$. No point of $[1,A]\times[1,B]$ has $dy=cr$. Hence $W(r,y)+W(y,r)=AB$.
+\end{proof}
+
+\subsection{Algorithm and checks}
+For odd $a<p$ the integers $2p$ and $a$ are coprime. For coprime $x\ge1$, $y\ge2$ write $x=qy+r$ with $0<r<y$ (here $r\ne0$ since $\gcd(x,y)=1$) and $A=\lfloor(y-1)/2\rfloor$, $B=\lfloor(r-1)/2\rfloor$. Then \eqref{eq:Lambda-shift} and \eqref{eq:Lambda-recip} give
+\[
+W(x,y)=q\binom{A+1}2+AB-W(y,r),
+\]
+and $W(x,1)=0$. The pair $(x,y)$ is thus replaced by $(y,r)$ exactly as in the Euclidean algorithm. Hence $W(2p,a)$ is evaluated with $O(\log a)$ arithmetic operations, and by Lemma~\ref{lem:counting}, $S(p)$ is evaluated with $O(p\log p)$ operations, in exact integer arithmetic.
+
+The program (\texttt{code/thetasum.c}) is written in C and uses exact 128-bit integer arithmetic; there are 283145 odd primes $p\le4\cdot10^6$ and 129703 primes $4\cdot10^6<p\le6\cdot10^6$. The values $S(p)$ for all 412848 odd primes $p\le6\cdot10^6$ were compared with the following:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*,nosep]
+\item a brute-force evaluation of the definition of $S(p)$ for all 668 odd primes $p<5000$ (option \texttt{brute} of \texttt{code/thetasum.c});
+\item a second implementation of the algorithm, for the 129703 primes $4\cdot10^6<p\le6\cdot10^6$ (\texttt{paper/checks/sp.c});
+\item a program that shares no code or method with the first (\texttt{code/floorsum\_check.c}): writing $(-1)^x=1-2x+4\lfloor x/2\rfloor$, it evaluates each inner sum over $j$ in the definition of $S(p)$ as a floor sum of a linear function by a Euclid-type algorithm, with $O(p\log p)$ operations in all. It was run on all 17983 odd primes $p<2\cdot10^5$, and on 640 further values: primes chosen at random from all ranges up to $6\cdot10^6$, together with the 20 extreme values of $S(p)/p-\frac12\log p$ for $10^5<p\le5\cdot10^6$.
+\end{enumerate}
+All values agree. The outputs of~(iii) are in the files \texttt{data/crosscheck\_floorsum*.txt} of the repository.
+
+\subsection{Proof of Proposition~\ref{prop:numerics}}
+The proposition is a statement about the finitely many values $S(p)$, $p\le6\cdot10^6$, computed as above. From the list of values (file \texttt{S\_p\_upto\_6e6.txt.gz} in the repository), $S(p)>0$ for every odd prime $p\le6\cdot10^6$, and for $m=1,\dots,5$ the largest prime $p\le6\cdot10^6$ with $S(p)\le mp$ is
+\[
+m=1,\dots,5:\qquad p=5,\ 233,\ 3119,\ 58013,\ 869399 .
+\]
+Hence $S(p)>mp$ for all primes $p$ with $p_m<p\le6\cdot10^6$, where $p_1,\dots,p_5$ are these five primes; this gives the five inequalities of the proposition. None of the thresholds can be lowered, because $p_m$ itself violates the inequality:
+\[
+\begin{aligned}
+S(5)&=4\le5, & S(233)&=440\le466, & S(3119)&=9194\le9357,\\
+S(58013)&=218428<232052, & S(869399)&=4287874<4346995,
+\end{aligned}
+\]
+where $466=2\cdot233$, $9357=3\cdot3119$, $232052=4\cdot58013$ and $4346995=5\cdot869399$.
+These values are the ones given by the computation; the values $S(233)=440$ and $S(3119)=9194$ are also verified in Lean (Appendix~\ref{app:lean}). \qed
+
+The minimum of $S(p)/p$ over $3119<p\le6\cdot10^6$ is $3.0254$, attained at $p=4139$; over $58013<p\le6\cdot10^6$ it is $4.0055$ (at $p=90089$), and over $869399<p\le6\cdot10^6$ it is $5.1332$ (at $p=1021019$). For $5\cdot10^6<p\le6\cdot10^6$ we have $S(p)/p>5.82$.
+
+\subsection{Comparison with the asymptotic formula}
+Put $X_p=S(p)/p-\frac12\log p$. By Theorem~\ref{thm:decomp}(i), which holds for every odd prime, $X_p=c_0+\Tpart(p)/p+O(1/p)$, with $c_0=0.23993\ldots$ as in \eqref{eq:c0}. (Part~(ii) of that theorem says nothing in the computed range, since it needs $p>10^{56}$.) Over $10^3<p\le6\cdot10^6$ (412681 primes) the mean of $X_p$ is $0.2396$, close to $c_0$, so that numerically $\Tpart(p)/p$ has mean close to $0$; we do not prove this. The standard deviation of $X_p$ is $0.626$; over all odd primes $p\le6\cdot10^6$, $X_p$ lies between $-2.160$ (at $p=750749$) and $2.386$ (at $p=4158001$). Table~\ref{tab:statistics} shows that the distribution is stable over the range.
+
+\begin{table}[ht]
+\small
+\centering
+\begin{tabular}{lrrrrr}
+\toprule
+range of $p$ & primes & mean & st.\ dev. & minimum (at $p$) & maximum (at $p$)\\
+\midrule
+$(10^3,\,2\cdot 10^5]$ & 17816 & 0.2387 & 0.624 & $-1.719$ (58013) & 2.219 (150151)\\
+$(2\cdot 10^5,\,10^6]$ & 60514 & 0.2400 & 0.627 & $-2.160$ (750749) & 2.279 (910981)\\
+$(10^6,\,2\cdot 10^6]$ & 70435 & 0.2397 & 0.625 & $-1.892$ (1767149) & 2.363 (1735651)\\
+$(2\cdot 10^6,\,3\cdot 10^6]$ & 67883 & 0.2407 & 0.626 & $-2.041$ (2972969) & 2.320 (2238391)\\
+$(3\cdot 10^6,\,4\cdot 10^6]$ & 66330 & 0.2391 & 0.625 & $-1.957$ (3950099) & 2.360 (3387931)\\
+$(4\cdot 10^6,\,5\cdot 10^6]$ & 65367 & 0.2396 & 0.626 & $-1.840$ (4046543) & 2.386 (4158001)\\
+$(5\cdot 10^6,\,6\cdot 10^6]$ & 64336 & 0.2390 & 0.628 & $-1.939$ (5525519) & 2.349 (5694151)\\
+\bottomrule
+\end{tabular}
+\caption{Statistics of $S(p)/p-\frac12\log p$ over primes $p$ in each range.}\label{tab:statistics}
+\end{table}
+
+\subsection{The open range}
+Conjectures~1.1, 3.1 and~3.2 hold for $p\le6\cdot10^6$ (Proposition~\ref{prop:numerics}) and for all $p$ larger than a threshold that has not been computed. The threshold would be effective if the implied constant in the Bourgain--Garaev bound were made explicit, but it is enormous: the proof of Theorem~\ref{thm:divisors} alone needs $\log\log p>4073$ (Remark~\ref{rem:optimality}(c)). Closing the gap between $6\cdot10^6$ and this threshold would require explicit constants in the Bourgain--Garaev bound (Lemma~\ref{lem:bg}), and an explicit form of the other estimates of Sections~\ref{sec:decomposition}--\ref{sec:proof}.
