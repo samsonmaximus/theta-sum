@@ -1,3 +1,4 @@
+\pdfoutput=1
 \documentclass[11pt]{amsart}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage[margin=1.1in]{geometry}
@@ -55,8 +56,6 @@ S(p)=\tfrac12\,p\log p+O\bigl(p(\log p)^{19/20}\bigr).
 The proof starts from an exact formula, obtained from a reciprocity law for half-range cotangent sums, that expresses $S(p)$ through tangent sums $\sum_t\tan(\pi pt/k)$. Large moduli $k$ are treated with Kloosterman's bound. For smaller moduli each tangent sum is split into a head and a tail: the heads are bounded on average over $k$ by the Bourgain--Garaev bound for short Kloosterman sums, and the tails by a new elementary estimate for the large divisors of the terms of an arithmetic progression. A formalization in the Lean proof assistant derives the conjecture from the Bourgain--Garaev bound in the range used here; that bound enters the formalization as a hypothesis.
 \end{abstract}
 \maketitle
-\setcounter{tocdepth}{1}
-\tableofcontents
 
 \input{s1_intro}
 \input{s2_cotangent}
